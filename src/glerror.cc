@@ -11,6 +11,7 @@ using std::runtime_error;
 using std::string;
 
 void _checkGlError(const char* filename, int lineno) {
+#ifndef NDEBUG
     ostringstream output;
     GLenum err;
     while ((err = glGetError()) != GL_NO_ERROR) {
@@ -49,4 +50,8 @@ void _checkGlError(const char* filename, int lineno) {
         message << "OpenGL (" << filename << ":" << lineno << "): " << err_str;
         throw runtime_error(message.str());
     }
+#else
+    (void) filename;
+    (void) lineno;
+#endif // NDEBUG
 }
