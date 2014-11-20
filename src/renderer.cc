@@ -1,19 +1,10 @@
-#include <fstream>
-#include <iostream>
-#include <sstream>
 #include <stdexcept>
-#include <vector>
+#include <string>
 #include <GL/glew.h>
 #include "renderer.h"
 
-using std::endl;
-using std::ifstream;
-using std::ostringstream;
 using std::runtime_error;
 using std::string;
-using std::vector;
-
-#define checkGlError() _checkGlError(__FILE__, __LINE__)
 
 // Public methods.
 
@@ -42,15 +33,11 @@ Renderer::Renderer(int width, int height) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     checkGlError();
 
-    GLuint vertex_shader = loadVertexShader("src/shader.vert");
-    GLuint fragment_shader = loadFragmentShader("src/shader.frag");
-    program_ = linkProgram(vertex_shader, fragment_shader);
+    program_.loadVertexShader("src/shader.vert");
+    program_.loadFragmentShader("src/shader.frag");
+    program_.link();
+    program_.use();
 
-    glDeleteShader(vertex_shader);
-    glDeleteShader(fragment_shader);
-
-    glUseProgram(program_);
-    checkGlError();
     glEnableVertexAttribArray(0);
     checkGlError();
 
@@ -86,130 +73,5 @@ void Renderer::initGlew() const {
     if (err != GLEW_OK) {
         string message = "GLEW: ";
         throw runtime_error(message + (const char*) glewGetErrorString(err));
-    }
-}
-
-GLuint Renderer::loadVertexShader(const char* filename) const {
-    return loadShader(GL_VERTEX_SHADER, filename);
-}
-
-GLuint Renderer::loadFragmentShader(const char* filename) const {
-    return loadShader(GL_FRAGMENT_SHADER, filename);
-}
-
-GLuint Renderer::loadShader(GLenum shader_type, const char* filename) const {
-    GLuint shader = glCreateShader(shader_type);
-    checkGlError();
-
-    ifstream t(filename);
-    if (t.fail())
-        throw runtime_error(string("Cannot open ") + filename);
-    ostringstream buffer;
-    buffer << t.rdbuf();
-    string source = buffer.str();
-    const GLchar * source_cstr = source.c_str();
-    const GLint size = source.size();
-
-    glShaderSource(shader, 1, &source_cstr, &size);
-    checkGlError();
-
-    glCompileShader(shader);
-    checkGlError();
-
-    GLint compiled;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
-    checkGlError();
-    if (!compiled) {
-        GLint log_len = 0;
-
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_len);
-        checkGlError();
-
-        ostringstream message;
-        message << filename << " ";
-
-        if (log_len > 0) {
-            vector<char> log(log_len);
-            glGetShaderInfoLog(shader, log_len, nullptr, &log[0]);
-            checkGlError();
-            message << &log[0];
-        } else {
-            message << "unknown error";
-        }
-        throw runtime_error(message.str());
-    }
-
-    return shader;
-}
-
-GLuint Renderer::linkProgram(GLuint vertex_shader,
-                             GLuint fragment_shader) const {
-    GLuint program = glCreateProgram();
-    checkGlError();
-    glAttachShader(program, vertex_shader);
-    checkGlError();
-    glAttachShader(program, fragment_shader);
-    checkGlError();
-    glLinkProgram(program);
-    checkGlError();
-
-    GLint linked;
-    glGetProgramiv(program, GL_LINK_STATUS, &linked);
-    checkGlError();
-    if (!linked) {
-        GLint log_len = 0;
-        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &log_len);
-        checkGlError();
-        if (log_len > 0) {
-            vector<char> log(log_len);
-            glGetProgramInfoLog(program, log_len, nullptr, &log[0]);
-            throw runtime_error(string("Program: ") + &log[0]);
-        } else {
-            throw runtime_error(string("Program: unknown error"));
-        }
-    }
-
-    return program;
-}
-
-
-void Renderer::_checkGlError(const char* filename, int lineno) const {
-    ostringstream output;
-    GLenum err;
-    while ((err = glGetError()) != GL_NO_ERROR) {
-        output << endl;
-        switch (err) {
-        case GL_INVALID_ENUM:
-            output << "An unacceptable value is specified for an enumerated "
-                   << "argument";
-            break;
-        case GL_INVALID_VALUE:
-            output << "A numeric argument is out of range";
-            break;
-        case GL_INVALID_OPERATION:
-            output << "The specified operation is not allowed in the current "
-                   << "state";
-            break;
-        case GL_INVALID_FRAMEBUFFER_OPERATION:
-            output << "The framebuffer object is not complete";
-            break;
-        case GL_OUT_OF_MEMORY:
-            output << "There is not enough memory left to execute the command";
-            break;
-        case GL_STACK_UNDERFLOW:
-            output << "An attempt has been made to perform an operation that "
-                   << "would cause an internal stack to underflow";
-            break;
-        case GL_STACK_OVERFLOW:
-            output << "An attempt has been made to perform an operation that "
-                   << "would cause an internal stack to overflow.";
-            break;
-        }
-    }
-    string err_str = output.str();
-    if (!err_str.empty()) {
-        ostringstream message;
-        message << "OpenGL (" << filename << ":" << lineno << "): " << err_str;
-        throw runtime_error(message.str());
     }
 }

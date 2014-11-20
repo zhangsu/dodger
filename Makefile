@@ -7,7 +7,7 @@ SRCDIR            = src/
 BINDIR            = bin/
 OUTPUTS           = $(DODGEROUTPUT)
 DODGEROUTPUT      = $(BINDIR)dodger
-DODGEROBJECTS     = $(addprefix $(SRCDIR), dodger.o renderer.o)
+DODGEROBJECTS     = $(addprefix $(SRCDIR), dodger.o glerror.o renderer.o shader_program.o)
 
 ifeq ($(DEBUG),1)
   FLAGS += -g
