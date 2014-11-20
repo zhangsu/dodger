@@ -53,11 +53,14 @@ void ShaderProgram::link() {
     program_ = program;
 
     glDeleteShader(vertex_shader_);
+    checkGlError();
     glDeleteShader(fragment_shader_);
+    checkGlError();
 }
 
 void ShaderProgram::use() const {
     glUseProgram(program_);
+    checkGlError();
 }
 
 void ShaderProgram::uniformMat4(const char* name, const GLfloat *value) const {
@@ -69,6 +72,7 @@ GLuint ShaderProgram::uniformLocation(const char* name) const {
     auto uniform = uniforms_.find(name);
     if (uniform == uniforms_.end()) {
         GLint location = glGetUniformLocation(program_, name);
+        checkGlError();
         uniforms_[name] = location;
         return location;
     }
