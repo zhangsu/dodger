@@ -1,10 +1,17 @@
+#define GLM_FORCE_RADIANS
 #include <stdexcept>
 #include <string>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include "glerror.hh"
 #include "renderer.h"
 
 using std::runtime_error;
 using std::string;
+using glm::mat4;
+using glm::vec3;
 
 // Public methods.
 
@@ -43,21 +50,25 @@ Renderer::Renderer(int width, int height) {
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     checkGlError();
+
+    view_ = glm::lookAt(vec3(0, 0, 10), vec3(0, 0, 0), vec3(0, 1, 0));
 }
 
 void Renderer::render() const {
-    glClearColor(0.2, 0, 0, 1.0);
-    checkGlError();
+    glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    checkGlError();
 
+    program_.uniformMat4("mvp", glm::value_ptr(mvp()));
     glDrawArrays(GL_TRIANGLES, 0, 3);
-    checkGlError();
 }
 
-void Renderer::resize(int width, int height) const {
+void Renderer::resize(int width, int height) {
     if (height == 0)
         height = 1;
+
+    float fov = glm::radians(60.0f);
+    float aspect_ratio = (float) width / height;
+    perspective_ = glm::perspective(fov, aspect_ratio, 0.001f, 100.0f);
 
     glViewport(0, 0, width, height);
     checkGlError();
@@ -74,4 +85,8 @@ void Renderer::initGlew() const {
         string message = "GLEW: ";
         throw runtime_error(message + (const char*) glewGetErrorString(err));
     }
+}
+
+mat4 Renderer::mvp() const {
+    return perspective_ * view_ * model_;
 }

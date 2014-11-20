@@ -24,6 +24,7 @@ void ShaderProgram::loadFragmentShader(const char* filename) {
 }
 
 void ShaderProgram::link() {
+    uniforms_.clear();
     GLuint program = glCreateProgram();
     checkGlError();
     glAttachShader(program, vertex_shader_);
@@ -57,7 +58,21 @@ void ShaderProgram::link() {
 
 void ShaderProgram::use() const {
     glUseProgram(program_);
-    checkGlError();
+}
+
+void ShaderProgram::uniformMat4(const char* name, const GLfloat *value) const {
+    GLint location = uniformLocation(name);
+    glUniformMatrix4fv(location, 1, GL_FALSE, value);
+}
+
+GLuint ShaderProgram::uniformLocation(const char* name) const {
+    auto uniform = uniforms_.find(name);
+    if (uniform == uniforms_.end()) {
+        GLint location = glGetUniformLocation(program_, name);
+        uniforms_[name] = location;
+        return location;
+    }
+    return uniform->second;
 }
 
 // Private methods.
