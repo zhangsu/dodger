@@ -128,7 +128,7 @@ GLuint Renderer::loadShader(GLenum shader_type, const char* filename) const {
         ostringstream message;
         message << filename << " ";
 
-        if (log_len > 1) {
+        if (log_len > 0) {
             vector<char> log(log_len);
             glGetShaderInfoLog(shader, log_len, nullptr, &log[0]);
             checkGlError();
