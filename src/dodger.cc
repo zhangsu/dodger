@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include "renderer.hh"
 
+using std::cout;
 using std::cerr;
 using std::endl;
 using std::exception;
@@ -59,10 +60,25 @@ int main(void) {
             }
         );
 
+#ifndef NDEBUG
+        int frame_count = 0;
+        double last_frame_time = glfwGetTime();
+#endif
         while (!glfwWindowShouldClose(window)) {
             renderer.render();
             glfwSwapBuffers(window);
             glfwPollEvents();
+
+#ifndef NDEBUG
+            frame_count++;
+            double current_frame_time = glfwGetTime();
+            double time_delta = current_frame_time - last_frame_time;
+            if (time_delta >= 1.0) {
+                cout << "FPS: " << frame_count / time_delta << endl;
+                frame_count = 0;
+                last_frame_time = current_frame_time;
+            }
+#endif
         }
     } catch (const exception& e) {
         cerr << e.what() << endl;
