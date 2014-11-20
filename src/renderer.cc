@@ -45,11 +45,8 @@ Renderer::Renderer(int width, int height) {
     program_.link();
     program_.use();
 
-    glEnableVertexAttribArray(0);
-    checkGlError();
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-    checkGlError();
+    program_.enableVertexAttribArray("vert");
+    program_.vertexAttribPointer("vert", 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     view_ = glm::lookAt(vec3(0, 0, 10), vec3(0, 0, 0), vec3(0, 1, 0));
 }

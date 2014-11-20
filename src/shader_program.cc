@@ -25,6 +25,7 @@ void ShaderProgram::loadFragmentShader(const char* filename) {
 
 void ShaderProgram::link() {
     uniforms_.clear();
+    attributes_.clear();
     GLuint program = glCreateProgram();
     checkGlError();
     glAttachShader(program, vertex_shader_);
@@ -63,9 +64,26 @@ void ShaderProgram::use() const {
     checkGlError();
 }
 
-void ShaderProgram::uniformMat4(const char* name, const GLfloat *value) const {
-    GLint location = uniformLocation(name);
-    glUniformMatrix4fv(location, 1, GL_FALSE, value);
+void ShaderProgram::uniformMat4(const char* name, const GLfloat* value) const {
+    glUniformMatrix4fv(uniformLocation(name), 1, GL_FALSE, value);
+    checkGlError();
+}
+
+void ShaderProgram::enableVertexAttribArray(const char* name) const {
+    glEnableVertexAttribArray(attribLocation(name));
+    checkGlError();
+}
+
+void ShaderProgram::vertexAttribPointer(
+    const char* name,
+    GLint size,
+    GLenum type,
+    GLboolean normalized,
+    GLsizei stride,
+    const GLvoid* pointer
+) const {
+    GLuint index = attribLocation(name);
+    glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 }
 
 GLuint ShaderProgram::uniformLocation(const char* name) const {
@@ -77,6 +95,17 @@ GLuint ShaderProgram::uniformLocation(const char* name) const {
         return location;
     }
     return uniform->second;
+}
+
+GLuint ShaderProgram::attribLocation(const char* name) const {
+    auto attribute = attributes_.find(name);
+    if (attribute == attributes_.end()) {
+        GLint location = glGetAttribLocation(program_, name);
+        checkGlError();
+        attributes_[name] = location;
+        return location;
+    }
+    return attribute->second;
 }
 
 // Private methods.
