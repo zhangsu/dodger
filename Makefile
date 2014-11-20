@@ -33,4 +33,4 @@ bin/:
 
 clean:
 	find . -name '*.o' -o -name '*.d' | xargs rm -f
-	rm -rf {bin,lib}
+	rm -rf {bin}
