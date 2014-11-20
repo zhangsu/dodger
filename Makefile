@@ -2,7 +2,7 @@ CC                = g++
 LINKER            = g++
 FLAGS             = -Wall -Wextra
 CFLAGS            = $(FLAGS) -std=c++0x -c -Iinclude
-LFLAGS            = $(FLAGS) -Llib -lGLEW -lglfw -lGL
+LFLAGS            = $(FLAGS) -Llib -lGLEW -lglfw -lGL -Wl,-rpath,lib
 SRCDIR            = src/
 BINDIR            = bin/
 OUTPUTS           = $(DODGEROUTPUT)
