@@ -21,7 +21,6 @@ int main(void) {
         cerr << "GLFW: " << description << endl;
     });
 
-    /* Initialize the library */
     if (!glfwInit())
         return -1;
 
@@ -60,7 +59,6 @@ int main(void) {
             }
         );
 
-        /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window)) {
             renderer.render();
             glfwSwapBuffers(window);
