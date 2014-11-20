@@ -3,7 +3,7 @@
 // GLFW documentation asks to include GLEW headers before GLFW.
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "renderer.h"
+#include "renderer.hh"
 
 using std::cerr;
 using std::endl;

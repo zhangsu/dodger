@@ -6,7 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "glerror.hh"
-#include "renderer.h"
+#include "renderer.hh"
 
 using std::runtime_error;
 using std::string;
