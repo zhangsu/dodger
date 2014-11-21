@@ -14,6 +14,21 @@ namespace {
 
 Renderer* prenderer;
 
+void handleKey(GLFWwindow* window, Game& game) {
+    bool lctrl = glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS;
+
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+        game.move(0, 0, -0.1);
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+        game.move(0, 0, 0.1);
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+        game.move(-0.1, 0, 0);
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        game.move(0.1, 0, 0);
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+        game.move(0, lctrl ? -0.1 : 0.1, 0);
+}
+
 }
 
 int main(void) {
@@ -69,6 +84,7 @@ int main(void) {
             renderer.render();
             glfwSwapBuffers(window);
             glfwPollEvents();
+            handleKey(window, game);
 
 #ifndef NDEBUG
             frame_count++;
