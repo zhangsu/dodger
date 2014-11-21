@@ -76,6 +76,8 @@ int main(void) {
             }
         );
 
+        glfwSwapInterval(1);
+
 #ifndef NDEBUG
         int frame_count = 0;
         double last_frame_time = glfwGetTime();
