@@ -49,7 +49,8 @@ int main(void) {
     // Frame buffer size can be different from window size.
     glfwGetFramebufferSize(window, &width, &height);
     try {
-        Renderer renderer(width, height);
+        Game game;
+        Renderer renderer(width, height, game);
         prenderer = &renderer;
 
         glfwSetWindowSizeCallback(

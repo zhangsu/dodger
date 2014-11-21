@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "game.hh"
 #include "glerror.hh"
 #include "renderer.hh"
 
@@ -15,7 +16,7 @@ using glm::vec3;
 
 // Public methods.
 
-Renderer::Renderer(int width, int height) {
+Renderer::Renderer(int width, int height, const Game& game) : game_(game) {
     initGlew();
     resize(width, height);
 
@@ -50,13 +51,13 @@ Renderer::Renderer(int width, int height) {
     program_.enableVertexAttribArray("vert");
     program_.vertexAttribPointer("vert", 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-    view_ = glm::lookAt(vec3(0, 0, 10), vec3(0, 0, 0), vec3(0, 1, 0));
 }
 
-void Renderer::render() const {
+void Renderer::render() {
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    view_ = glm::lookAt(game_.pos(), game_.reference_pos(), vec3(0, 1, 0));
     program_.uniformMat4("mvp", glm::value_ptr(mvp()));
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
