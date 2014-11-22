@@ -12,9 +12,14 @@ using std::exception;
 
 namespace {
 
+// This global pointer are used by lambda functions who need to access the
+// renderer but cannot capture any variable due to the fact that they must
+// be used as function pointers. Only lambda functions that do not capture
+// anything can be used as function pointers.
 Renderer* prenderer;
 
-void handleKey(GLFWwindow* window, Game& game) {
+// Handles all the keyboard input.
+void handleKeyEvent(GLFWwindow* window, Game& game) {
     bool lctrl = glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS;
 
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
@@ -40,6 +45,7 @@ int main(void) {
     if (!glfwInit())
         return -1;
 
+    // Create window and OpenGL context.
     int width = 800, height = 600;
     glfwWindowHint(GLFW_VISIBLE, false);
     glfwWindowHint(GLFW_SAMPLES, 4);
@@ -53,6 +59,7 @@ int main(void) {
         return -2;
     }
 
+    // Center the window on the primary monitor.
     const GLFWvidmode* vid_mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
     glfwSetWindowPos(window,
                      (vid_mode->width - width) / 2,
@@ -76,6 +83,7 @@ int main(void) {
             }
         );
 
+        // Force vertical sync.
         glfwSwapInterval(1);
 
 #ifndef NDEBUG
@@ -86,9 +94,10 @@ int main(void) {
             renderer.render();
             glfwSwapBuffers(window);
             glfwPollEvents();
-            handleKey(window, game);
+            handleKeyEvent(window, game);
 
 #ifndef NDEBUG
+            // Output FPS count to standard output.
             frame_count++;
             double current_frame_time = glfwGetTime();
             double time_delta = current_frame_time - last_frame_time;

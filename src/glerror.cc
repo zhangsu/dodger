@@ -51,6 +51,7 @@ void _checkGlError(const char* filename, int lineno) {
         throw runtime_error(message.str());
     }
 #else
+    // If not debugging, turn error checking off for performance.
     (void) filename;
     (void) lineno;
 #endif // NDEBUG

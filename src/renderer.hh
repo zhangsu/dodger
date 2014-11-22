@@ -7,11 +7,15 @@
 #include "game.hh"
 #include "shader_program.hh"
 
+// The main renderer that renders everything.
 class Renderer {
   public:
+    // Constructs a renderer with the specified framebuffer size.
     Renderer(int width, int height, const Game&);
 
+    // Renders everything.
     void render();
+    // Callback that resizes the viewport as the window resizes.
     void resize(int width, int height);
 
   private:
