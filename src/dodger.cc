@@ -36,9 +36,8 @@ void handleKeyEvent(GLFWwindow* window, Game& game) {
 
 }
 
-int main(void) {
-    glfwSetErrorCallback([](int error, const char* description) {
-        (void) error;
+int main() {
+    glfwSetErrorCallback([](int, const char* description) {
         cerr << "GLFW: " << description << endl;
     });
 
