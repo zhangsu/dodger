@@ -20,8 +20,11 @@ Renderer::Renderer(int width, int height, const Game& game) : game_(game) {
     initGlew();
     resize(width, height);
 
+    // Initialize global OpenGL properties.
     glEnable(GL_MULTISAMPLE);
+    checkGlError();
     glEnable(GL_BLEND);
+    checkGlError();
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     checkGlError();
 
