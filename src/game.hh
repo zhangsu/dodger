@@ -8,11 +8,11 @@ class Game {
     Game();
     void move(float x, float y, float z);
     void move(glm::vec3 translation);
-    glm::vec3 pos() const;
-    glm::vec3 eye_pos() const;
-    glm::vec3 reference_pos() const;
+    glm::mat4 view() const;
 
   private:
+    glm::vec3 reference_pos() const;
+
     glm::vec3 pos_;
     glm::vec3 eye_pos_;
     glm::vec3 eye_dir_;

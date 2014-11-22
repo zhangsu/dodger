@@ -46,22 +46,15 @@ Renderer::Renderer(int width, int height, const Game& game) : game_(game) {
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
     checkGlError();
 
-    program_.loadVertexShader("src/shader.vert");
-    program_.loadFragmentShader("src/shader.frag");
-    program_.link();
-    program_.use();
-
     program_.enableVertexAttribArray("vert");
     program_.vertexAttribPointer("vert", 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
 }
 
-void Renderer::render() {
+void Renderer::render() const {
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    view_ = glm::lookAt(game_.pos(), game_.reference_pos(), vec3(0, 1, 0));
-    program_.uniformMat4("mvp", glm::value_ptr(mvp()));
+    program_.uniformMat4("mvp", glm::value_ptr(perspective_ * game_.view()));
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
@@ -88,8 +81,4 @@ void Renderer::initGlew() const {
         string message = "GLEW: ";
         throw runtime_error(message + (const char*) glewGetErrorString(err));
     }
-}
-
-mat4 Renderer::mvp() const {
-    return perspective_ * view_ * model_;
 }

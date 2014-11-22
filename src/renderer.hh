@@ -14,13 +14,12 @@ class Renderer {
     Renderer(int width, int height, const Game&);
 
     // Renders everything.
-    void render();
+    void render() const;
     // Callback that resizes the viewport as the window resizes.
     void resize(int width, int height);
 
   private:
     void initGlew() const;
-    glm::mat4 mvp() const;
 
     const Game& game_;
 
@@ -28,7 +27,8 @@ class Renderer {
     GLuint vbo_;
     ShaderProgram program_;
 
-    glm::mat4 perspective_, view_, model_;
+
+    glm::mat4 perspective_;
 };
 
 #endif // DODGER_RENDERER_H_
