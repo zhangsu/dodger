@@ -15,11 +15,17 @@ using std::vector;
 
 // Public methods.
 
-void ShaderProgram::loadVertexShader(const char* filename) {
+ShaderProgram::ShaderProgram(string vert_filename, string frag_filename) {
+    loadVertexShader(vert_filename);
+    loadFragmentShader(frag_filename);
+    link();
+}
+
+void ShaderProgram::loadVertexShader(string filename) {
     vertex_shader_ = loadShader(GL_VERTEX_SHADER, filename);
 }
 
-void ShaderProgram::loadFragmentShader(const char* filename) {
+void ShaderProgram::loadFragmentShader(string filename) {
     fragment_shader_ = loadShader(GL_FRAGMENT_SHADER, filename);
 }
 
@@ -64,18 +70,18 @@ void ShaderProgram::use() const {
     checkGlError();
 }
 
-void ShaderProgram::uniformMat4(const char* name, const GLfloat* value) const {
+void ShaderProgram::uniformMat4(string name, const GLfloat* value) const {
     glUniformMatrix4fv(uniformLocation(name), 1, GL_FALSE, value);
     checkGlError();
 }
 
-void ShaderProgram::enableVertexAttribArray(const char* name) const {
+void ShaderProgram::enableVertexAttribArray(string name) const {
     glEnableVertexAttribArray(attribLocation(name));
     checkGlError();
 }
 
 void ShaderProgram::vertexAttribPointer(
-    const char* name,
+    string name,
     GLint size,
     GLenum type,
     GLboolean normalized,
@@ -86,10 +92,10 @@ void ShaderProgram::vertexAttribPointer(
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
 }
 
-GLuint ShaderProgram::uniformLocation(const char* name) const {
+GLuint ShaderProgram::uniformLocation(string name) const {
     auto uniform = uniforms_.find(name);
     if (uniform == uniforms_.end()) {
-        GLint location = glGetUniformLocation(program_, name);
+        GLint location = glGetUniformLocation(program_, name.c_str());
         checkGlError();
         uniforms_[name] = location;
         return location;
@@ -97,10 +103,10 @@ GLuint ShaderProgram::uniformLocation(const char* name) const {
     return uniform->second;
 }
 
-GLuint ShaderProgram::attribLocation(const char* name) const {
+GLuint ShaderProgram::attribLocation(string name) const {
     auto attribute = attributes_.find(name);
     if (attribute == attributes_.end()) {
-        GLint location = glGetAttribLocation(program_, name);
+        GLint location = glGetAttribLocation(program_, name.c_str());
         checkGlError();
         attributes_[name] = location;
         return location;
@@ -110,8 +116,7 @@ GLuint ShaderProgram::attribLocation(const char* name) const {
 
 // Private methods.
 
-GLuint ShaderProgram::loadShader(GLenum shader_type, const char* filename)
-    const {
+GLuint ShaderProgram::loadShader(GLenum shader_type, string filename) const {
     GLuint shader = glCreateShader(shader_type);
     checkGlError();
 
