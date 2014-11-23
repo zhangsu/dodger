@@ -1,14 +1,16 @@
-CC                = g++
-LINKER            = g++
-FLAGS             = -Wall -Wextra
-CFLAGS            = $(FLAGS) -std=c++0x -c -Iinclude
-LFLAGS            = $(FLAGS) -Llib -lGLEW -lglfw -lGL -Wl,-rpath,lib
-SRCDIR            = src/
-BINDIR            = bin/
-OUTPUTS           = $(DODGEROUTPUT)
-DODGEROUTPUT      = $(BINDIR)dodger
-DODGEROBJECTS     = $(addprefix $(SRCDIR), dodger.o game.o glerror.o renderer.o\
-                                           shader_program.o)
+CC            = g++
+LINKER        = g++
+FLAGS         = -Wall -Wextra
+CFLAGS        = $(FLAGS) -std=c++0x -c -Iinclude -DGLM_FORCE_RADIANS
+LFLAGS        = $(FLAGS) -Llib -lpng -lGLEW -lglfw -lGL -Wl,-rpath,lib
+SRCDIR        = src/
+BINDIR        = bin/
+OUTPUTS       = $(DODGEROUTPUT)
+DODGEROUTPUT  = $(BINDIR)dodger
+DODGEROBJECTS = $(addprefix $(SRCDIR),\
+                  dodger.o game.o glerror.o image.o opengl_renderer.o\
+                  opengl_terrain_renderer.o renderer.o scene_node.o\
+                  shader_program.o terrain.o)
 
 ifeq ($(DEBUG),1)
   FLAGS += -g

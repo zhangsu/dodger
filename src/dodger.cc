@@ -3,7 +3,7 @@
 // GLFW documentation asks to include GLEW headers before GLFW.
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "renderer.hh"
+#include "opengl_renderer.hh"
 
 using std::cout;
 using std::cerr;
@@ -71,7 +71,7 @@ int main() {
     glfwGetFramebufferSize(window, &width, &height);
     try {
         Game game;
-        Renderer renderer(width, height, game);
+        OpenGLRenderer renderer(width, height, game);
         prenderer = &renderer;
 
         glfwSetWindowSizeCallback(

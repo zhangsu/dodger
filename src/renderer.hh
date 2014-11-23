@@ -1,34 +1,27 @@
 #ifndef DODGER_RENDERER_H_
 #define DODGER_RENDERER_H_
 
-#define GLM_FORCE_RADIANS
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include "game.hh"
-#include "shader_program.hh"
+#include "terrain.hh"
 
-// The main renderer that renders everything.
+// An interface for renderers.
 class Renderer {
   public:
-    // Constructs a renderer with the specified framebuffer size.
-    Renderer(int width, int height, const Game&);
+    // Constructs a renderer with the specified game.
+    Renderer(const Game&);
 
+    // Clears everything.
+    virtual void clear() const = 0;
     // Renders everything.
-    void render() const;
+    virtual void render() const;
+    // Renders a terrain node.
+    virtual void render(const Terrain&, glm::mat4 transformations) const = 0;
     // Callback that resizes the viewport as the window resizes.
-    void resize(int width, int height);
+    virtual void resize(int width, int height) = 0;
 
-  private:
-    void initGlew() const;
-
+  protected:
     const Game& game_;
-
-    GLuint vao_;
-    GLuint vbo_;
-    ShaderProgram program_;
-
-
-    glm::mat4 perspective_;
 };
 
 #endif // DODGER_RENDERER_H_
