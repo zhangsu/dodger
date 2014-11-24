@@ -15,6 +15,7 @@ Game::Game()
 
     scene_root_->addChild(new Terrain("data/images/heightmap.png"));
     scene_root_->addChild(player_);
+    player_->translate(vec3(0, 0, 5));
     player_->addChild(new Spirit());
     player_->addChild(camera_);
     camera_->translate(vec3(0, 0, 10));
@@ -26,6 +27,10 @@ void Game::move(float x, float y, float z) {
 
 void Game::move(vec3 translation) {
     player_->translate(translation);
+}
+
+void Game::turn(float angle) {
+    player_->rotate(angle, vec3(0, 1, 0));
 }
 
 glm::mat4 Game::viewTrans() const {
