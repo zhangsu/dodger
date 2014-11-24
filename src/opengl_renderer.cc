@@ -21,6 +21,10 @@ OpenGLRenderer::OpenGLRenderer(int width, int height, const Game& game)
         checkGlError(),
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA),
         checkGlError(),
+        glEnable(GL_CULL_FACE),
+        checkGlError(),
+        glEnable(GL_DEPTH_TEST),
+        checkGlError(),
 
         game)),
       program_("src/shader.vert", "src/shader.frag"),
