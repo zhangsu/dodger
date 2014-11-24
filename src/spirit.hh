@@ -11,8 +11,7 @@ class Spirit : public SceneNode {
     explicit Spirit();
 
     // Render this spirit and its descendents.
-    virtual void render(const Renderer&,
-                        glm::mat4 transformation = glm::mat4()) const;
+    virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;
 
   private:
 };

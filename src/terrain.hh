@@ -18,8 +18,7 @@ class Terrain : public SceneNode {
                      float xyscale = 1);
 
     // Render this terrain and its descendents.
-    virtual void render(const Renderer&,
-                        glm::mat4 transformation = glm::mat4()) const;
+    virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Gets the number of vertices in the x direction.
     int width() const;
     // Gets the number of vertices in the y direction.

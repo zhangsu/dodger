@@ -25,11 +25,10 @@ Terrain::Terrain(string heightmap_filename, float modifier, float xyscale)
     }
 }
 
-void Terrain::render(const Renderer& renderer, mat4 transformation) const {
-    mat4 stack = transformation * transformation_;
+void Terrain::render(const Renderer& renderer, mat4 trans) const {
+    mat4 stack = trans * transformation();
     renderer.render(*this, stack);
-    for (auto child : children_)
-        child->render(renderer, stack);
+    renderChildren(renderer, stack);
 }
 
 int Terrain::width() const {

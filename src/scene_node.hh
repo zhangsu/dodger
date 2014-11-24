@@ -14,8 +14,7 @@ public:
     SceneNode();
 
     // Render this scene node and its descendents.
-    virtual void render(const Renderer&,
-                        glm::mat4 transformations = glm::mat4()) const;
+    virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Add a child node to this node.
     virtual void addChild(SceneNode* child);
     // Removes a child node from this node.
@@ -24,6 +23,8 @@ public:
     void set_parent(SceneNode* parent);
     // Gets the parent of this node.
     SceneNode* parent() const;
+    // Gets the transformation matrix of this node.
+    glm::mat4 transformation() const;
     // Gets the cumulative transformation matrix from root to this node.
     glm::mat4 cumulativeTransformation() const;
 
@@ -35,6 +36,9 @@ public:
     void translate(const glm::vec3& amount);
 
 protected:
+    // Renders the children with the specified cumulative matrix stack.
+    void renderChildren(const Renderer& renderer, glm::mat4 stack) const;
+
     glm::mat4 transformation_;
 
     std::list<SceneNode*> children_;

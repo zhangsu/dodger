@@ -39,8 +39,7 @@ void OpenGLRenderer::clear() const {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void OpenGLRenderer::render(const Terrain& terrain,
-                            mat4 model_trans) const {
+void OpenGLRenderer::render(const Terrain& terrain, mat4 model_trans) const {
     terrain_renderer_.render(
         terrain, proj_trans_ * game_.viewTrans() * model_trans);
 }

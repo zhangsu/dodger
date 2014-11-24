@@ -8,9 +8,8 @@ using glm::mat4;
 
 Spirit::Spirit() {}
 
-void Spirit::render(const Renderer& renderer, mat4 transformation) const {
-    mat4 stack = transformation * transformation_;
+void Spirit::render(const Renderer& renderer, mat4 trans) const {
+    mat4 stack = trans * transformation();
     renderer.render(*this, stack);
-    for (auto child : children_)
-        child->render(renderer, stack);
+    renderChildren(renderer, stack);
 }

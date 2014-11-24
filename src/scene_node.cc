@@ -5,6 +5,8 @@
 using glm::mat4;
 using glm::vec3;
 
+// Public methods.
+
 SceneNode::SceneNode() : parent_(nullptr) {}
 
 void SceneNode::addChild(SceneNode* child) {
@@ -24,22 +26,24 @@ SceneNode* SceneNode::parent() const {
     return parent_;
 }
 
-mat4 SceneNode::cumulativeTransformation() const {
-    mat4 transformation = transformation_;
-    const SceneNode* node = this;
-    while ((node = node->parent()) != nullptr)
-        transformation = node->transformation_ * transformation;
-    return transformation;
+mat4 SceneNode::transformation() const {
+    return transformation_;
 }
 
-void SceneNode::render(const Renderer& renderer, mat4 transformations) const {
-    mat4 stack = transformations * transformation_;
-    for (auto child : children_)
-        child->render(renderer, stack);
+mat4 SceneNode::cumulativeTransformation() const {
+    mat4 trans = transformation();
+    const SceneNode* node = this;
+    while ((node = node->parent()) != nullptr)
+        trans = node->transformation() * trans;
+    return trans;
+}
+
+void SceneNode::render(const Renderer& renderer, mat4 trans) const {
+    renderChildren(renderer, trans * transformation());
 }
 
 void SceneNode::rotate(float angle, const vec3& axis) {
-    transformation_ = glm::rotate(transformation_, angle,  axis);
+    transformation_ = glm::rotate(transformation_, angle, axis);
 }
 
 void SceneNode::scale(const vec3& amount) {
@@ -48,4 +52,11 @@ void SceneNode::scale(const vec3& amount) {
 
 void SceneNode::translate(const vec3& amount) {
     transformation_ = glm::translate(transformation_, amount);
+}
+
+// Protected methods.
+
+void SceneNode::renderChildren(const Renderer& renderer, mat4 stack) const {
+    for (auto child : children_)
+        child->render(renderer, stack);
 }
