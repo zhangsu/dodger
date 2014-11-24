@@ -24,6 +24,14 @@ SceneNode* SceneNode::parent() const {
     return parent_;
 }
 
+mat4 SceneNode::cumulativeTransformation() const {
+    mat4 transformation = transformation_;
+    const SceneNode* node = this;
+    while ((node = node->parent()) != nullptr)
+        transformation = node->transformation_ * transformation;
+    return transformation;
+}
+
 void SceneNode::render(const Renderer& renderer, mat4 transformations) const {
     mat4 stack = transformations * transformation_;
     for (auto child : children_)

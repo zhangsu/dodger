@@ -24,6 +24,8 @@ public:
     void set_parent(SceneNode* parent);
     // Gets the parent of this node.
     SceneNode* parent() const;
+    // Gets the cumulative transformation matrix from root to this node.
+    glm::mat4 cumulativeTransformation() const;
 
     // Rotate this scene node by `angle` alone `axis`.
     void rotate(float angle, const glm::vec3& axis);

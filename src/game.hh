@@ -14,12 +14,7 @@ class Game {
     SceneNode* scene_root() const;
 
   private:
-    glm::vec3 reference_pos() const;
-
-    glm::vec3 pos_;
-    glm::vec3 eye_pos_;
-    glm::vec3 eye_dir_;
-
+    SceneNode* const camera_;
     SceneNode* const player_;
     SceneNode* const scene_root_;
 };
