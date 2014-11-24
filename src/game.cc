@@ -1,6 +1,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "game.hh"
+#include "spirit.hh"
 #include "terrain.hh"
 
 using glm::vec3;
@@ -11,7 +12,11 @@ Game::Game()
     : pos_(vec3(0, 0, 8)),
       eye_pos_(vec3(0, 0, 10)),
       eye_dir_(vec3(0.0f, 0.0f, -1.0f)),
-      scene_root_(new Terrain("data/images/heightmap.png")) {}
+      player_(new Spirit()),
+      scene_root_(new SceneNode()) {
+    scene_root_->addChild(new Terrain("data/images/heightmap.png"));
+    scene_root_->addChild(player_);
+}
 
 void Game::move(float x, float y, float z) {
     move(vec3(x, y, z));
@@ -20,6 +25,7 @@ void Game::move(float x, float y, float z) {
 void Game::move(vec3 translation) {
     pos_ += translation;
     eye_pos_ += translation;
+    player_->translate(translation);
 }
 
 glm::mat4 Game::view() const {

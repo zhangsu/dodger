@@ -25,8 +25,7 @@ Terrain::Terrain(string heightmap_filename, float modifier, float xyscale)
     }
 }
 
-void Terrain::render(const Renderer& renderer,
-                     glm::mat4 transformations) const {
+void Terrain::render(const Renderer& renderer, mat4 transformations) const {
     mat4 stack = transformations * transformations_;
     renderer.render(*this, stack);
     for (auto child : children_)

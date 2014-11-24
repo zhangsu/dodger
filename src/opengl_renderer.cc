@@ -24,7 +24,8 @@ OpenGLRenderer::OpenGLRenderer(int width, int height, const Game& game)
 
         game)),
       program_("src/shader.vert", "src/shader.frag"),
-      terrain_renderer_(game_, program_) {
+      terrain_renderer_(game_, program_),
+      spirit_renderer_(game_, program_) {
 
     resize(width, height);
 }
@@ -38,6 +39,11 @@ void OpenGLRenderer::render(const Terrain& terrain,
                             mat4 transformations) const {
     terrain_renderer_.render(
         terrain, projection_ * game_.view() * transformations);
+}
+
+void OpenGLRenderer::render(const Spirit& spirit, mat4 transformations) const {
+    spirit_renderer_.render(
+        spirit, projection_ * game_.view() * transformations);
 }
 
 void OpenGLRenderer::resize(int width, int height) {

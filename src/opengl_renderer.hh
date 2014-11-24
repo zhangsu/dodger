@@ -6,6 +6,7 @@
 #include "game.hh"
 #include "renderer.hh"
 #include "shader_program.hh"
+#include "opengl_spirit_renderer.hh"
 #include "opengl_terrain_renderer.hh"
 
 // The main OpenGL renderer that renders everything.
@@ -19,6 +20,8 @@ class OpenGLRenderer : public Renderer {
     using Renderer::render;
     // Renders a terrain node with the specified model transformations.
     virtual void render(const Terrain&, glm::mat4 transformations) const;
+    // Renders a spirit node with the specified model transformations.
+    virtual void render(const Spirit&, glm::mat4 transformations) const;
     // Callback that resizes the viewport as the window resizes.
     void resize(int width, int height);
 
@@ -28,6 +31,7 @@ class OpenGLRenderer : public Renderer {
 
     const ShaderProgram program_;
     const OpenGLTerrainRenderer terrain_renderer_;
+    const OpenGLSpiritRenderer spirit_renderer_;
 
     glm::mat4 projection_;
 };

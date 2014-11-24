@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 #include "game.hh"
+#include "spirit.hh"
 #include "terrain.hh"
 
 // An interface for renderers.
@@ -15,8 +16,10 @@ class Renderer {
     virtual void clear() const = 0;
     // Renders everything.
     virtual void render() const;
-    // Renders a terrain node.
+    // Renders a terrain node with the specified model transformations.
     virtual void render(const Terrain&, glm::mat4 transformations) const = 0;
+    // Renders a spirit node with the specified model transformations.
+    virtual void render(const Spirit&, glm::mat4 transformations) const = 0;
     // Callback that resizes the viewport as the window resizes.
     virtual void resize(int width, int height) = 0;
 

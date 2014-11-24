@@ -20,7 +20,8 @@ class Game {
     glm::vec3 eye_pos_;
     glm::vec3 eye_dir_;
 
-    SceneNode* scene_root_;
+    SceneNode* const player_;
+    SceneNode* const scene_root_;
 };
 
 #endif // DODGER_GAME_H_
