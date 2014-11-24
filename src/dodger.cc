@@ -34,9 +34,9 @@ void handleKeyEvent(GLFWwindow* window, Game& game) {
         game.move(0.1, 0, 0);
 
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        game.turn(0.1);
+        game.turn(0.025);
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        game.turn(-0.1);
+        game.turn(-0.025);
 
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
         game.move(0, lctrl ? -0.1 : 0.1, 0);
