@@ -36,14 +36,14 @@ void OpenGLRenderer::clear() const {
 }
 
 void OpenGLRenderer::render(const Terrain& terrain,
-                            mat4 transformations) const {
+                            mat4 model_trans) const {
     terrain_renderer_.render(
-        terrain, projection_ * game_.view() * transformations);
+        terrain, proj_trans_ * game_.viewTrans() * model_trans);
 }
 
-void OpenGLRenderer::render(const Spirit& spirit, mat4 transformations) const {
+void OpenGLRenderer::render(const Spirit& spirit, mat4 model_trans) const {
     spirit_renderer_.render(
-        spirit, projection_ * game_.view() * transformations);
+        spirit, proj_trans_ * game_.viewTrans() * model_trans);
 }
 
 void OpenGLRenderer::resize(int width, int height) {
@@ -52,7 +52,7 @@ void OpenGLRenderer::resize(int width, int height) {
 
     float fov = glm::radians(60.0f);
     float aspect_ratio = (float) width / height;
-    projection_ = glm::perspective(fov, aspect_ratio, 0.001f, 100.0f);
+    proj_trans_ = glm::perspective(fov, aspect_ratio, 0.001f, 100.0f);
 
     glViewport(0, 0, width, height);
     checkGlError();

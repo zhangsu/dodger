@@ -9,7 +9,7 @@ class Game {
     Game();
     void move(float x, float y, float z);
     void move(glm::vec3 translation);
-    glm::mat4 view() const;
+    glm::mat4 viewTrans() const;
     // Gets the root node of the scene.
     SceneNode* scene_root() const;
 

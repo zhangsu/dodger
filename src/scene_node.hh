@@ -33,7 +33,7 @@ public:
     void translate(const glm::vec3& amount);
 
 protected:
-    glm::mat4 transformations_;
+    glm::mat4 transformation_;
 
     std::list<SceneNode*> children_;
     SceneNode* parent_;

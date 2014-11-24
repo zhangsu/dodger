@@ -25,19 +25,19 @@ SceneNode* SceneNode::parent() const {
 }
 
 void SceneNode::render(const Renderer& renderer, mat4 transformations) const {
-    mat4 stack = transformations * transformations_;
+    mat4 stack = transformations * transformation_;
     for (auto child : children_)
         child->render(renderer, stack);
 }
 
 void SceneNode::rotate(float angle, const vec3& axis) {
-    transformations_ = glm::rotate(transformations_, angle,  axis);
+    transformation_ = glm::rotate(transformation_, angle,  axis);
 }
 
 void SceneNode::scale(const vec3& amount) {
-    transformations_ = glm::scale(transformations_, amount);
+    transformation_ = glm::scale(transformation_, amount);
 }
 
 void SceneNode::translate(const vec3& amount) {
-    transformations_ = glm::translate(transformations_, amount);
+    transformation_ = glm::translate(transformation_, amount);
 }

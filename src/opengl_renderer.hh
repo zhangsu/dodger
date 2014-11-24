@@ -18,10 +18,10 @@ class OpenGLRenderer : public Renderer {
     // Clears everything.
     void clear() const;
     using Renderer::render;
-    // Renders a terrain node with the specified model transformations.
-    virtual void render(const Terrain&, glm::mat4 transformations) const;
-    // Renders a spirit node with the specified model transformations.
-    virtual void render(const Spirit&, glm::mat4 transformations) const;
+    // Renders a terrain node with the specified model transformation.
+    virtual void render(const Terrain&, glm::mat4 model_trans) const;
+    // Renders a spirit node with the specified model transformation.
+    virtual void render(const Spirit&, glm::mat4 model_trans) const;
     // Callback that resizes the viewport as the window resizes.
     void resize(int width, int height);
 
@@ -33,7 +33,7 @@ class OpenGLRenderer : public Renderer {
     const OpenGLTerrainRenderer terrain_renderer_;
     const OpenGLSpiritRenderer spirit_renderer_;
 
-    glm::mat4 projection_;
+    glm::mat4 proj_trans_;
 };
 
 #endif // DODGER_OPENGL_RENDERER_H_
