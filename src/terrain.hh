@@ -23,6 +23,8 @@ class Terrain : public SceneNode {
     int width() const;
     // Gets the number of vertices in the y direction.
     int height() const;
+    // Get the specified row of the heightmap.
+    const std::vector<float>& operator [](int index) const;
 
   private:
     const float modifier_;

@@ -4,6 +4,7 @@
 #include "terrain.hh"
 
 using std::string;
+using std::vector;
 using glm::mat4;
 
 // Public methods.
@@ -13,9 +14,13 @@ Terrain::Terrain(string heightmap_filename, float modifier, float xyscale)
       xyscale_(xyscale) {
     Image heightmap;
     heightmap.loadPng(heightmap_filename);
-
     width_ = heightmap.width();
     height_ = heightmap.height();
+    // Only use a even heightmap dimension.
+    if (width_ % 2 == 1)
+        width_--;
+    if (height_ % 2 == 1)
+        height_--;
     heightmap_.resize(width_);
 
     for (int i = 0; i < width_; ++i) {
@@ -37,4 +42,8 @@ int Terrain::width() const {
 
 int Terrain::height() const {
     return height_;
+}
+
+const vector<float>& Terrain::operator [](int index) const {
+    return heightmap_[index];
 }

@@ -55,7 +55,7 @@ void OpenGLRenderer::resize(int width, int height) {
 
     float fov = glm::radians(60.0f);
     float aspect_ratio = (float) width / height;
-    proj_trans_ = glm::perspective(fov, aspect_ratio, 0.001f, 100.0f);
+    proj_trans_ = glm::perspective(fov, aspect_ratio, 0.001f, 1000.0f);
 
     glViewport(0, 0, width, height);
     checkGlError();

@@ -12,10 +12,15 @@ Game::Game()
     : camera_(new SceneNode()),
       player_(new SceneNode()),
       scene_root_(new SceneNode()) {
-
-    scene_root_->addChild(new Terrain("data/images/heightmap.png"));
+    Terrain* terrain = new Terrain("data/images/heightmap.png");
+    scene_root_->addChild(terrain);
     scene_root_->addChild(player_);
-    player_->translate(vec3(0, 0, 5));
+    terrain->scale(vec3(0.5, 20, 0.5));
+    // Center the terrain in world space.
+    terrain->translate(vec3(-terrain->width() / 2.0, 0,
+                            -terrain->height() / 2.0));
+
+    player_->translate(vec3(0, 5, 0));
     player_->addChild(new Spirit());
     player_->addChild(camera_);
     camera_->translate(vec3(0, 0, 10));

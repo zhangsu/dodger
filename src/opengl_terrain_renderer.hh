@@ -17,10 +17,15 @@ class OpenGLTerrainRenderer {
     void render(const Terrain&, const glm::mat4& transformations) const;
 
   private:
+    size_t init(const Terrain&) const;
+
     const Game& game_;
     const ShaderProgram& program_;
 
-    GLuint vao_;
+    // These are lazily-initialized by render.
+    mutable GLuint vao_;
+    mutable bool initialized;
+    mutable size_t vertex_count_;
 };
 
 #endif // OPENGL_DODGER_TERRAIN_RENDERER_H_
