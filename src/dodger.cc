@@ -18,8 +18,8 @@ namespace {
 // anything can be used as function pointers.
 Renderer* prenderer;
 
-// Handles all the keyboard input.
-void handleKeyEvent(GLFWwindow* window, Game& game) {
+// Handles all the keyboard input state for each frame.
+void handleKeyState(GLFWwindow* window, Game& game) {
     bool lctrl = glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS;
 
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS
@@ -40,6 +40,18 @@ void handleKeyEvent(GLFWwindow* window, Game& game) {
 
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
         game.move(0, lctrl ? -0.1 : 0.1, 0);
+}
+
+// Handles all the keyboard input event independent of frames.
+void handleKeyEvent(GLFWwindow*, int key, int, int action, int) {
+    if (action != GLFW_PRESS)
+        return;
+
+    switch (key) {
+    case GLFW_KEY_1:
+        prenderer->toggleWireframe();
+        break;
+    }
 }
 
 }
@@ -89,6 +101,7 @@ int main() {
                 prenderer->resize(width, height);
             }
         );
+        glfwSetKeyCallback(window, handleKeyEvent);
 
         // Force vertical sync.
         glfwSwapInterval(1);
@@ -101,7 +114,7 @@ int main() {
             renderer.render();
             glfwSwapBuffers(window);
             glfwPollEvents();
-            handleKeyEvent(window, game);
+            handleKeyState(window, game);
 
 #ifndef NDEBUG
             // Output FPS count to standard output.

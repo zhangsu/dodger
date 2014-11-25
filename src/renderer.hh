@@ -22,9 +22,14 @@ class Renderer {
     virtual void render(const Spirit&, glm::mat4 transformations) const = 0;
     // Callback that resizes the viewport as the window resizes.
     virtual void resize(int width, int height) = 0;
+    // Toggles wireframe mode. The default is off.
+    virtual void toggleWireframe();
+
 
   protected:
     const Game& game_;
+
+    bool draw_wireframe_;
 };
 
 #endif // DODGER_RENDERER_H_

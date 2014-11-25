@@ -61,6 +61,16 @@ void OpenGLRenderer::resize(int width, int height) {
     checkGlError();
 }
 
+void OpenGLRenderer::toggleWireframe() {
+    Renderer::toggleWireframe();
+    if (draw_wireframe_)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    else
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    checkGlError();
+}
+
+
 // Private methods.
 
 void OpenGLRenderer::initGlew() const {
