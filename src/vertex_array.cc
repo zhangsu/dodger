@@ -14,8 +14,8 @@ void VertexArray::bind() const {
     checkGlError();
 }
 
-void VertexArray::addBuffer(vector<GLfloat> data, string attr,
-                            size_t tuple_len) const {
+void VertexArray::addAttribute(vector<GLfloat> data, string attr,
+                               size_t tuple_len) const {
     bind();
 
     GLuint buf;
@@ -27,8 +27,9 @@ void VertexArray::addBuffer(vector<GLfloat> data, string attr,
                  &data[0], GL_STATIC_DRAW);
     checkGlError();
 
-    program_.use();
-    program_.enableVertexAttribArray(attr);
-    program_.vertexAttribPointer(attr, tuple_len, GL_FLOAT, GL_FALSE, 0,
-                                 nullptr);
+    GLuint index = program_.attribLocation(attr);
+    glEnableVertexAttribArray(index);
+    checkGlError();
+    glVertexAttribPointer(index, tuple_len, GL_FLOAT, GL_FALSE, 0, 0);
+    checkGlError();
 }

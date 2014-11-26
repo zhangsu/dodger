@@ -16,8 +16,8 @@ class VertexArray {
     // Adds a buffer to this vertex array with content from `data` that have a
     // tuple size of `tuple_len` and associates it with the specified vertex
     // attribute of the shader.
-    void addBuffer(std::vector<GLfloat> data, std::string attr,
-                   size_t tuple_len) const;
+    void addAttribute(std::vector<GLfloat> data, std::string attr,
+                      size_t tuple_len) const;
 
   private:
     GLuint id_;

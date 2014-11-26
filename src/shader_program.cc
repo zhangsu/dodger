@@ -79,24 +79,6 @@ void ShaderProgram::uniformMat4(string name, const GLfloat* value) const {
     checkGlError();
 }
 
-void ShaderProgram::enableVertexAttribArray(string name) const {
-    glEnableVertexAttribArray(attribLocation(name));
-    checkGlError();
-}
-
-void ShaderProgram::vertexAttribPointer(
-    string name,
-    GLint size,
-    GLenum type,
-    GLboolean normalized,
-    GLsizei stride,
-    const GLvoid* pointer
-) const {
-    GLuint index = attribLocation(name);
-    glVertexAttribPointer(index, size, type, normalized, stride, pointer);
-    checkGlError();
-}
-
 GLuint ShaderProgram::uniformLocation(string name) const {
     auto uniform = uniforms_.find(name);
     if (uniform == uniforms_.end()) {

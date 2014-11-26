@@ -84,8 +84,8 @@ void TerrainRenderer::genVertices(const Terrain& terrain) const {
         }
     }
 
-    vertex_array_.addBuffer(positions, "position", 3);
-    vertex_array_.addBuffer(normals, "normal", 3);
+    vertex_array_.addAttribute(positions, "position", 3);
+    vertex_array_.addAttribute(normals, "normal", 3);
     vertex_count_ = positions.size() / 3;
 }
 

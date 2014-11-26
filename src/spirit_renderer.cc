@@ -22,7 +22,7 @@ SpiritRenderer::SpiritRenderer(
         positions[i*3 + 2] = 0.0;
     }
 
-    vertex_array_.addBuffer(positions, "position", 3);
+    vertex_array_.addAttribute(positions, "position", 3);
 }
 
 void SpiritRenderer::render(const Spirit&, const mat4& mvp) const {

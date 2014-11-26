@@ -23,15 +23,6 @@ class ShaderProgram {
     void uniform1i(std::string name, GLint value) const;
     // Sets the specified mat4 type uniform value.
     void uniformMat4(std::string name, const GLfloat* value) const;
-    // Enable the specified vertex attribute array.
-    void enableVertexAttribArray(std::string name) const;
-    // Sets the vertex attributes.
-    void vertexAttribPointer(std::string name,
-                             GLint size,
-                             GLenum type,
-                             GLboolean normalized,
-                             GLsizei stride,
-                             const GLvoid* pointer) const;
     // Gets the location of the specified uniform value.
     GLuint uniformLocation(std::string name) const;
     // Gets the location of the specified attribute.
