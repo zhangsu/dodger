@@ -21,6 +21,8 @@ class TerrainRenderer {
   private:
     // Generates positions from a terrain and return the position count.
     void genVertices(const Terrain&) const;
+    void addPosition(const Terrain&, std::vector<GLfloat>& positions,
+                     int i, int j) const;
 
     const Game& game_;
     const ShaderProgram& program_;
