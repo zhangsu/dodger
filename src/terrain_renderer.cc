@@ -2,21 +2,21 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "image.hh"
 #include "glerror.hh"
-#include "opengl_terrain_renderer.hh"
+#include "terrain_renderer.hh"
 
 using std::vector;
 using glm::mat4;
 
 // Public methods.
 
-OpenGLTerrainRenderer::OpenGLTerrainRenderer(
+TerrainRenderer::TerrainRenderer(
     const Game& game,
     const ShaderProgram& program
 ) : game_(game),
     program_(program),
     initialized(false) {}
 
-void OpenGLTerrainRenderer::render(const Terrain& terrain,
+void TerrainRenderer::render(const Terrain& terrain,
                                    const mat4& mvp) const {
     program_.use();
 
@@ -41,7 +41,7 @@ void OpenGLTerrainRenderer::render(const Terrain& terrain,
 
 // Private methods.
 
-void OpenGLTerrainRenderer::initVertices(const Terrain& terrain) const {
+void TerrainRenderer::initVertices(const Terrain& terrain) const {
     vector<GLfloat> positions;
 
     // Triangle strip positions from top to bottom.
@@ -123,7 +123,7 @@ void OpenGLTerrainRenderer::initVertices(const Terrain& terrain) const {
     vertex_count_ = positions.size() / 3;
 }
 
-void OpenGLTerrainRenderer::initTexture() const {
+void TerrainRenderer::initTexture() const {
     glGenTextures(1, &texture_);
     checkGlError();
     glBindTexture(GL_TEXTURE_2D, texture_);

@@ -6,8 +6,8 @@
 #include "game.hh"
 #include "renderer.hh"
 #include "shader_program.hh"
-#include "opengl_spirit_renderer.hh"
-#include "opengl_terrain_renderer.hh"
+#include "spirit_renderer.hh"
+#include "terrain_renderer.hh"
 
 // The main OpenGL renderer that renders everything.
 class OpenGLRenderer : public Renderer {
@@ -32,8 +32,8 @@ class OpenGLRenderer : public Renderer {
     void initGlew() const;
 
     const ShaderProgram program_;
-    const OpenGLTerrainRenderer terrain_renderer_;
-    const OpenGLSpiritRenderer spirit_renderer_;
+    const TerrainRenderer terrain_renderer_;
+    const SpiritRenderer spirit_renderer_;
 
     glm::mat4 proj_trans_;
 };

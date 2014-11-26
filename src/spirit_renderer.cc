@@ -1,10 +1,10 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "glerror.hh"
-#include "opengl_spirit_renderer.hh"
+#include "spirit_renderer.hh"
 
 using glm::mat4;
 
-OpenGLSpiritRenderer::OpenGLSpiritRenderer(
+SpiritRenderer::SpiritRenderer(
     const Game& game,
     const ShaderProgram& program
 ) : game_(game),
@@ -38,7 +38,7 @@ OpenGLSpiritRenderer::OpenGLSpiritRenderer(
     program_.vertexAttribPointer("position", 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 }
 
-void OpenGLSpiritRenderer::render(const Spirit&, const mat4& mvp) const {
+void SpiritRenderer::render(const Spirit&, const mat4& mvp) const {
     program_.use();
     glBindVertexArray(vert_arr_);
     checkGlError();

@@ -8,10 +8,10 @@
 #include "terrain.hh"
 
 // The renderer for terrains.
-class OpenGLTerrainRenderer {
+class TerrainRenderer {
   public:
     // Constructs a terrain renderer with the specified shader program.
-    OpenGLTerrainRenderer(const Game&, const ShaderProgram&);
+    TerrainRenderer(const Game&, const ShaderProgram&);
 
     // Renders this terrain with the specified MVP transformations.
     void render(const Terrain&, const glm::mat4& transformations) const;

@@ -8,10 +8,10 @@
 #include "spirit.hh"
 
 // The renderer for spirits.
-class OpenGLSpiritRenderer {
+class SpiritRenderer {
   public:
     // Constructs a spirit renderer with the specified shader program.
-    OpenGLSpiritRenderer(const Game&, const ShaderProgram&);
+    SpiritRenderer(const Game&, const ShaderProgram&);
 
     // Renders a spirit with the specified MVP transformations.
     void render(const Spirit&, const glm::mat4& transformations) const;
