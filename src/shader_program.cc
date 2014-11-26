@@ -71,6 +71,11 @@ void ShaderProgram::use() const {
     checkGlError();
 }
 
+void ShaderProgram::uniform1i(string name, GLint value) const {
+    glUniform1i(uniformLocation(name), value);
+    checkGlError();
+}
+
 void ShaderProgram::uniformMat4(string name, const GLfloat* value) const {
     glUniformMatrix4fv(uniformLocation(name), 1, GL_FALSE, value);
     checkGlError();

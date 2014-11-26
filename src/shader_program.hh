@@ -19,6 +19,8 @@ class ShaderProgram {
     void link();
     // Uses the current program.
     void use() const;
+    // Sets the specified int type uniform value.
+    void uniform1i(std::string name, GLint value) const;
     // Sets the specified mat4 type uniform value.
     void uniformMat4(std::string name, const GLfloat* value) const;
     // Enable the specified vertex attribute array.

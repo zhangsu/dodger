@@ -17,13 +17,16 @@ class OpenGLTerrainRenderer {
     void render(const Terrain&, const glm::mat4& transformations) const;
 
   private:
-    size_t init(const Terrain&) const;
+    // Generates positions from a terrain and return the position count.
+    void initVertices(const Terrain&) const;
+    void initTexture() const;
 
     const Game& game_;
     const ShaderProgram& program_;
 
     // These are lazily-initialized by render.
     mutable GLuint vert_arr_;
+    mutable GLuint texture_;
     mutable bool initialized;
     mutable size_t vertex_count_;
 };

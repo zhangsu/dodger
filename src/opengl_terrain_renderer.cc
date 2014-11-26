@@ -1,5 +1,6 @@
 #include <vector>
 #include <glm/gtc/type_ptr.hpp>
+#include "image.hh"
 #include "glerror.hh"
 #include "opengl_terrain_renderer.hh"
 
@@ -17,23 +18,30 @@ OpenGLTerrainRenderer::OpenGLTerrainRenderer(
 
 void OpenGLTerrainRenderer::render(const Terrain& terrain,
                                    const mat4& mvp) const {
+    program_.use();
+
     if (!initialized) {
-        vertex_count_ = init(terrain);
+        initVertices(terrain);
+        initTexture();
         initialized = true;
     }
 
-    program_.use();
     glBindVertexArray(vert_arr_);
+    checkGlError();
+    glActiveTexture(GL_TEXTURE0);
+    checkGlError();
+    glBindTexture(GL_TEXTURE_2D, texture_);
     checkGlError();
 
     program_.uniformMat4("mvp", glm::value_ptr(mvp));
+    program_.uniform1i("sampler", 0);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_count_);
     checkGlError();
 }
 
 // Private methods.
 
-size_t OpenGLTerrainRenderer::init(const Terrain& terrain) const {
+void OpenGLTerrainRenderer::initVertices(const Terrain& terrain) const {
     vector<GLfloat> positions;
 
     // Triangle strip positions from top to bottom.
@@ -95,7 +103,6 @@ size_t OpenGLTerrainRenderer::init(const Terrain& terrain) const {
         }
     }
 
-    program_.use();
     glGenVertexArrays(1, &vert_arr_);
     checkGlError();
     glBindVertexArray(vert_arr_);
@@ -113,5 +120,35 @@ size_t OpenGLTerrainRenderer::init(const Terrain& terrain) const {
     program_.enableVertexAttribArray("position");
     program_.vertexAttribPointer("position", 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-    return positions.size() / 3;
+    vertex_count_ = positions.size() / 3;
+}
+
+void OpenGLTerrainRenderer::initTexture() const {
+    glGenTextures(1, &texture_);
+    checkGlError();
+    glBindTexture(GL_TEXTURE_2D, texture_);
+    checkGlError();
+
+    Image texture_map;
+    texture_map.loadPng("data/images/grass_texture.png");
+    size_t len = texture_map.width() * texture_map.height()
+                 * texture_map.elements();
+    vector<float> data(len);
+    for (size_t i = 0; i < len; ++i)
+        data[i] = texture_map.data()[i];
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture_map.width(),
+                 texture_map.height(), 0, GL_RGB, GL_FLOAT, &data[0]);
+    checkGlError();
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    checkGlError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    checkGlError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    checkGlError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                    GL_LINEAR_MIPMAP_LINEAR);
+    checkGlError();
+    glGenerateMipmap(GL_TEXTURE_2D);
+    checkGlError();
 }
