@@ -41,34 +41,36 @@ void TerrainRenderer::genVertices(const Terrain& terrain) const {
     vector<GLfloat> normals;
 
     // Triangle strip positions from top to bottom.
-    for (int i = 0; i < terrain.height(); i += 2) {
+    for (int x = 0; x < terrain.width(); x += 2) {
         // Triangle strip positions from left to right.
-        int j;
-        for (j = 0; j < terrain.width(); j += 2) {
-            addPosition(terrain, positions, i + 1, j);
-            addPosition(terrain, positions, i, j);
-            addPosition(terrain, positions, i + 1, j + 1);
-            addPosition(terrain, positions, i, j + 1);
+        int z;
+        for (z = 0; z < terrain.height(); z += 2) {
+            addPosition(terrain, positions, x + 1, z);
+            addPosition(terrain, positions, x, z);
+            addPosition(terrain, positions, x + 1, z + 1);
+            addPosition(terrain, positions, x, z + 1);
         }
-        if (i + 2 >= terrain.width()) {
+        if (x + 2 >= terrain.width()) {
             // Last row may not need the reverse direction.
             break;
         }
         // Repeat last position of the above row twice to avoid backfacing.
-        j -= 2;
-        for (int k = 0; k < 2; ++k)
-            addPosition(terrain, positions, i, j + 1);
+        z -= 2;
+        for (int k = 0; k < 2; ++k) {
+            addPosition(terrain, positions, x, z + 1);
+        }
         // Triangle strip positions from right to left.
-        for (j = terrain.width() - 1; j >= 0; j -= 2) {
-            addPosition(terrain, positions, i + 1, j);
-            addPosition(terrain, positions, i + 2, j);
-            addPosition(terrain, positions, i + 1, j - 1);
-            addPosition(terrain, positions, i + 2, j - 1);
+        for (z = terrain.width() - 1; z >= 0; z -= 2) {
+            addPosition(terrain, positions, x + 1, z);
+            addPosition(terrain, positions, x + 2, z);
+            addPosition(terrain, positions, x + 1, z - 1);
+            addPosition(terrain, positions, x + 2, z - 1);
         }
         // Repeat last position of the above row twice to avoid backfacing.
-        j += 2;
-        for (int k = 0; k < 2; ++k)
-            addPosition(terrain, positions, i + 2, j - 1);
+        z += 2;
+        for (int k = 0; k < 2; ++k) {
+            addPosition(terrain, positions, x + 2, z - 1);
+        }
     }
 
     vertex_array_.addBuffer(positions, "position", 3);
@@ -77,8 +79,8 @@ void TerrainRenderer::genVertices(const Terrain& terrain) const {
 
 void TerrainRenderer::addPosition(const Terrain& terrain,
                                   vector<GLfloat>& positions,
-                                  int i, int j) const {
-    positions.push_back(i);
-    positions.push_back(terrain[i][j]);
-    positions.push_back(j);
+                                  int x, int z) const {
+    positions.push_back(x);
+    positions.push_back(terrain[x][z]);
+    positions.push_back(z);
 }
