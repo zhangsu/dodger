@@ -103,6 +103,8 @@ GLuint ShaderProgram::uniformLocation(string name) const {
     auto uniform = uniforms_.find(name);
     if (uniform == uniforms_.end()) {
         GLint location = glGetUniformLocation(program_, name.c_str());
+        if (location == -1)
+            throw runtime_error(string("Uniform ") + name + " does not exist");
         checkGlError();
         uniforms_[name] = location;
         return location;
