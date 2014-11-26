@@ -20,7 +20,7 @@ class SpiritRenderer {
   private:
     const Game& game_;
     const ShaderProgram& program_;
-    const VertexArray vert_arr_;
+    const VertexArray vertex_array_;
     const int lod_;
 };
 

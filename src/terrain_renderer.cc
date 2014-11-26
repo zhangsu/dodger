@@ -14,29 +14,29 @@ TerrainRenderer::TerrainRenderer(
     const ShaderProgram& program
 ) : game_(game),
     program_(program),
-    vert_arr_(program),
+    vertex_array_(program),
     texture_("data/images/grass_texture.png"),
     initialized(false) {}
 
 void TerrainRenderer::render(const Terrain& terrain, const mat4& mvp) const {
     if (!initialized) {
-        initVertices(terrain);
+        genVertices(terrain);
         initialized = true;
     }
 
-    vert_arr_.bind();
+    vertex_array_.bind();
     texture_.activateAndBind(GL_TEXTURE0 + 0);
 
     program_.use();
     program_.uniform1i("sampler", 0);
     program_.uniformMat4("mvp", glm::value_ptr(mvp));
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, vert_count_);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_count_);
     checkGlError();
 }
 
 // Private methods.
 
-void TerrainRenderer::initVertices(const Terrain& terrain) const {
+void TerrainRenderer::genVertices(const Terrain& terrain) const {
     vector<GLfloat> positions;
 
     // Triangle strip positions from top to bottom.
@@ -98,6 +98,6 @@ void TerrainRenderer::initVertices(const Terrain& terrain) const {
         }
     }
 
-    vert_arr_.addBuffer(positions, "position", 3);
-    vert_count_ = positions.size() / 3;
+    vertex_array_.addBuffer(positions, "position", 3);
+    vertex_count_ = positions.size() / 3;
 }

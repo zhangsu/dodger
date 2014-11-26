@@ -20,16 +20,16 @@ class TerrainRenderer {
 
   private:
     // Generates positions from a terrain and return the position count.
-    void initVertices(const Terrain&) const;
+    void genVertices(const Terrain&) const;
 
     const Game& game_;
     const ShaderProgram& program_;
-    const VertexArray vert_arr_;
+    const VertexArray vertex_array_;
     const Texture texture_;
 
     // These are lazily-initialized by render.
     mutable bool initialized;
-    mutable size_t vert_count_;
+    mutable size_t vertex_count_;
 };
 
 #endif // OPENGL_DODGER_TERRAIN_RENDERER_H_
