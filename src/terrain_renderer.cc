@@ -14,10 +14,10 @@ TerrainRenderer::TerrainRenderer(
     const ShaderProgram& program
 ) : game_(game),
     program_(program),
+    vert_arr_(program),
     initialized(false) {}
 
-void TerrainRenderer::render(const Terrain& terrain,
-                                   const mat4& mvp) const {
+void TerrainRenderer::render(const Terrain& terrain, const mat4& mvp) const {
     program_.use();
 
     if (!initialized) {
@@ -26,8 +26,8 @@ void TerrainRenderer::render(const Terrain& terrain,
         initialized = true;
     }
 
-    glBindVertexArray(vert_arr_);
-    checkGlError();
+    vert_arr_.bind();
+
     glActiveTexture(GL_TEXTURE0);
     checkGlError();
     glBindTexture(GL_TEXTURE_2D, texture_);
@@ -35,7 +35,7 @@ void TerrainRenderer::render(const Terrain& terrain,
 
     program_.uniformMat4("mvp", glm::value_ptr(mvp));
     program_.uniform1i("sampler", 0);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_count_);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, vert_count_);
     checkGlError();
 }
 
@@ -103,24 +103,8 @@ void TerrainRenderer::initVertices(const Terrain& terrain) const {
         }
     }
 
-    glGenVertexArrays(1, &vert_arr_);
-    checkGlError();
-    glBindVertexArray(vert_arr_);
-    checkGlError();
-
-    GLuint buf;
-    glGenBuffers(1, &buf);
-    checkGlError();
-    glBindBuffer(GL_ARRAY_BUFFER, buf);
-    checkGlError();
-    glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof (GLfloat),
-                 &positions[0], GL_STATIC_DRAW);
-    checkGlError();
-
-    program_.enableVertexAttribArray("position");
-    program_.vertexAttribPointer("position", 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-    vertex_count_ = positions.size() / 3;
+    vert_arr_.addBuffer(positions, "position", 3);
+    vert_count_ = positions.size() / 3;
 }
 
 void TerrainRenderer::initTexture() const {

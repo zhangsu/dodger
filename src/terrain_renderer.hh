@@ -6,6 +6,7 @@
 #include "game.hh"
 #include "shader_program.hh"
 #include "terrain.hh"
+#include "vertex_array.hh"
 
 // The renderer for terrains.
 class TerrainRenderer {
@@ -23,12 +24,12 @@ class TerrainRenderer {
 
     const Game& game_;
     const ShaderProgram& program_;
+    const VertexArray vert_arr_;
 
     // These are lazily-initialized by render.
-    mutable GLuint vert_arr_;
     mutable GLuint texture_;
     mutable bool initialized;
-    mutable size_t vertex_count_;
+    mutable size_t vert_count_;
 };
 
 #endif // OPENGL_DODGER_TERRAIN_RENDERER_H_

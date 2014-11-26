@@ -6,6 +6,7 @@
 #include "game.hh"
 #include "shader_program.hh"
 #include "spirit.hh"
+#include "vertex_array.hh"
 
 // The renderer for spirits.
 class SpiritRenderer {
@@ -19,9 +20,8 @@ class SpiritRenderer {
   private:
     const Game& game_;
     const ShaderProgram& program_;
+    const VertexArray vert_arr_;
     const int lod_;
-
-    GLuint vert_arr_;
 };
 
 #endif // OPENGL_DODGER_SPIRIT_RENDERER_H_
