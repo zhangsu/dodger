@@ -101,9 +101,9 @@ GLuint ShaderProgram::uniformLocation(string name) const {
     auto uniform = uniforms_.find(name);
     if (uniform == uniforms_.end()) {
         GLint location = glGetUniformLocation(program_, name.c_str());
-        if (location == -1)
-            throw runtime_error(string("Uniform ") + name + " does not exist");
         checkGlError();
+        if (location == -1)
+            throw runtime_error(string("Invalid uniform: ") + name);
         uniforms_[name] = location;
         return location;
     }
@@ -115,6 +115,8 @@ GLuint ShaderProgram::attribLocation(string name) const {
     if (attribute == attributes_.end()) {
         GLint location = glGetAttribLocation(program_, name.c_str());
         checkGlError();
+        if (location == -1)
+            throw runtime_error(string("Invalid attribute: ") + name);
         attributes_[name] = location;
         return location;
     }
