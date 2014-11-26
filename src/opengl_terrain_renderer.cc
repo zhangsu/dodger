@@ -28,6 +28,7 @@ void OpenGLTerrainRenderer::render(const Terrain& terrain,
 
     program_.uniformMat4("mvp", glm::value_ptr(mvp));
     glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_count_);
+    checkGlError();
 }
 
 // Private methods.

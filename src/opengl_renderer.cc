@@ -70,7 +70,6 @@ void OpenGLRenderer::toggleWireframe() {
     checkGlError();
 }
 
-
 // Private methods.
 
 void OpenGLRenderer::initGlew() const {

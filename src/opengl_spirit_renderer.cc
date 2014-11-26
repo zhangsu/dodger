@@ -45,4 +45,5 @@ void OpenGLSpiritRenderer::render(const Spirit&, const mat4& mvp) const {
 
     program_.uniformMat4("mvp", glm::value_ptr(mvp));
     glDrawArrays(GL_LINE_LOOP, 0, lod_);
+    checkGlError();
 }

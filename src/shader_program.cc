@@ -51,6 +51,7 @@ void ShaderProgram::link() {
         if (log_len > 0) {
             vector<char> log(log_len);
             glGetProgramInfoLog(program, log_len, nullptr, &log[0]);
+            checkGlError();
             throw runtime_error(string("Program: ") + &log[0]);
         } else {
             throw runtime_error(string("Program: unknown error"));
@@ -90,6 +91,7 @@ void ShaderProgram::vertexAttribPointer(
 ) const {
     GLuint index = attribLocation(name);
     glVertexAttribPointer(index, size, type, normalized, stride, pointer);
+    checkGlError();
 }
 
 GLuint ShaderProgram::uniformLocation(string name) const {
