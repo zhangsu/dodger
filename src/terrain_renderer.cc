@@ -15,26 +15,21 @@ TerrainRenderer::TerrainRenderer(
 ) : game_(game),
     program_(program),
     vert_arr_(program),
+    texture_("data/images/grass_texture.png"),
     initialized(false) {}
 
 void TerrainRenderer::render(const Terrain& terrain, const mat4& mvp) const {
-    program_.use();
-
     if (!initialized) {
         initVertices(terrain);
-        initTexture();
         initialized = true;
     }
 
     vert_arr_.bind();
+    texture_.activateAndBind(GL_TEXTURE0 + 0);
 
-    glActiveTexture(GL_TEXTURE0);
-    checkGlError();
-    glBindTexture(GL_TEXTURE_2D, texture_);
-    checkGlError();
-
-    program_.uniformMat4("mvp", glm::value_ptr(mvp));
+    program_.use();
     program_.uniform1i("sampler", 0);
+    program_.uniformMat4("mvp", glm::value_ptr(mvp));
     glDrawArrays(GL_TRIANGLE_STRIP, 0, vert_count_);
     checkGlError();
 }
@@ -105,34 +100,4 @@ void TerrainRenderer::initVertices(const Terrain& terrain) const {
 
     vert_arr_.addBuffer(positions, "position", 3);
     vert_count_ = positions.size() / 3;
-}
-
-void TerrainRenderer::initTexture() const {
-    glGenTextures(1, &texture_);
-    checkGlError();
-    glBindTexture(GL_TEXTURE_2D, texture_);
-    checkGlError();
-
-    Image texture_map;
-    texture_map.loadPng("data/images/grass_texture.png");
-    size_t len = texture_map.width() * texture_map.height()
-                 * texture_map.elements();
-    vector<float> data(len);
-    for (size_t i = 0; i < len; ++i)
-        data[i] = texture_map.data()[i];
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture_map.width(),
-                 texture_map.height(), 0, GL_RGB, GL_FLOAT, &data[0]);
-    checkGlError();
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    checkGlError();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    checkGlError();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    checkGlError();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                    GL_LINEAR_MIPMAP_LINEAR);
-    checkGlError();
-    glGenerateMipmap(GL_TEXTURE_2D);
-    checkGlError();
 }

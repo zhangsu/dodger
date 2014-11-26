@@ -6,6 +6,7 @@
 #include "game.hh"
 #include "shader_program.hh"
 #include "terrain.hh"
+#include "texture.hh"
 #include "vertex_array.hh"
 
 // The renderer for terrains.
@@ -20,14 +21,13 @@ class TerrainRenderer {
   private:
     // Generates positions from a terrain and return the position count.
     void initVertices(const Terrain&) const;
-    void initTexture() const;
 
     const Game& game_;
     const ShaderProgram& program_;
     const VertexArray vert_arr_;
+    const Texture texture_;
 
     // These are lazily-initialized by render.
-    mutable GLuint texture_;
     mutable bool initialized;
     mutable size_t vert_count_;
 };
