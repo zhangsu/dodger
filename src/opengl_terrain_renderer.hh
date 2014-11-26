@@ -23,7 +23,7 @@ class OpenGLTerrainRenderer {
     const ShaderProgram& program_;
 
     // These are lazily-initialized by render.
-    mutable GLuint vao_;
+    mutable GLuint vert_arr_;
     mutable bool initialized;
     mutable size_t vertex_count_;
 };

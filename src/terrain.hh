@@ -19,9 +19,9 @@ class Terrain : public SceneNode {
 
     // Render this terrain and its descendents.
     virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;
-    // Gets the number of vertices in the x direction.
+    // Gets the number of heights in the x direction.
     int width() const;
-    // Gets the number of vertices in the y direction.
+    // Gets the number of heights in the y direction.
     int height() const;
     // Get the specified row of the heightmap.
     const std::vector<float>& operator [](int index) const;

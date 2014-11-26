@@ -21,7 +21,7 @@ class OpenGLSpiritRenderer {
     const ShaderProgram& program_;
     const int lod_;
 
-    GLuint vao_;
+    GLuint vert_arr_;
 };
 
 #endif // OPENGL_DODGER_SPIRIT_RENDERER_H_

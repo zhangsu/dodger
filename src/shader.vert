@@ -2,8 +2,8 @@
 
 uniform mat4 mvp;
 
-in vec3 vert;
+in vec3 position;
 
 void main() {
-    gl_Position = mvp * vec4(vert, 1.0);
+    gl_Position = mvp * vec4(position, 1.0);
 }

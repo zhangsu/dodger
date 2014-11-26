@@ -23,7 +23,7 @@ void OpenGLTerrainRenderer::render(const Terrain& terrain,
     }
 
     program_.use();
-    glBindVertexArray(vao_);
+    glBindVertexArray(vert_arr_);
     checkGlError();
 
     program_.uniformMat4("mvp", glm::value_ptr(mvp));
@@ -34,85 +34,84 @@ void OpenGLTerrainRenderer::render(const Terrain& terrain,
 // Private methods.
 
 size_t OpenGLTerrainRenderer::init(const Terrain& terrain) const {
-    vector<GLfloat> vertices;
+    vector<GLfloat> positions;
 
-    // Triangle strip vertices from top to bottom.
+    // Triangle strip positions from top to bottom.
     for (int i = 0; i < terrain.height(); i += 2) {
-        // Triangle strip vertices from left to right.
+        // Triangle strip positions from left to right.
         int j;
         for (j = 0; j < terrain.width(); j += 2) {
-            vertices.push_back(i + 1);
-            vertices.push_back(terrain[i + 1][j]);
-            vertices.push_back(j);
+            positions.push_back(i + 1);
+            positions.push_back(terrain[i + 1][j]);
+            positions.push_back(j);
 
-            vertices.push_back(i);
-            vertices.push_back(terrain[i][j]);
-            vertices.push_back(j);
+            positions.push_back(i);
+            positions.push_back(terrain[i][j]);
+            positions.push_back(j);
 
-            vertices.push_back(i + 1);
-            vertices.push_back(terrain[i + 1][j + 1]);
-            vertices.push_back(j + 1);
+            positions.push_back(i + 1);
+            positions.push_back(terrain[i + 1][j + 1]);
+            positions.push_back(j + 1);
 
-            vertices.push_back(i);
-            vertices.push_back(terrain[i][j + 1]);
-            vertices.push_back(j + 1);
+            positions.push_back(i);
+            positions.push_back(terrain[i][j + 1]);
+            positions.push_back(j + 1);
         }
         if (i + 2 >= terrain.width()) {
             // Last row may not need the reverse direction.
             break;
         }
-        // Repeat last vertex of the above row twice to avoid backfacing face.
+        // Repeat last position of the above row twice to avoid backfacing.
         j -= 2;
         for (int k = 0; k < 2; ++k) {
-            vertices.push_back(i);
-            vertices.push_back(terrain[i][j + 1]);
-            vertices.push_back(j + 1);
+            positions.push_back(i);
+            positions.push_back(terrain[i][j + 1]);
+            positions.push_back(j + 1);
         }
-        // Triangle strip vertices from right to left.
+        // Triangle strip positions from right to left.
         for (j = terrain.width() - 1; j >= 0; j -= 2) {
-            vertices.push_back(i + 1);
-            vertices.push_back(terrain[i + 1][j]);
-            vertices.push_back(j);
+            positions.push_back(i + 1);
+            positions.push_back(terrain[i + 1][j]);
+            positions.push_back(j);
 
-            vertices.push_back(i + 2);
-            vertices.push_back(terrain[i + 2][j]);
-            vertices.push_back(j);
+            positions.push_back(i + 2);
+            positions.push_back(terrain[i + 2][j]);
+            positions.push_back(j);
 
-            vertices.push_back(i + 1);
-            vertices.push_back(terrain[i + 1][j - 1]);
-            vertices.push_back(j - 1);
+            positions.push_back(i + 1);
+            positions.push_back(terrain[i + 1][j - 1]);
+            positions.push_back(j - 1);
 
-            vertices.push_back(i + 2);
-            vertices.push_back(terrain[i + 2][j - 1]);
-            vertices.push_back(j - 1);
+            positions.push_back(i + 2);
+            positions.push_back(terrain[i + 2][j - 1]);
+            positions.push_back(j - 1);
         }
-        // Repeat last vertex of the above row twice to avoid backfacing face.
+        // Repeat last position of the above row twice to avoid backfacing.
         j += 2;
         for (int k = 0; k < 2; ++k) {
-            vertices.push_back(i + 2);
-            vertices.push_back(terrain[i + 2][j - 1]);
-            vertices.push_back(j - 1);
+            positions.push_back(i + 2);
+            positions.push_back(terrain[i + 2][j - 1]);
+            positions.push_back(j - 1);
         }
     }
 
     program_.use();
-
-    glGenVertexArrays(1, &vao_);
+    glGenVertexArrays(1, &vert_arr_);
     checkGlError();
-    glBindVertexArray(vao_);
-    checkGlError();
-
-    GLuint vbo;
-    glGenBuffers(1, &vbo);
-    checkGlError();
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    checkGlError();
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof (GLfloat),
-                 &vertices[0], GL_STATIC_DRAW);
+    glBindVertexArray(vert_arr_);
     checkGlError();
 
-    program_.enableVertexAttribArray("vert");
-    program_.vertexAttribPointer("vert", 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+    GLuint buf;
+    glGenBuffers(1, &buf);
+    checkGlError();
+    glBindBuffer(GL_ARRAY_BUFFER, buf);
+    checkGlError();
+    glBufferData(GL_ARRAY_BUFFER, positions.size() * sizeof (GLfloat),
+                 &positions[0], GL_STATIC_DRAW);
+    checkGlError();
 
-    return vertices.size() / 3;
+    program_.enableVertexAttribArray("position");
+    program_.vertexAttribPointer("position", 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+    return positions.size() / 3;
 }
