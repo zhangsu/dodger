@@ -23,6 +23,8 @@ class TerrainRenderer {
     void genVertices(const Terrain&) const;
     void addPosition(const Terrain&, std::vector<GLfloat>& positions,
                      int x, int z) const;
+    void addNormal(const Terrain&, std::vector<GLfloat>& normals,
+                   int x, int z) const;
 
     const Game& game_;
     const ShaderProgram& program_;
