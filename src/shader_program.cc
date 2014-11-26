@@ -1,9 +1,7 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-#include <string>
 #include <vector>
-#include <GL/glew.h>
 #include "glerror.hh"
 #include "shader_program.hh"
 
