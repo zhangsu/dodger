@@ -9,7 +9,7 @@ class Renderer;
 
 // The base type for any node in a scene graph.
 class SceneNode {
-public:
+  public:
     // Construct an empty scene node.
     SceneNode();
     virtual ~SceneNode();
@@ -48,7 +48,7 @@ public:
     // Translate this scene node by x, y, z.
     void translate(float x, float y, float z);
 
-protected:
+  protected:
     // Renders the children with the specified cumulative matrix stack.
     void renderChildren(const Renderer& renderer, glm::mat4 stack) const;
 
