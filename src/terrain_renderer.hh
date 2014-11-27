@@ -15,8 +15,9 @@ class TerrainRenderer {
     // Constructs a terrain renderer with the specified shader program.
     TerrainRenderer(const Game&, const ShaderProgram&);
 
-    // Renders this terrain with the specified MVP transformations.
-    void render(const Terrain&, const glm::mat4& transformations) const;
+    // Renders a terrain with the specified model-view and projection
+    // transformations.
+    void render(const Terrain&, const glm::mat4& mv, const glm::mat4& p) const;
 
   private:
     // Generates positions from a terrain and return the position count.

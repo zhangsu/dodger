@@ -14,8 +14,9 @@ class SpiritRenderer {
     // Constructs a spirit renderer with the specified shader program.
     SpiritRenderer(const Game&, const ShaderProgram&);
 
-    // Renders a spirit with the specified MVP transformations.
-    void render(const Spirit&, const glm::mat4& transformations) const;
+    // Renders a spirit with the specified model-view and projection
+    // transformations.
+    void render(const Spirit&, const glm::mat4& mv, const glm::mat4& p) const;
 
   private:
     const Game& game_;

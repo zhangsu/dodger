@@ -19,7 +19,8 @@ TerrainRenderer::TerrainRenderer(
     texture_("data/images/grass_texture.png"),
     initialized(false) {}
 
-void TerrainRenderer::render(const Terrain& terrain, const mat4& mvp) const {
+void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
+                             const mat4& p) const {
     if (!initialized) {
         genVertices(terrain);
         initialized = true;
@@ -30,7 +31,8 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mvp) const {
 
     program_.use();
     program_.uniform1i("sampler", 0);
-    program_.uniformMat4("mvp", glm::value_ptr(mvp));
+    program_.uniformMat4("mv", glm::value_ptr(mv));
+    program_.uniformMat4("mvp", glm::value_ptr(p * mv));
     glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_count_);
     checkGlError();
 }
@@ -110,6 +112,7 @@ void TerrainRenderer::addNormal(const Terrain& terrain,
         x < terrain.width() - 1 ? (vec3(x + 1, terrain[x + 1][z], z) - center)
                                 : zero
     };
+    // Vertex normal is the sum of neighboring surface normals.
     vec3 normal;
     for (int i = 0; i < 4; ++i)
         normal += glm::cross(neighbors[i], neighbors[(i + 1) % 4]);

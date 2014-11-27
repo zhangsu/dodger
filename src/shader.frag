@@ -7,5 +7,5 @@ in vec2 uv;
 out vec4 color;
 
 void main() {
-    color = 0.1*vec4(unit_normal, 1) + texture(sampler, uv);
+    color = 0.1*vec4(unit_normal, 0) + texture(sampler, uv);
 }

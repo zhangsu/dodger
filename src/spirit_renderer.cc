@@ -25,11 +25,13 @@ SpiritRenderer::SpiritRenderer(
     vertex_array_.addAttribute(positions, "position", 3);
 }
 
-void SpiritRenderer::render(const Spirit&, const mat4& mvp) const {
-    program_.use();
+void SpiritRenderer::render(const Spirit&, const mat4& mv,
+                            const mat4& p) const {
     vertex_array_.bind();
 
-    program_.uniformMat4("mvp", glm::value_ptr(mvp));
+    program_.use();
+    program_.uniformMat4("mv", glm::value_ptr(mv));
+    program_.uniformMat4("mvp", glm::value_ptr(p * mv));
     glDrawArrays(GL_LINE_LOOP, 0, lod_);
     checkGlError();
 }

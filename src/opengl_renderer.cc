@@ -41,12 +41,12 @@ void OpenGLRenderer::clear() const {
 
 void OpenGLRenderer::render(const Terrain& terrain, mat4 model_trans) const {
     terrain_renderer_.render(
-        terrain, proj_trans_ * game_.viewTrans() * model_trans);
+        terrain, game_.viewTrans() * model_trans, proj_trans_);
 }
 
 void OpenGLRenderer::render(const Spirit& spirit, mat4 model_trans) const {
     spirit_renderer_.render(
-        spirit, proj_trans_ * game_.viewTrans() * model_trans);
+        spirit, game_.viewTrans() * model_trans, proj_trans_);
 }
 
 void OpenGLRenderer::resize(int width, int height) {
