@@ -9,9 +9,7 @@ using glm::mat4;
 
 // Public methods.
 
-Terrain::Terrain(string heightmap_filename, float modifier, float xyscale)
-    : modifier_(modifier),
-      xyscale_(xyscale) {
+Terrain::Terrain(string heightmap_filename) {
     Image heightmap;
     heightmap.loadPng(heightmap_filename);
     width_ = heightmap.width();
