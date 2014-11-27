@@ -4,11 +4,10 @@
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
-#include "material.hh"
-#include "scene_node.hh"
+#include "primitive.hh"
 
 // A class that stores the properties of a terrain.
-class Terrain : public SceneNode {
+class Terrain : public Primitive {
   public:
     // Constructs a terrain from the specified heightmap, each grid of which
     // has a unit length of 1 in the x and z directions, and a value between 0
@@ -23,12 +22,8 @@ class Terrain : public SceneNode {
     int height() const;
     // Gets the specified row of the heightmap.
     const std::vector<float>& operator [](int index) const;
-    // Gets the material for this terrain.
-    const Material& material() const;
 
   private:
-    const Material material_;
-
     int width_;
     int height_;
     std::vector<std::vector<float>> heightmap_;

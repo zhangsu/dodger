@@ -2,10 +2,10 @@
 #define DODGER_SPIRIT_HH_
 
 #include <glm/glm.hpp>
-#include "scene_node.hh"
+#include "primitive.hh"
 
 // A class that stores the properties of a terrain.
-class Spirit : public SceneNode {
+class Spirit : public Primitive {
   public:
     // Constructs a spherical sprit with the specified radius.
     explicit Spirit();
