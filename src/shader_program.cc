@@ -2,6 +2,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <vector>
+#include <glm/gtc/type_ptr.hpp>
 #include "glerror.hh"
 #include "shader_program.hh"
 
@@ -10,6 +11,7 @@ using std::ostringstream;
 using std::runtime_error;
 using std::string;
 using std::vector;
+using glm::mat4;
 
 // Public methods.
 
@@ -74,8 +76,9 @@ void ShaderProgram::uniform1i(string name, GLint value) const {
     checkGlError();
 }
 
-void ShaderProgram::uniformMat4(string name, const GLfloat* value) const {
-    glUniformMatrix4fv(uniformLocation(name), 1, GL_FALSE, value);
+void ShaderProgram::uniformMat4(string name, const mat4& value) const {
+    glUniformMatrix4fv(uniformLocation(name), 1, GL_FALSE,
+                       glm::value_ptr(value));
     checkGlError();
 }
 

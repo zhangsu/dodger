@@ -1,5 +1,4 @@
 #include <vector>
-#include <glm/gtc/type_ptr.hpp>
 #include "glerror.hh"
 #include "spirit_renderer.hh"
 
@@ -30,8 +29,8 @@ void SpiritRenderer::render(const Spirit&, const mat4& mv,
     vertex_array_.bind();
 
     program_.use();
-    program_.uniformMat4("mv", glm::value_ptr(mv));
-    program_.uniformMat4("mvp", glm::value_ptr(p * mv));
+    program_.uniformMat4("mv", mv);
+    program_.uniformMat4("mvp", p * mv);
     glDrawArrays(GL_LINE_LOOP, 0, lod_);
     checkGlError();
 }

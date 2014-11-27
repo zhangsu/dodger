@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 
 // Program that encapsulates shader-related operations.
 class ShaderProgram {
@@ -22,7 +23,7 @@ class ShaderProgram {
     // Sets the specified int type uniform value.
     void uniform1i(std::string name, GLint value) const;
     // Sets the specified mat4 type uniform value.
-    void uniformMat4(std::string name, const GLfloat* value) const;
+    void uniformMat4(std::string name, const glm::mat4& value) const;
     // Gets the location of the specified uniform value.
     GLuint uniformLocation(std::string name) const;
     // Gets the location of the specified attribute.

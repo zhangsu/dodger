@@ -1,5 +1,4 @@
 #include <vector>
-#include <glm/gtc/type_ptr.hpp>
 #include "image.hh"
 #include "glerror.hh"
 #include "terrain_renderer.hh"
@@ -34,8 +33,8 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
     program_.use();
     program_.uniform1i("sampler", 0);
     program_.uniform1i("mountain_sampler", 1);
-    program_.uniformMat4("mv", glm::value_ptr(mv));
-    program_.uniformMat4("mvp", glm::value_ptr(p * mv));
+    program_.uniformMat4("mv", mv);
+    program_.uniformMat4("mvp", p * mv);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_count_);
     checkGlError();
 }
