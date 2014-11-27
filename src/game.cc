@@ -14,15 +14,14 @@ Game::Game()
     Terrain* terrain = new Terrain("data/images/heightmap.png");
     scene_root_.addChild(terrain);
     scene_root_.addChild(player_);
-    terrain->scale(vec3(0.5, 20, 0.5));
+    terrain->scale(0.5, 20, 0.5);
     // Center the terrain in world space.
-    terrain->translate(vec3(-terrain->width() / 2.0, 0,
-                            -terrain->height() / 2.0));
+    terrain->translate(-terrain->width() / 2.0, 0, -terrain->height() / 2.0);
 
-    player_->translate(vec3(0, 5, 0));
+    player_->translate(0, 5, 0);
     player_->addChild(new Spirit());
     player_->addChild(camera_);
-    camera_->translate(vec3(0, 0, 10));
+    camera_->translate(0, 0, 10);
 }
 
 void Game::move(float x, float y, float z) {
@@ -34,7 +33,7 @@ void Game::move(vec3 translation) {
 }
 
 void Game::turn(float angle) {
-    player_->rotate(angle, vec3(0, 1, 0));
+    player_->rotate(angle, 0, 1, 0);
 }
 
 glm::mat4 Game::viewTrans() const {

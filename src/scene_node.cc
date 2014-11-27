@@ -59,6 +59,18 @@ void SceneNode::translate(const vec3& amount) {
     transformation_ = glm::translate(transformation_, amount);
 }
 
+void SceneNode::rotate(float angle, float x, float y, float z) {
+    rotate(angle, vec3(x, y, z));
+}
+
+void SceneNode::scale(float x, float y, float z) {
+    scale(vec3(x, y, z));
+}
+
+void SceneNode::translate(float x, float y, float z) {
+    translate(vec3(x, y, z));
+}
+
 // Protected methods.
 
 void SceneNode::renderChildren(const Renderer& renderer, mat4 stack) const {

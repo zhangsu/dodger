@@ -35,6 +35,12 @@ public:
     void scale(const glm::vec3& amount);
     // Translate this scene node by `amount`.
     void translate(const glm::vec3& amount);
+    // Rotate this scene node by `angle` alone an axis specified by x, y, z.
+    void rotate(float angle, float x, float y, float z);
+    // Scale this scene node by x, y, z.
+    void scale(float x, float y, float z);
+    // Translate this scene node by x, y, z.
+    void translate(float x, float y, float z);
 
 protected:
     // Renders the children with the specified cumulative matrix stack.
