@@ -25,10 +25,10 @@ Terrain::Terrain(string heightmap_filename)
         height_--;
     heightmap_.resize(width_);
 
-    for (int i = 0; i < width_; ++i) {
-        heightmap_[i].resize(height_);
-        for (int j = 0; j < height_; ++j)
-            heightmap_[i][j] = heightmap(i, j, 0);
+    for (int x = 0; x < width_; ++x) {
+        heightmap_[x].resize(height_);
+        for (int z = 0; z < height_; ++z)
+            heightmap_[x][z] = heightmap(x, z, 0);
     }
 }
 
