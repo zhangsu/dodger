@@ -17,13 +17,13 @@ class Terrain : public SceneNode {
                      float modifier = 0.5,
                      float xyscale = 1);
 
-    // Render this terrain and its descendents.
+    // Renders this terrain and its descendents.
     virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Gets the number of heights in the x direction.
     int width() const;
     // Gets the number of heights in the y direction.
     int height() const;
-    // Get the specified row of the heightmap.
+    // Gets the specified row of the heightmap.
     const std::vector<float>& operator [](int index) const;
 
   private:

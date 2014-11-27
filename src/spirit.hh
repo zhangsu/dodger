@@ -10,7 +10,7 @@ class Spirit : public SceneNode {
     // Constructs a spherical sprit with the specified radius.
     explicit Spirit();
 
-    // Render this spirit and its descendents.
+    // Renders this spirit and its descendents.
     virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;
 
   private:

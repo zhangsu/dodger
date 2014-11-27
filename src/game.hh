@@ -10,6 +10,7 @@ class Game {
     void move(float x, float y, float z);
     void move(glm::vec3 translation);
     void turn(float angle);
+    // Returns the viewing transformation matrix.
     glm::mat4 viewTrans() const;
     // Gets the root node of the scene.
     SceneNode* scene_root() const;

@@ -22,7 +22,7 @@ class OpenGLRenderer : public Renderer {
     virtual void render(const Terrain&, glm::mat4 model_trans) const;
     // Renders a spirit node with the specified model transformation.
     virtual void render(const Spirit&, glm::mat4 model_trans) const;
-    // Callback that resizes the viewport as the window resizes.
+    // Resizes the viewport as the window resizes.
     void resize(int width, int height);
     // Toggles wireframe mode. The default is off.
     virtual void toggleWireframe();
