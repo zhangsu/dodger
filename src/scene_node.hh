@@ -17,9 +17,9 @@ class SceneNode {
     // Render this scene node and its descendents.
     virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Add a child node to this node.
-    virtual void addChild(SceneNode* child);
+    virtual void attach(SceneNode* child);
     // Removes a child node from this node.
-    void removeChild(SceneNode* child);
+    void detach(SceneNode* child);
     // Sets the parent of this node.
     void set_parent(SceneNode* parent);
     // Gets the parent of this node.

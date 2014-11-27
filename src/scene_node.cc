@@ -15,12 +15,12 @@ SceneNode::~SceneNode() {
         delete child;
 }
 
-void SceneNode::addChild(SceneNode* child) {
+void SceneNode::attach(SceneNode* child) {
     children_.push_back(child);
     child->set_parent(this);
 }
 
-void SceneNode::removeChild(SceneNode* child) {
+void SceneNode::detach(SceneNode* child) {
     children_.remove(child);
 }
 

@@ -14,15 +14,15 @@ Game::Game()
       camera_(new SceneNode()),
       player_(new SceneNode()) {
     Terrain* terrain = new Terrain("data/images/heightmap.png");
-    scene_root_.addChild(terrain);
-    scene_root_.addChild(player_);
+    scene_root_.attach(terrain);
+    scene_root_.attach(player_);
     terrain->scale(0.5, 20, 0.5);
     // Center the terrain in world space.
     terrain->translate(-terrain->width() / 2.0, 0, -terrain->height() / 2.0);
 
     player_->translate(0, 5, 0);
-    player_->addChild(new Spirit());
-    player_->addChild(camera_);
+    player_->attach(new Spirit());
+    player_->attach(camera_);
     camera_->translate(0, 0, 10);
 
     Light* sun = new Light(vec3(0.2, 0.2, 0.2), vec3(0.1, 0, 0));
@@ -68,5 +68,5 @@ float Game::ambient() const {
 
 void Game::addLight(SceneNode* parent, Light* light) {
     lights_.push_back(light);
-    parent->addChild(light);
+    parent->attach(light);
 }
