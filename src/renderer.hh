@@ -1,5 +1,5 @@
-#ifndef DODGER_RENDERER_H_
-#define DODGER_RENDERER_H_
+#ifndef DODGER_RENDERER_HH_
+#define DODGER_RENDERER_HH_
 
 #include <glm/glm.hpp>
 #include "game.hh"
@@ -32,4 +32,4 @@ class Renderer {
     bool draw_wireframe_;
 };
 
-#endif // DODGER_RENDERER_H_
+#endif // DODGER_RENDERER_HH_

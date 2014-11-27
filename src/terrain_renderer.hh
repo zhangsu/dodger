@@ -1,5 +1,5 @@
-#ifndef OPENGL_DODGER_TERRAIN_RENDERER_H_
-#define OPENGL_DODGER_TERRAIN_RENDERER_H_
+#ifndef OPENGL_DODGER_TERRAIN_RENDERER_HH_
+#define OPENGL_DODGER_TERRAIN_RENDERER_HH_
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -38,4 +38,4 @@ class TerrainRenderer {
     mutable size_t vertex_count_;
 };
 
-#endif // OPENGL_DODGER_TERRAIN_RENDERER_H_
+#endif // OPENGL_DODGER_TERRAIN_RENDERER_HH_

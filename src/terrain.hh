@@ -1,5 +1,5 @@
-#ifndef DODGER_TERRAIN_H_
-#define DODGER_TERRAIN_H_
+#ifndef DODGER_TERRAIN_HH_
+#define DODGER_TERRAIN_HH_
 
 #include <string>
 #include <vector>
@@ -35,4 +35,4 @@ class Terrain : public SceneNode {
     std::vector<std::vector<float>> heightmap_;
 };
 
-#endif // DODGER_TERRAIN_H_
+#endif // DODGER_TERRAIN_HH_

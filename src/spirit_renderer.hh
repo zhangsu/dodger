@@ -1,5 +1,5 @@
-#ifndef OPENGL_DODGER_SPIRIT_RENDERER_H_
-#define OPENGL_DODGER_SPIRIT_RENDERER_H_
+#ifndef OPENGL_DODGER_SPIRIT_RENDERER_HH_
+#define OPENGL_DODGER_SPIRIT_RENDERER_HH_
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -25,4 +25,4 @@ class SpiritRenderer {
     const int lod_;
 };
 
-#endif // OPENGL_DODGER_SPIRIT_RENDERER_H_
+#endif // OPENGL_DODGER_SPIRIT_RENDERER_HH_

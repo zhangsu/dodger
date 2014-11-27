@@ -1,5 +1,5 @@
-#ifndef DODGER_GAME_H_
-#define DODGER_GAME_H_
+#ifndef DODGER_GAME_HH_
+#define DODGER_GAME_HH_
 
 #include <glm/glm.hpp>
 #include "scene_node.hh"
@@ -20,4 +20,4 @@ class Game {
     SceneNode* const scene_root_;
 };
 
-#endif // DODGER_GAME_H_
+#endif // DODGER_GAME_HH_

@@ -1,5 +1,5 @@
-#ifndef OPENGL_TEXTURE_H_
-#define OPENGL_TEXTURE_H_
+#ifndef OPENGL_TEXTURE_HH_
+#define OPENGL_TEXTURE_HH_
 
 #include <string>
 #include <GL/glew.h>
@@ -19,4 +19,4 @@ class Texture {
     GLuint id_;
 };
 
-#endif // OPENGL_TEXTURE_H_
+#endif // OPENGL_TEXTURE_HH_

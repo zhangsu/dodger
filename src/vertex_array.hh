@@ -1,5 +1,5 @@
-#ifndef OPENGL_VERTEX_ARRAY_H_
-#define OPENGL_VERTEX_ARRAY_H_
+#ifndef OPENGL_VERTEX_ARRAY_HH_
+#define OPENGL_VERTEX_ARRAY_HH_
 
 #include <vector>
 #include <GL/glew.h>
@@ -24,4 +24,4 @@ class VertexArray {
     const ShaderProgram& program_;
 };
 
-#endif // OPENGL_VERTEX_ARRAY_H_
+#endif // OPENGL_VERTEX_ARRAY_HH_

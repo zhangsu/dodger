@@ -1,5 +1,5 @@
-#ifndef DODGER_OPENGL_RENDERER_H_
-#define DODGER_OPENGL_RENDERER_H_
+#ifndef DODGER_OPENGL_RENDERER_HH_
+#define DODGER_OPENGL_RENDERER_HH_
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -38,4 +38,4 @@ class OpenGLRenderer : public Renderer {
     glm::mat4 proj_trans_;
 };
 
-#endif // DODGER_OPENGL_RENDERER_H_
+#endif // DODGER_OPENGL_RENDERER_HH_

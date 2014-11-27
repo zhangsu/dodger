@@ -1,5 +1,5 @@
-#ifndef DODGER_SPIRIT_H_
-#define DODGER_SPIRIT_H_
+#ifndef DODGER_SPIRIT_HH_
+#define DODGER_SPIRIT_HH_
 
 #include <glm/glm.hpp>
 #include "scene_node.hh"
@@ -16,4 +16,4 @@ class Spirit : public SceneNode {
   private:
 };
 
-#endif // DODGER_SPIRIT_H_
+#endif // DODGER_SPIRIT_HH_

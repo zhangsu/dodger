@@ -1,5 +1,5 @@
-#ifndef DODGER_SHADER_PROGRAM_H_
-#define DODGER_SHADER_PROGRAM_H_
+#ifndef DODGER_SHADER_PROGRAM_HH_
+#define DODGER_SHADER_PROGRAM_HH_
 
 #include <string>
 #include <unordered_map>
@@ -39,4 +39,4 @@ class ShaderProgram {
     mutable std::unordered_map<std::string, GLuint> attributes_;
 };
 
-#endif // DODGER_SHADER_PROGRAM_H_
+#endif // DODGER_SHADER_PROGRAM_HH_
