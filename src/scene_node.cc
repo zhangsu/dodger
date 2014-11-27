@@ -4,6 +4,7 @@
 
 using glm::mat4;
 using glm::vec3;
+using glm::vec4;
 
 // Public methods.
 
@@ -31,16 +32,28 @@ SceneNode* SceneNode::parent() const {
     return parent_;
 }
 
+vec3 SceneNode::position(const SceneNode* node) const {
+    return vec3(nodeTransformation(node) * vec4(0, 0, 0, 1));
+}
+
 mat4 SceneNode::transformation() const {
     return transformation_;
 }
 
-mat4 SceneNode::cumulativeTransformation() const {
+mat4 SceneNode::worldTransformation() const {
     mat4 trans = transformation();
     const SceneNode* node = this;
     while ((node = node->parent()) != nullptr)
         trans = node->transformation() * trans;
     return trans;
+}
+
+mat4 SceneNode::nodeTransformation(const SceneNode* node) const {
+    mat4 world_trans = worldTransformation();
+    if (node == nullptr)
+        return world_trans;
+    else
+        return glm::inverse(node->worldTransformation()) * world_trans;
 }
 
 void SceneNode::render(const Renderer& renderer, mat4 trans) const {

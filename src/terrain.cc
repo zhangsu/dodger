@@ -6,10 +6,13 @@
 using std::string;
 using std::vector;
 using glm::mat4;
+using glm::vec3;
 
 // Public methods.
 
-Terrain::Terrain(string heightmap_filename) {
+Terrain::Terrain(string heightmap_filename)
+    : material_(vec3(0.9f, 1.0f, 0.9f), vec3(0, 0, 0), 0) {
+
     Image heightmap;
     heightmap.loadPng(heightmap_filename);
     width_ = heightmap.width();
@@ -44,4 +47,8 @@ int Terrain::height() const {
 
 const vector<float>& Terrain::operator [](int index) const {
     return heightmap_[index];
+}
+
+const Material& Terrain::material() const {
+    return material_;
 }

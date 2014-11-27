@@ -22,6 +22,12 @@ class ShaderProgram {
     void use() const;
     // Sets the specified int type uniform value.
     void uniform1i(std::string name, GLint value) const;
+    // Sets the specified float type uniform value.
+    void uniform1f(std::string name, GLfloat value) const;
+    // Sets the specified 3-tuple float type uniform value.
+    void uniform3f(std::string name, GLfloat v0, GLfloat v1, GLfloat v2) const;
+    // Sets the specified vec3 type uniform value.
+    void uniformVec3(std::string name, const glm::vec3& value) const;
     // Sets the specified mat4 type uniform value.
     void uniformMat4(std::string name, const glm::mat4& value) const;
     // Gets the location of the specified uniform value.

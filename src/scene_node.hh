@@ -24,10 +24,16 @@ public:
     void set_parent(SceneNode* parent);
     // Gets the parent of this node.
     SceneNode* parent() const;
+    // Gets the position of this node in another node's frame, or in world
+    // frame if the node is nullptr.
+    glm::vec3 position(const SceneNode* node = nullptr) const;
     // Gets the transformation matrix of this node.
     glm::mat4 transformation() const;
     // Gets the cumulative transformation matrix from root to this node.
-    glm::mat4 cumulativeTransformation() const;
+    glm::mat4 worldTransformation() const;
+    // Gets the transformation matrix in another node's frame, or in world
+    // frame if the node is nullptr.
+    glm::mat4 nodeTransformation(const SceneNode* = nullptr) const;
 
     // Rotate this scene node by `angle` alone `axis`.
     void rotate(float angle, const glm::vec3& axis);

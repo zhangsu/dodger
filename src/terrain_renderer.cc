@@ -1,8 +1,11 @@
+#include <string>
 #include <vector>
 #include "image.hh"
 #include "glerror.hh"
 #include "terrain_renderer.hh"
 
+using std::string;
+using std::to_string;
 using std::vector;
 using glm::mat4;
 using glm::vec3;
@@ -15,8 +18,8 @@ TerrainRenderer::TerrainRenderer(
 ) : game_(game),
     program_(program),
     vertex_array_(program),
-    texture_("data/images/grass_texture.png"),
-    mountain_texture_("data/images/mountain_texture.png"),
+    grass_texture_("data/images/grass_texture.png"),
+    rock_texture_("data/images/mountain_texture.png"),
     initialized(false) {}
 
 void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
@@ -27,14 +30,31 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
     }
 
     vertex_array_.bind();
-    texture_.activateAndBind(GL_TEXTURE0);
-    mountain_texture_.activateAndBind(GL_TEXTURE1);
-
     program_.use();
-    program_.uniform1i("sampler", 0);
-    program_.uniform1i("mountain_sampler", 1);
+
+    const Material& material = terrain.material();
+    for (unsigned i = 0; i < game_.lights().size(); ++i) {
+        const Light* light = game_.lights()[i];
+        string prefix = string("lights[") + to_string(i) + "].";
+        program_.uniformVec3(prefix + "position",
+                             light->position(game_.camera()));
+        program_.uniformVec3(prefix + "color", light->color());
+        program_.uniformVec3(prefix + "attenuation", light->attenuation());
+    }
+    program_.uniform1i("light_count", game_.lights().size());
+    program_.uniformVec3("ambient", game_.ambient() * material.diffuse());
+    program_.uniformVec3("diffuse", material.diffuse());
+    program_.uniformVec3("specular", material.specular());
+    program_.uniform1f("shininess", material.shininess());
+
+    grass_texture_.activateAndBind(GL_TEXTURE0);
+    rock_texture_.activateAndBind(GL_TEXTURE1);
+    program_.uniform1i("grass_sampler", 0);
+    program_.uniform1i("rock_sampler", 1);
+
     program_.uniformMat4("mv", mv);
     program_.uniformMat4("mvp", p * mv);
+
     glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_count_);
     checkGlError();
 }

@@ -4,12 +4,14 @@
 #include "spirit.hh"
 #include "terrain.hh"
 
+using std::vector;
 using glm::vec3;
 
 // Public methods.
 
 Game::Game()
-    : camera_(new SceneNode()),
+    : ambient_(0.3f),
+      camera_(new SceneNode()),
       player_(new SceneNode()) {
     Terrain* terrain = new Terrain("data/images/heightmap.png");
     scene_root_.addChild(terrain);
@@ -22,6 +24,12 @@ Game::Game()
     player_->addChild(new Spirit());
     player_->addChild(camera_);
     camera_->translate(0, 0, 10);
+
+    Light* sun = new Light(vec3(0.2, 0.2, 0.2), vec3(0.1, 0, 0));
+    sun->translate(0, 100, 0);
+    addLight(&scene_root_, sun);
+
+    addLight(player_, new Light(vec3(0.05, 0.1, 1.0), vec3(0.1, 0.01, 0.01)));
 }
 
 void Game::move(float x, float y, float z) {
@@ -37,9 +45,28 @@ void Game::turn(float angle) {
 }
 
 glm::mat4 Game::viewTrans() const {
-    return glm::inverse(camera_->cumulativeTransformation());
+    return glm::inverse(camera_->worldTransformation());
 }
 
 const SceneNode& Game::scene_root() const {
     return scene_root_;
+}
+
+const SceneNode* Game::camera() const {
+    return camera_;
+}
+
+const vector<const Light*> Game::lights() const {
+    return lights_;
+}
+
+float Game::ambient() const {
+    return ambient_;
+}
+
+// Private methods.
+
+void Game::addLight(SceneNode* parent, Light* light) {
+    lights_.push_back(light);
+    parent->addChild(light);
 }

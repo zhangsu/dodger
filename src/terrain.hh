@@ -23,8 +23,12 @@ class Terrain : public SceneNode {
     int height() const;
     // Gets the specified row of the heightmap.
     const std::vector<float>& operator [](int index) const;
+    // Gets the material for this terrain.
+    const Material& material() const;
 
   private:
+    const Material material_;
+
     int width_;
     int height_;
     std::vector<std::vector<float>> heightmap_;

@@ -12,6 +12,7 @@ using std::runtime_error;
 using std::string;
 using std::vector;
 using glm::mat4;
+using glm::vec3;
 
 // Public methods.
 
@@ -74,6 +75,21 @@ void ShaderProgram::use() const {
 void ShaderProgram::uniform1i(string name, GLint value) const {
     glUniform1i(uniformLocation(name), value);
     checkGlError();
+}
+
+void ShaderProgram::uniform1f(string name, GLfloat value) const {
+    glUniform1f(uniformLocation(name), value);
+    checkGlError();
+}
+
+void ShaderProgram::uniform3f(string name,
+                              GLfloat v0, GLfloat v1, GLfloat v2) const {
+    glUniform3f(uniformLocation(name), v0, v1, v2);
+    checkGlError();
+}
+
+void ShaderProgram::uniformVec3(string name, const vec3& value) const {
+    uniform3f(name, value.x, value.y, value.z);
 }
 
 void ShaderProgram::uniformMat4(string name, const mat4& value) const {
