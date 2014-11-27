@@ -35,6 +35,14 @@ Texture::Texture(string filename) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
                     GL_LINEAR_MIPMAP_LINEAR);
     checkGlError();
+
+    GLfloat aniso = 0.0f;
+    glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &aniso);
+    checkGlError();
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, aniso);
+    checkGlError();
+
+    checkGlError();
     glGenerateMipmap(GL_TEXTURE_2D);
     checkGlError();
 }
