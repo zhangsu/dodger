@@ -12,6 +12,7 @@ class SceneNode {
 public:
     // Construct an empty scene node.
     SceneNode();
+    virtual ~SceneNode();
 
     // Render this scene node and its descendents.
     virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;

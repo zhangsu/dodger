@@ -9,6 +9,11 @@ using glm::vec3;
 
 SceneNode::SceneNode() : parent_(nullptr) {}
 
+SceneNode::~SceneNode() {
+    for (auto child : children_)
+        delete child;
+}
+
 void SceneNode::addChild(SceneNode* child) {
     children_.push_back(child);
     child->set_parent(this);
