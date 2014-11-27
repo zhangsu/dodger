@@ -17,16 +17,14 @@ SceneNode::~SceneNode() {
 
 void SceneNode::attach(SceneNode* child) {
     children_.push_back(child);
-    child->set_parent(this);
+    child->parent_ = this;
 }
 
 void SceneNode::detach(SceneNode* child) {
     children_.remove(child);
+    child->parent_ = nullptr;
 }
 
-void SceneNode::set_parent(SceneNode* parent) {
-    parent_ = parent;
-}
 
 SceneNode* SceneNode::parent() const {
     return parent_;

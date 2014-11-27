@@ -20,8 +20,6 @@ class SceneNode {
     virtual void attach(SceneNode* child);
     // Removes a child node from this node.
     void detach(SceneNode* child);
-    // Sets the parent of this node.
-    void set_parent(SceneNode* parent);
     // Gets the parent of this node.
     SceneNode* parent() const;
     // Gets the position of this node in another node's frame, or in world
