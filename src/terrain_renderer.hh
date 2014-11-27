@@ -31,6 +31,7 @@ class TerrainRenderer {
     const ShaderProgram& program_;
     const VertexArray vertex_array_;
     const Texture texture_;
+    const Texture mountain_texture_;
 
     // These are lazily-initialized by render.
     mutable bool initialized;

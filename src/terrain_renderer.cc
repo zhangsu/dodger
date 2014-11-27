@@ -17,6 +17,7 @@ TerrainRenderer::TerrainRenderer(
     program_(program),
     vertex_array_(program),
     texture_("data/images/grass_texture.png"),
+    mountain_texture_("data/images/mountain_texture.png"),
     initialized(false) {}
 
 void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
@@ -27,10 +28,12 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
     }
 
     vertex_array_.bind();
-    texture_.activateAndBind(GL_TEXTURE0 + 0);
+    texture_.activateAndBind(GL_TEXTURE0);
+    mountain_texture_.activateAndBind(GL_TEXTURE1);
 
     program_.use();
     program_.uniform1i("sampler", 0);
+    program_.uniform1i("mountain_sampler", 1);
     program_.uniformMat4("mv", glm::value_ptr(mv));
     program_.uniformMat4("mvp", glm::value_ptr(p * mv));
     glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_count_);
