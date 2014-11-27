@@ -9,7 +9,7 @@
 class VertexArray {
   public:
     // Constructs a vertex array object with an associated shader program.
-    VertexArray(const ShaderProgram&);
+    explicit VertexArray(const ShaderProgram&);
 
     // Binds to this vertex array.
     void bind() const;
