@@ -33,6 +33,10 @@ class SceneNode {
     // frame if the node is nullptr.
     glm::mat4 nodeTransformation(const SceneNode* = nullptr) const;
 
+    // Resets the transformation for this node.
+    void resetTransformation();
+    // Sets the transformation of this node.
+    void set_transformation(glm::mat4 transformation);
     // Rotate this scene node by `angle` alone `axis`.
     void rotate(float angle, const glm::vec3& axis);
     // Scale this scene node by `amount`.

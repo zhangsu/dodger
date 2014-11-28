@@ -13,6 +13,9 @@ class Game {
     void move(float x, float y, float z);
     void move(glm::vec3 translation);
     void turn(float angle);
+    // Toggles god mode.
+    void toggleGodMode();
+
     // Returns the viewing transformation matrix.
     glm::mat4 viewTrans() const;
     // Gets the root node of the scene.
@@ -21,7 +24,6 @@ class Game {
     const SceneNode* camera() const;
     // Gets the list of lights.
     const std::vector<const Light*> lights() const;
-
     // Gets the ambient light coefficient.
     float ambient() const;
 
@@ -35,6 +37,8 @@ class Game {
 
     SceneNode scene_root_;
     std::vector<const Light*> lights_;
+
+    bool god_mode_;
 };
 
 #endif // DODGER_GAME_HH_

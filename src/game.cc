@@ -5,6 +5,7 @@
 #include "terrain.hh"
 
 using std::vector;
+using glm::mat4;
 using glm::vec3;
 
 // Public methods.
@@ -12,7 +13,8 @@ using glm::vec3;
 Game::Game()
     : ambient_(0.3f),
       camera_(new SceneNode()),
-      player_(new SceneNode()) {
+      player_(new SceneNode()),
+      god_mode_(false) {
     Terrain* terrain = new Terrain("data/images/heightmap.png");
     scene_root_.attach(terrain);
     scene_root_.attach(player_);
@@ -37,14 +39,35 @@ void Game::move(float x, float y, float z) {
 }
 
 void Game::move(vec3 translation) {
-    player_->translate(translation);
+    if (god_mode_) {
+        camera_->translate(translation);
+    } else {
+        player_->translate(translation);
+    }
 }
 
 void Game::turn(float angle) {
-    player_->rotate(angle, 0, 1, 0);
+    if (god_mode_) {
+        camera_->rotate(angle, 0, 1, 0);
+    } else {
+        player_->rotate(angle, 0, 1, 0);
+    }
 }
 
-glm::mat4 Game::viewTrans() const {
+void Game::toggleGodMode() {
+    god_mode_ ^= true;
+    if (god_mode_) {
+        mat4 world_trans = camera_->worldTransformation();
+        player_->detach(camera_);
+        camera_->set_transformation(world_trans);
+    } else {
+        camera_->resetTransformation();
+        player_->attach(camera_);
+        camera_->translate(0, 0, 10);
+    }
+}
+
+mat4 Game::viewTrans() const {
     return glm::inverse(camera_->worldTransformation());
 }
 

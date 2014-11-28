@@ -25,7 +25,6 @@ void SceneNode::detach(SceneNode* child) {
     child->parent_ = nullptr;
 }
 
-
 SceneNode* SceneNode::parent() const {
     return parent_;
 }
@@ -52,6 +51,14 @@ mat4 SceneNode::nodeTransformation(const SceneNode* node) const {
         return world_trans;
     else
         return glm::inverse(node->worldTransformation()) * world_trans;
+}
+
+void SceneNode::resetTransformation() {
+    transformation_ = mat4();
+}
+
+void SceneNode::set_transformation(glm::mat4 transformation) {
+    transformation_ = transformation;
 }
 
 void SceneNode::render(const Renderer& renderer, mat4 trans) const {

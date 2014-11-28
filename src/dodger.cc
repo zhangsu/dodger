@@ -12,10 +12,11 @@ using std::exception;
 
 namespace {
 
-// This global pointer are used by lambda functions who need to access the
-// renderer but cannot capture any variable due to the fact that they must
-// be used as function pointers. Only lambda functions that do not capture
-// anything can be used as function pointers.
+// These global variables are global because they need to be used by lambda
+// functions who need to access the them but cannot capture any variable due to
+// the fact that they must be used as function pointers. Only lambda functions
+// that do not capture anything can be used as function pointers.
+Game game;
 Renderer* prenderer;
 
 // Handles all the keyboard input state for each frame.
@@ -50,6 +51,9 @@ void handleKeyEvent(GLFWwindow*, int key, int, int action, int) {
     switch (key) {
     case GLFW_KEY_1:
         prenderer->toggleWireframe();
+        break;
+    case GLFW_KEY_G:
+        game.toggleGodMode();
         break;
     }
 }
@@ -90,7 +94,6 @@ int main() {
     // Frame buffer size can be different from window size.
     glfwGetFramebufferSize(window, &width, &height);
     try {
-        Game game;
         OpenGLRenderer renderer(width, height, game);
         prenderer = &renderer;
 
