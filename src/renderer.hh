@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 #include "game.hh"
+#include "sky.hh"
 #include "spirit.hh"
 #include "terrain.hh"
 
@@ -18,6 +19,8 @@ class Renderer {
     virtual void render() const;
     // Renders a terrain node with the specified model transformations.
     virtual void render(const Terrain&, glm::mat4 transformations) const = 0;
+    // Renders a sky node with the specified model transformations.
+    virtual void render(const Sky&, glm::mat4 transformations) const = 0;
     // Renders a spirit node with the specified model transformations.
     virtual void render(const Spirit&, glm::mat4 transformations) const = 0;
     // Callback that resizes the viewport as the window resizes.

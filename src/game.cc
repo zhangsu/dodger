@@ -1,6 +1,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "game.hh"
+#include "sky.hh"
 
 using std::vector;
 using glm::mat4;
@@ -15,6 +16,11 @@ Game::Game()
       player_(new Spirit(terrain_)),
       camera_distance_(10),
       god_mode_(false) {
+    // Set up sky.
+    Sky* sky = new Sky();
+    scene_.attach(sky);
+    sky->scale(10, 10, 10);
+
     // Set up terrain.
     scene_.attach(terrain_);
     terrain_->scale(0.5, 20, 0.5);

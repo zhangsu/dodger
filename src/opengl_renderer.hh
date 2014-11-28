@@ -6,6 +6,7 @@
 #include "game.hh"
 #include "renderer.hh"
 #include "shader_program.hh"
+#include "sky_renderer.hh"
 #include "spirit_renderer.hh"
 #include "terrain_renderer.hh"
 
@@ -20,6 +21,8 @@ class OpenGLRenderer : public Renderer {
     using Renderer::render;
     // Renders a terrain node with the specified model transformation.
     virtual void render(const Terrain&, glm::mat4 model_trans) const;
+    // Renders a sky node with the specified model transformation.
+    virtual void render(const Sky&, glm::mat4 model_trans) const;
     // Renders a spirit node with the specified model transformation.
     virtual void render(const Spirit&, glm::mat4 model_trans) const;
     // Resizes the viewport as the window resizes.
@@ -35,6 +38,7 @@ class OpenGLRenderer : public Renderer {
 
     const ShaderProgram program_;
     const TerrainRenderer terrain_renderer_;
+    const SkyRenderer sky_renderer_;
     const SpiritRenderer spirit_renderer_;
 
     glm::mat4 proj_trans_;

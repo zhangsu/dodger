@@ -11,7 +11,8 @@ class Primitive : public SceneNode {
     const Material& material() const;
 
   protected:
-    Primitive(Material);
+    Primitive();
+    explicit Primitive(Material);
 
   private:
     const Material material_;

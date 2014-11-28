@@ -4,6 +4,8 @@ using glm::vec3;
 
 // Public methods.
 
+Material::Material() {}
+
 Material::Material(vec3 diffuse, vec3 specular, float shininess)
     : diffuse_(diffuse),
       specular_(specular),

@@ -10,8 +10,9 @@ DODGEROUTPUT  = $(BINDIR)dodger
 DODGEROBJECTS = $(addprefix $(SRCDIR),\
                   dodger.o game.o glerror.o image.o light.o material.o\
                   opengl_renderer.o primitive.o renderer.o scene_node.o\
-                  shader_program.o spirit.o spirit_renderer.o terrain.o\
-                  terrain_renderer.o texture.o vertex_array.o)
+                  shader_program.o sky.o sky_renderer.o spirit.o\
+                  spirit_renderer.o terrain.o terrain_renderer.o texture.o\
+                  vertex_array.o)
 
 ifeq ($(DEBUG),1)
   FLAGS += -g

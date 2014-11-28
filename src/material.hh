@@ -6,6 +6,8 @@
 // A representation of material under Phong lighting model.
 class Material {
 public:
+    // Constructs a pure black non-reflective material.
+    Material();
     // Constructs a material with the specified diffuse and specular
     // coefficients and shininess.
     Material(glm::vec3 diffuse, glm::vec3 specular, float shininess);
