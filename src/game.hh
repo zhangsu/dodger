@@ -21,7 +21,7 @@ class Game {
     // Returns the viewing transformation matrix.
     glm::mat4 viewTrans() const;
     // Gets the root node of the scene.
-    const SceneNode& scene_root() const;
+    const SceneNode& scene() const;
     // Gets the camera node.
     const SceneNode* camera() const;
     // Gets the list of lights.
@@ -39,7 +39,7 @@ class Game {
     SceneNode* const camera_;
     SceneNode* const player_;
 
-    SceneNode scene_root_;
+    SceneNode scene_;
     std::vector<const Light*> lights_;
 
     float camera_distance_;
