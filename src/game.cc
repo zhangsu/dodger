@@ -107,6 +107,6 @@ void Game::addLight(SceneNode* parent, Light* light) {
 
 void Game::updateCameraTrans() {
     camera_->resetTrans();
-    camera_->rotate(-camera_distance_ * 0.01, 1, 0, 0);
+    camera_->rotate(-camera_distance_ * 0.02, 1, 0, 0);
     camera_->translate(0, 0, camera_distance_);
 }
