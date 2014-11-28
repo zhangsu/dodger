@@ -13,6 +13,8 @@ class Game {
     void move(float x, float y, float z);
     void move(glm::vec3 translation);
     void turn(float angle);
+    // Zoom in (negative distance) or out (positive distance) the camera.
+    void zoom(float distance);
     // Toggles god mode.
     void toggleGodMode();
 
@@ -29,6 +31,8 @@ class Game {
 
   private:
     void addLight(SceneNode* parent, Light*);
+    // Updates the camera transformation in parent's frame.
+    void updateCameraTrans();
 
     const float ambient_;
 
@@ -38,6 +42,7 @@ class Game {
     SceneNode scene_root_;
     std::vector<const Light*> lights_;
 
+    float camera_distance_;
     bool god_mode_;
 };
 

@@ -14,6 +14,7 @@ Game::Game()
     : ambient_(0.3f),
       camera_(new SceneNode()),
       player_(new SceneNode()),
+      camera_distance_(10),
       god_mode_(false) {
     Terrain* terrain = new Terrain("data/images/heightmap.png");
     scene_root_.attach(terrain);
@@ -25,7 +26,7 @@ Game::Game()
     player_->translate(0, 5, 0);
     player_->attach(new Spirit());
     player_->attach(camera_);
-    camera_->translate(0, 0, 10);
+    updateCameraTrans();
 
     Light* sun = new Light(vec3(0.2, 0.2, 0.2), vec3(0.1, 0, 0));
     sun->translate(0, 100, 0);
@@ -54,6 +55,13 @@ void Game::turn(float angle) {
     }
 }
 
+void Game::zoom(float distance) {
+    camera_distance_ += distance;
+    camera_distance_ = std::min(20.0f, std::max(-1.0f, camera_distance_));
+    if (!god_mode_)
+        updateCameraTrans();
+}
+
 void Game::toggleGodMode() {
     god_mode_ ^= true;
     if (god_mode_) {
@@ -61,9 +69,8 @@ void Game::toggleGodMode() {
         player_->detach(camera_);
         camera_->set_trans(world_trans);
     } else {
-        camera_->resetTrans();
         player_->attach(camera_);
-        camera_->translate(0, 0, 10);
+        updateCameraTrans();
     }
 }
 
@@ -92,4 +99,10 @@ float Game::ambient() const {
 void Game::addLight(SceneNode* parent, Light* light) {
     lights_.push_back(light);
     parent->attach(light);
+}
+
+void Game::updateCameraTrans() {
+    camera_->resetTrans();
+    camera_->rotate(-camera_distance_ * 0.01, 1, 0, 0);
+    camera_->translate(0, 0, camera_distance_);
 }

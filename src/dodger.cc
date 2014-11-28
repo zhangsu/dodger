@@ -58,6 +58,11 @@ void handleKeyEvent(GLFWwindow*, int key, int, int action, int) {
     }
 }
 
+// Handles scrolling device input event (e.g., mouse scroll).
+void handleScrollEvent(GLFWwindow*, double, double yoffset) {
+    game.zoom(yoffset * 0.1);
+}
+
 }
 
 int main() {
@@ -105,6 +110,7 @@ int main() {
             }
         );
         glfwSetKeyCallback(window, handleKeyEvent);
+        glfwSetScrollCallback(window, handleScrollEvent);
 
         // Force vertical sync.
         glfwSwapInterval(1);
