@@ -26,17 +26,17 @@ class SceneNode {
     // frame if the node is nullptr.
     glm::vec3 position(const SceneNode* node = nullptr) const;
     // Gets the transformation matrix of this node.
-    glm::mat4 transformation() const;
+    glm::mat4 trans() const;
     // Gets the cumulative transformation matrix from root to this node.
-    glm::mat4 worldTransformation() const;
+    glm::mat4 worldTrans() const;
     // Gets the transformation matrix in another node's frame, or in world
     // frame if the node is nullptr.
-    glm::mat4 nodeTransformation(const SceneNode* = nullptr) const;
+    glm::mat4 nodeTrans(const SceneNode* = nullptr) const;
 
     // Resets the transformation for this node.
-    void resetTransformation();
+    void resetTrans();
     // Sets the transformation of this node.
-    void set_transformation(glm::mat4 transformation);
+    void set_trans(glm::mat4 trans);
     // Rotate this scene node by `angle` alone `axis`.
     void rotate(float angle, const glm::vec3& axis);
     // Scale this scene node by `amount`.
@@ -54,7 +54,7 @@ class SceneNode {
     // Renders the children with the specified cumulative matrix stack.
     void renderChildren(const Renderer& renderer, glm::mat4 stack) const;
 
-    glm::mat4 transformation_;
+    glm::mat4 trans_;
 
     std::list<SceneNode*> children_;
     SceneNode* parent_;

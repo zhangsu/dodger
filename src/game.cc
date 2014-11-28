@@ -57,18 +57,18 @@ void Game::turn(float angle) {
 void Game::toggleGodMode() {
     god_mode_ ^= true;
     if (god_mode_) {
-        mat4 world_trans = camera_->worldTransformation();
+        mat4 world_trans = camera_->worldTrans();
         player_->detach(camera_);
-        camera_->set_transformation(world_trans);
+        camera_->set_trans(world_trans);
     } else {
-        camera_->resetTransformation();
+        camera_->resetTrans();
         player_->attach(camera_);
         camera_->translate(0, 0, 10);
     }
 }
 
 mat4 Game::viewTrans() const {
-    return glm::inverse(camera_->worldTransformation());
+    return glm::inverse(camera_->worldTrans());
 }
 
 const SceneNode& Game::scene_root() const {
