@@ -26,7 +26,6 @@ Game::Game()
     // Update player's y position immediately.
     player_->translate(0, 0);
     addLight(player_, new Light(vec3(0.05, 0.1, 1.0), vec3(0.1, 0.01, 0.01)));
-    addLight(player_, new Light(vec3(0.05, 0.1, 1.0), vec3(0.1, 0.01, 0.01)));
 
     // Set up camera.
     player_->attach(camera_);
