@@ -63,11 +63,20 @@ void OpenGLRenderer::resize(int width, int height) {
 
 void OpenGLRenderer::toggleWireframe() {
     Renderer::toggleWireframe();
-    if (draw_wireframe_)
+    if (drawing_wireframe_)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     else
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     checkGlError();
+}
+
+void OpenGLRenderer::toggleBackfaceCulling() {
+    Renderer::toggleBackfaceCulling();
+    if (culling_backface_) {
+        glEnable(GL_CULL_FACE);
+    } else {
+        glDisable(GL_CULL_FACE);
+    }
 }
 
 // Private methods.

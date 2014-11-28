@@ -26,6 +26,8 @@ class OpenGLRenderer : public Renderer {
     void resize(int width, int height);
     // Toggles wireframe mode. The default is off.
     virtual void toggleWireframe();
+    // Toggles backface culling. The default is on.
+    virtual void toggleBackfaceCulling();
 
   private:
     // Initialize GLEW.

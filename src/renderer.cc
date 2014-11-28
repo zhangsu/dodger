@@ -2,7 +2,10 @@
 
 // Public methods.
 
-Renderer::Renderer(const Game& game) : game_(game), draw_wireframe_(false) {}
+Renderer::Renderer(const Game& game)
+    : game_(game),
+      drawing_wireframe_(false),
+      culling_backface_(true) {}
 
 void Renderer::render() const {
     clear();
@@ -10,5 +13,9 @@ void Renderer::render() const {
 }
 
 void Renderer::toggleWireframe() {
-    draw_wireframe_ ^= true;
+    drawing_wireframe_ ^= true;
+}
+
+void Renderer::toggleBackfaceCulling() {
+    culling_backface_ ^= true;
 }

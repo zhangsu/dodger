@@ -24,12 +24,15 @@ class Renderer {
     virtual void resize(int width, int height) = 0;
     // Toggles wireframe mode. The default is off.
     virtual void toggleWireframe();
+    // Toggles backface culling. The default is on.
+    virtual void toggleBackfaceCulling();
 
 
   protected:
     const Game& game_;
 
-    bool draw_wireframe_;
+    bool drawing_wireframe_;
+    bool culling_backface_;
 };
 
 #endif // DODGER_RENDERER_HH_

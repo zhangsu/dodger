@@ -52,6 +52,9 @@ void handleKeyEvent(GLFWwindow*, int key, int, int action, int) {
     case GLFW_KEY_1:
         prenderer->toggleWireframe();
         break;
+    case GLFW_KEY_2:
+        prenderer->toggleBackfaceCulling();
+        break;
     case GLFW_KEY_G:
         game.toggleGodMode();
         break;
