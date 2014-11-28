@@ -47,6 +47,8 @@ void main() {
             * max(dot(unit_normal, light_direction), 0.0);
         vec3 specular_color = intensity * specular
             * pow(max(dot(r, eye_pos), 0.0), shininess);
+        diffuse_color = clamp(diffuse_color, 0.0, 1.0);
+        specular_color = clamp(specular_color, 0.0, 1.0);
 
         color += tex_color * diffuse_color + specular_color;
     }
