@@ -16,23 +16,28 @@ Game::Game()
       player_(new SceneNode()),
       camera_distance_(10),
       god_mode_(false) {
+    // Set up terrain.
     Terrain* terrain = new Terrain("data/images/heightmap.png");
     scene_root_.attach(terrain);
-    scene_root_.attach(player_);
     terrain->scale(0.5, 20, 0.5);
     // Center the terrain in world space.
     terrain->translate(-terrain->width() / 2.0, 0, -terrain->height() / 2.0);
 
+    // Set up player.
+    scene_root_.attach(player_);
     player_->translate(0, 5, 0);
     player_->attach(new Spirit());
+    addLight(player_, new Light(vec3(0.05, 0.1, 1.0), vec3(0.1, 0.01, 0.01)));
+
+    // Set up camera.
     player_->attach(camera_);
     updateCameraTrans();
 
+    // Add a global sunlight.
     Light* sun = new Light(vec3(0.2, 0.2, 0.2), vec3(0.1, 0, 0));
     sun->translate(0, 100, 0);
     addLight(&scene_root_, sun);
 
-    addLight(player_, new Light(vec3(0.05, 0.1, 1.0), vec3(0.1, 0.01, 0.01)));
 }
 
 void Game::move(float x, float y, float z) {
