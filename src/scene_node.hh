@@ -22,11 +22,13 @@ class SceneNode {
     void detach(SceneNode* child);
     // Gets the parent of this node.
     SceneNode* parent() const;
+    // Gets the scaling of this node.
+    const glm::vec3& scaling() const;
     // Gets the position of this node in another node's frame, or in world
     // frame if the node is nullptr.
     glm::vec3 position(const SceneNode* node = nullptr) const;
     // Gets the transformation matrix of this node.
-    glm::mat4 trans() const;
+    const glm::mat4& trans() const;
     // Gets the cumulative transformation matrix from root to this node.
     glm::mat4 worldTrans() const;
     // Gets the transformation matrix in another node's frame, or in world
@@ -55,6 +57,7 @@ class SceneNode {
     void renderChildren(const Renderer& renderer, glm::mat4 stack) const;
 
     glm::mat4 trans_;
+    glm::vec3 scaling_;
 
     std::list<SceneNode*> children_;
     SceneNode* parent_;

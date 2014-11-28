@@ -8,7 +8,7 @@ using glm::vec4;
 
 // Public methods.
 
-SceneNode::SceneNode() : parent_(nullptr) {}
+SceneNode::SceneNode() : scaling_(1.0f, 1.0f, 1.0f), parent_(nullptr) {}
 
 SceneNode::~SceneNode() {
     for (auto child : children_)
@@ -29,11 +29,15 @@ SceneNode* SceneNode::parent() const {
     return parent_;
 }
 
+const vec3& SceneNode::scaling() const {
+    return scaling_;
+}
+
 vec3 SceneNode::position(const SceneNode* node) const {
     return vec3(nodeTrans(node) * vec4(0, 0, 0, 1));
 }
 
-mat4 SceneNode::trans() const {
+const mat4& SceneNode::trans() const {
     return trans_;
 }
 
@@ -71,6 +75,7 @@ void SceneNode::rotate(float angle, const vec3& axis) {
 
 void SceneNode::scale(const vec3& amount) {
     trans_ = glm::scale(trans_, amount);
+    scaling_ *= amount;
 }
 
 void SceneNode::translate(const vec3& amount) {

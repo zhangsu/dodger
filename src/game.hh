@@ -3,8 +3,10 @@
 
 #include <vector>
 #include <glm/glm.hpp>
-#include "scene_node.hh"
 #include "light.hh"
+#include "scene_node.hh"
+#include "spirit.hh"
+#include "terrain.hh"
 
 class Game {
   public:
@@ -36,8 +38,9 @@ class Game {
 
     const float ambient_;
 
+    Terrain* const terrain_;
     SceneNode* const camera_;
-    SceneNode* const player_;
+    Spirit* const player_;
 
     SceneNode scene_;
     std::vector<const Light*> lights_;

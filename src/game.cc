@@ -1,8 +1,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "game.hh"
-#include "spirit.hh"
-#include "terrain.hh"
 
 using std::vector;
 using glm::mat4;
@@ -12,21 +10,22 @@ using glm::vec3;
 
 Game::Game()
     : ambient_(0.3f),
+      terrain_(new Terrain("data/images/heightmap.png")),
       camera_(new SceneNode()),
-      player_(new SceneNode()),
+      player_(new Spirit(terrain_)),
       camera_distance_(10),
       god_mode_(false) {
     // Set up terrain.
-    Terrain* terrain = new Terrain("data/images/heightmap.png");
-    scene_.attach(terrain);
-    terrain->scale(0.5, 20, 0.5);
+    scene_.attach(terrain_);
+    terrain_->scale(0.5, 20, 0.5);
     // Center the terrain in world space.
-    terrain->translate(-terrain->width() / 2.0, 0, -terrain->height() / 2.0);
+    terrain_->translate(-terrain_->width() / 2.0, 0, -terrain_->height() / 2.0);
 
     // Set up player.
     scene_.attach(player_);
-    player_->translate(0, 5, 0);
-    player_->attach(new Spirit());
+    // Update player's y position immediately.
+    player_->translate(0, 0);
+    addLight(player_, new Light(vec3(0.05, 0.1, 1.0), vec3(0.1, 0.01, 0.01)));
     addLight(player_, new Light(vec3(0.05, 0.1, 1.0), vec3(0.1, 0.01, 0.01)));
 
     // Set up camera.
@@ -47,7 +46,7 @@ void Game::move(vec3 translation) {
     if (god_mode_) {
         camera_->translate(translation);
     } else {
-        player_->translate(translation);
+        player_->translate(translation.x, translation.z);
     }
 }
 

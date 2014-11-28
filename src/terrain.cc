@@ -8,6 +8,7 @@ using std::string;
 using std::vector;
 using glm::mat4;
 using glm::vec3;
+using glm::vec4;
 
 // Public methods.
 
@@ -48,4 +49,30 @@ int Terrain::height() const {
 
 const vector<float>& Terrain::operator [](int index) const {
     return heightmap_[index];
+}
+
+float Terrain::height(float x, float z) const {
+    if (x < 0 || z < 0 || x >= width() - 1 || z >= height() - 1)
+        return 0;
+
+    int x0 = x;
+    int z0 = z;
+    int x1 = x0 + 1;
+    int z1 = z0 + 1;
+
+    float y0 = (*this)[x0][z0];
+    float y1 = (*this)[x1][z0];
+    float y2 = (*this)[x0][z1];
+    float y3 = (*this)[x1][z1];
+
+    // Linear interpolation on the terrain triangles.
+    float dx = x - x0;
+    float dz = z - z0;
+
+    float y;
+    if (dx + dz < 1)
+        y = y0 + (y1 - y0) * dx + (y2 - y0) * dz;
+    else
+        y = y3 + (y1 - y3) * (1 - dz) + (y2 - y3) * (1 - dx);
+    return (trans_ * vec4(x, y, z, 1)).y;
 }
