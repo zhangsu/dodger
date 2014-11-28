@@ -32,7 +32,6 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
     vertex_array_.bind();
     program_.use();
 
-    const Material& material = terrain.material();
     for (unsigned i = 0; i < game_.lights().size(); ++i) {
         const Light* light = game_.lights()[i];
         string prefix = string("lights[") + to_string(i) + "].";
@@ -41,6 +40,8 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
         program_.uniformVec3(prefix + "color", light->color());
         program_.uniformVec3(prefix + "attenuation", light->attenuation());
     }
+
+    const Material& material = terrain.material();
     program_.uniform1i("light_count", game_.lights().size());
     program_.uniformVec3("ambient", game_.ambient() * material.diffuse());
     program_.uniformVec3("diffuse", material.diffuse());
