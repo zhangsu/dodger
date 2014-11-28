@@ -10,8 +10,8 @@ SpiritRenderer::SpiritRenderer(
     const ShaderProgram& program
 ) : game_(game),
     program_(program),
-    vertex_array_(program),
-    lod_(20) {
+    lod_(20),
+    vertex_array_(program) {
 
     vector<GLfloat> positions(lod_ * 3);
 
@@ -22,6 +22,7 @@ SpiritRenderer::SpiritRenderer(
     }
 
     vertex_array_.addAttribute(positions, "position", 3);
+    vertex_array_.set_count(lod_);
 }
 
 void SpiritRenderer::render(const Spirit&, const mat4& mv,
@@ -30,6 +31,6 @@ void SpiritRenderer::render(const Spirit&, const mat4& mv,
 
     program_.use();
     program_.uniformMat4("mvp", p * mv);
-    glDrawArrays(GL_LINE_LOOP, 0, lod_);
+    glDrawArrays(GL_LINE_LOOP, 0, vertex_array_.count());
     checkGlError();
 }

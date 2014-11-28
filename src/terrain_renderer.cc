@@ -15,10 +15,10 @@ using glm::vec3;
 TerrainRenderer::TerrainRenderer(const Game& game)
     : program_("src/terrain.vert", "src/terrain.frag"),
       game_(game),
-      vertex_array_(program_),
       grass_texture_("data/images/grass_texture.png"),
       rock_texture_("data/images/mountain_texture.png"),
-      initialized(false) {}
+      initialized(false),
+      vertex_array_(program_) {}
 
 void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
                              const mat4& p) const {
@@ -54,7 +54,7 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
     program_.uniformMat4("mv", mv);
     program_.uniformMat4("mvp", p * mv);
 
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_count_);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_array_.count());
     checkGlError();
 }
 
@@ -109,7 +109,7 @@ void TerrainRenderer::genVertices(const Terrain& terrain) const {
 
     vertex_array_.addAttribute(positions, "position", 3);
     vertex_array_.addAttribute(normals, "normal", 3);
-    vertex_count_ = positions.size() / 3;
+    vertex_array_.set_count(positions.size() / 3);
 }
 
 void TerrainRenderer::addPosition(const Terrain& terrain,

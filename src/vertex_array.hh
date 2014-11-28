@@ -17,10 +17,16 @@ class VertexArray {
     // tuple size of `tuple_len` and associates it with the specified vertex
     // attribute of the shader.
     void addAttribute(std::vector<GLfloat> data, std::string attr,
-                      size_t tuple_len) const;
+                      size_t tuple_len);
+    // Sets the number of vertices for this vertex array.
+    void set_count(size_t count);
+    // Gets the number of vertices for this vertex array.
+    size_t count() const;
 
   private:
     GLuint id_;
+    size_t count_;
+
     const ShaderProgram& program_;
 };
 

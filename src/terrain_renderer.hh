@@ -30,13 +30,12 @@ class TerrainRenderer {
     ShaderProgram program_;
 
     const Game& game_;
-    const VertexArray vertex_array_;
     const Texture grass_texture_;
     const Texture rock_texture_;
 
     // These are lazily-initialized by render.
     mutable bool initialized;
-    mutable size_t vertex_count_;
+    mutable VertexArray vertex_array_;
 };
 
 #endif // DODGER_TERRAIN_RENDERER_HH_

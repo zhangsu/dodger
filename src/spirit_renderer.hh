@@ -1,7 +1,6 @@
 #ifndef DODGER_SPIRIT_RENDERER_HH_
 #define DODGER_SPIRIT_RENDERER_HH_
 
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include "game.hh"
 #include "shader_program.hh"
@@ -21,8 +20,9 @@ class SpiritRenderer {
   private:
     const Game& game_;
     const ShaderProgram& program_;
-    const VertexArray vertex_array_;
     const int lod_;
+
+    VertexArray vertex_array_;
 };
 
 #endif // DODGER_SPIRIT_RENDERER_HH_
