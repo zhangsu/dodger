@@ -27,8 +27,8 @@ OpenGLRenderer::OpenGLRenderer(int width, int height, const Game& game)
         checkGlError(),
 
         game)),
-      program_("src/shader.vert", "src/shader.frag"),
-      terrain_renderer_(game_, program_),
+      program_("src/texture.vert", "src/texture.frag"),
+      terrain_renderer_(game_),
       spirit_renderer_(game_, program_) {
 
     resize(width, height);

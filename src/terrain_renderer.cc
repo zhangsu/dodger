@@ -12,15 +12,13 @@ using glm::vec3;
 
 // Public methods.
 
-TerrainRenderer::TerrainRenderer(
-    const Game& game,
-    const ShaderProgram& program
-) : game_(game),
-    program_(program),
-    vertex_array_(program),
-    grass_texture_("data/images/grass_texture.png"),
-    rock_texture_("data/images/mountain_texture.png"),
-    initialized(false) {}
+TerrainRenderer::TerrainRenderer(const Game& game)
+    : program_("src/terrain.vert", "src/terrain.frag"),
+      game_(game),
+      vertex_array_(program_),
+      grass_texture_("data/images/grass_texture.png"),
+      rock_texture_("data/images/mountain_texture.png"),
+      initialized(false) {}
 
 void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
                              const mat4& p) const {

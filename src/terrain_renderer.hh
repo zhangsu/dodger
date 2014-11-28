@@ -13,7 +13,7 @@
 class TerrainRenderer {
   public:
     // Constructs a terrain renderer with the specified shader program.
-    TerrainRenderer(const Game&, const ShaderProgram&);
+    TerrainRenderer(const Game&);
 
     // Renders a terrain with the specified model-view and projection
     // transformations.
@@ -27,8 +27,9 @@ class TerrainRenderer {
     void addNormal(const Terrain&, std::vector<GLfloat>& normals,
                    int x, int z) const;
 
+    ShaderProgram program_;
+
     const Game& game_;
-    const ShaderProgram& program_;
     const VertexArray vertex_array_;
     const Texture grass_texture_;
     const Texture rock_texture_;

@@ -29,7 +29,6 @@ void SpiritRenderer::render(const Spirit&, const mat4& mv,
     vertex_array_.bind();
 
     program_.use();
-    program_.uniformMat4("mv", mv);
     program_.uniformMat4("mvp", p * mv);
     glDrawArrays(GL_LINE_LOOP, 0, lod_);
     checkGlError();
