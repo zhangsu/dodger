@@ -49,7 +49,7 @@ void Game::move(float x, float y, float z) {
 
 void Game::move(vec3 translation) {
     if (god_mode_) {
-        camera_->translate(translation);
+        camera_->translate(5.0f * translation);
     } else {
         player_->translate(translation.x, translation.z);
     }
