@@ -6,7 +6,7 @@
 using std::string;
 using std::vector;
 
-Texture::Texture(string filename) {
+Texture::Texture(string filename, bool clamp) {
     glGenTextures(1, &id_);
     checkGlError();
 
@@ -33,10 +33,12 @@ Texture::Texture(string filename) {
                  map.height(), 0, GL_RGB, GL_FLOAT, &data[0]);
     checkGlError();
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    checkGlError();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    checkGlError();
+    if (clamp) {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        checkGlError();
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        checkGlError();
+    }
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     checkGlError();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,

@@ -8,7 +8,7 @@
 class Texture {
   public:
     // Constructs a texture from an image.
-    explicit Texture(std::string filename);
+    Texture(std::string filename, bool clamp = false);
 
     // Binds to this texture.
     void bind() const;

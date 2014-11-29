@@ -19,7 +19,8 @@ Game::Game()
     // Set up sky.
     Sky* sky = new Sky();
     scene_.attach(sky);
-    sky->scale(10, 10, 10);
+    sky->translate(-2500, -2500, -2500);
+    sky->scale(5000, 5000, 5000);
 
     // Set up terrain.
     scene_.attach(terrain_);
