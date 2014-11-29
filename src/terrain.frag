@@ -25,8 +25,8 @@ out vec4 frag_color;
 void main() {
     // Texture mapping.
     float altitude = untrans_position.y;
-    vec3 tex_color = texture(grass_sampler, uv).rgb * (1 - altitude)
-                   + texture(rock_sampler, uv).rgb * altitude;
+    vec3 tex_color = mix(texture(grass_sampler, uv).rgb,
+                         texture(rock_sampler, uv).rgb, altitude);
 
     // Phong Lighting.
     vec3 color = tex_color * ambient;
