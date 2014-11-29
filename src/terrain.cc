@@ -19,17 +19,18 @@ Terrain::Terrain(string heightmap_filename)
     heightmap.loadPng(heightmap_filename);
     width_ = heightmap.width();
     height_ = heightmap.height();
-    // Only use a even heightmap dimension.
+    // Only use an even heightmap dimension.
     if (width_ % 2 == 1)
         width_--;
     if (height_ % 2 == 1)
         height_--;
-    heightmap_.resize(width_);
+    heightmap_.resize(height_);
 
-    for (int x = 0; x < width_; ++x) {
-        heightmap_[x].resize(height_);
-        for (int z = 0; z < height_; ++z)
-            heightmap_[x][z] = heightmap(x, z, 0);
+    for (int z = 0; z < height_; ++z) {
+        heightmap_[z].resize(width_);
+        for (int x = 0; x < width_; ++x) {
+            heightmap_[z][x] = heightmap(x, z, 0);
+        }
     }
 }
 
@@ -60,10 +61,10 @@ float Terrain::height(float x, float z) const {
     int x1 = x0 + 1;
     int z1 = z0 + 1;
 
-    float y0 = (*this)[x0][z0];
-    float y1 = (*this)[x1][z0];
-    float y2 = (*this)[x0][z1];
-    float y3 = (*this)[x1][z1];
+    float y0 = (*this)[z0][x0];
+    float y1 = (*this)[z0][x1];
+    float y2 = (*this)[z1][x0];
+    float y3 = (*this)[z1][x1];
 
     // Linear interpolation on the terrain triangles.
     float dx = x - x0;

@@ -20,7 +20,8 @@ class Terrain : public Primitive {
     int width() const;
     // Gets the number of heights in the z direction.
     int height() const;
-    // Gets the specified row of the heightmap.
+    // Gets the specified row of the heightmap. The origin is the top left
+    // corner of the heightmap.
     const std::vector<float>& operator [](int index) const;
     // Gets the height at a specified point on the terrain.
     float height(float x, float z) const;
