@@ -39,7 +39,7 @@ Game::Game()
     updateCameraTrans();
 
     // Add a global sunlight.
-    Light* sun = new Light(vec3(0.2, 0.2, 0.2), vec3(0.1, 0, 0));
+    Light* sun = new Light(vec3(0.1, 0.1, 0.1), vec3(0.1, 0, 0));
     sun->translate(0, 100, 0);
     addLight(&scene_, sun);
 }
