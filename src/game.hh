@@ -12,10 +12,12 @@ class Game {
   public:
     Game();
 
+    // Moves the player.
     void move(float x, float y, float z);
     void move(glm::vec3 translation);
+    // Turns the player left or right on the xz terrain plane.
     void turn(float angle);
-    // Zoom in (negative distance) or out (positive distance) the camera.
+    // Zooms in (negative distance) or out (positive distance) the camera.
     void zoom(float distance);
     // Toggles god mode.
     void toggleGodMode();
