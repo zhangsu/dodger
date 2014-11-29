@@ -18,6 +18,10 @@ namespace {
 // that do not capture anything can be used as function pointers.
 Game game;
 Renderer* prenderer;
+bool left_mouse_button_down = false;
+bool right_mouse_button_down = false;
+
+struct { double x, y; } last_mouse_pos;
 
 // Handles all the keyboard input state for each frame.
 void handleKeyState(GLFWwindow* window, Game& game) {
@@ -59,6 +63,38 @@ void handleKeyEvent(GLFWwindow*, int key, int, int action, int) {
         game.toggleGodMode();
         break;
     }
+}
+
+// Handles mouse press and release event.
+void handleMouseButtonEvent(GLFWwindow* window, int button, int action, int) {
+    switch (button) {
+    case GLFW_MOUSE_BUTTON_LEFT:
+        left_mouse_button_down = (action == GLFW_PRESS);
+        if (!left_mouse_button_down)
+            game.lookAtPlayer();
+        break;
+    case GLFW_MOUSE_BUTTON_RIGHT:
+        right_mouse_button_down = (action == GLFW_PRESS);
+        break;
+    }
+    if (left_mouse_button_down || right_mouse_button_down)
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    else
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+// Handles mouse move event.
+void handleMouseMoveEvent(GLFWwindow* window, double x, double y) {
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
+    double dx = (x - last_mouse_pos.x) / width;
+    double dy = (y - last_mouse_pos.y) / height;
+    if (right_mouse_button_down)
+        game.rotatePlayer(dx, dy);
+    else if (left_mouse_button_down)
+        game.rotateCamera(dx, dy);
+    last_mouse_pos.x = x;
+    last_mouse_pos.y = y;
 }
 
 // Handles scrolling device input event (e.g., mouse scroll).
@@ -113,7 +149,11 @@ int main() {
             }
         );
         glfwSetKeyCallback(window, handleKeyEvent);
+        glfwSetMouseButtonCallback(window, handleMouseButtonEvent);
+        glfwSetCursorPosCallback(window, handleMouseMoveEvent);
         glfwSetScrollCallback(window, handleScrollEvent);
+
+        glfwGetCursorPos(window, &last_mouse_pos.x, &last_mouse_pos.y);
 
         // Force vertical sync.
         glfwSwapInterval(1);

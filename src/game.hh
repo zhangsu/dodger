@@ -19,6 +19,12 @@ class Game {
     void turn(float angle);
     // Zooms in (negative distance) or out (positive distance) the camera.
     void zoom(float distance);
+    // Rotates the camera only.
+    void rotateCamera(float dx, float dy);
+    // Rotates the player together with camera.
+    void rotatePlayer(float dx, float dy);
+    // Reset the camera's x angle, making it look at the player.
+    void lookAtPlayer();
     // Toggles god mode.
     void toggleGodMode();
 
@@ -47,7 +53,10 @@ class Game {
     SceneNode scene_;
     std::vector<const Light*> lights_;
 
+    // Camera's distance to the player.
     float camera_distance_;
+    glm::vec2 camera_angles_;
+    glm::vec3 god_camera_translation_;
     bool god_mode_;
 };
 

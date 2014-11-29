@@ -71,6 +71,38 @@ void Game::zoom(float distance) {
         updateCameraTrans();
 }
 
+void Game::rotateCamera(float dx, float dy) {
+    float angle = glm::radians(120.0f);
+    if (god_mode_) {
+        camera_->rotate(-dx * angle, 0, 1, 0);
+        camera_->rotate(-dy * angle, 1, 0, 0);
+    } else {
+        camera_angles_.x += dx * angle;
+        camera_angles_.y += -dy * angle;
+        updateCameraTrans();
+    }
+}
+
+void Game::rotatePlayer(float dx, float dy) {
+    float camera_angle = glm::radians(60.0f);
+    if (god_mode_) {
+        camera_->rotate(-dx * camera_angle, 0, 1, 0);
+        camera_->rotate(-dy * camera_angle, 1, 0, 0);
+    } else {
+        player_->rotate(-dx * glm::radians(120.0f), 0, 1, 0);
+        // Camera y position can be rotated at the same time, but not x.
+        camera_angles_.y += -dy * camera_angle;
+        updateCameraTrans();
+    }
+}
+
+void Game::lookAtPlayer() {
+    if (god_mode_)
+        return;
+    camera_angles_.x = 0;
+    updateCameraTrans();
+}
+
 void Game::toggleGodMode() {
     god_mode_ ^= true;
     if (god_mode_) {
@@ -111,7 +143,10 @@ void Game::addLight(SceneNode* parent, Light* light) {
 }
 
 void Game::updateCameraTrans() {
+    camera_angles_.y = std::min(std::max(camera_angles_.y, -0.5f), 0.1f);
     camera_->resetTrans();
-    camera_->rotate(-camera_distance_ * 0.02, 1, 0, 0);
+    // Rotate around camera's, also the player's origin.
+    camera_->rotate(camera_angles_.x, 0, 1, 0);
+    camera_->rotate(camera_angles_.y, 1, 0, 0);
     camera_->translate(0, 0, camera_distance_);
 }
