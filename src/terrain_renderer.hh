@@ -13,13 +13,14 @@
 class TerrainRenderer {
   public:
     // Constructs a terrain renderer with the specified shader program.
-    TerrainRenderer(const Game&);
+    TerrainRenderer(const Game&, int shadow_map_texture_index);
 
     // Renders a terrain for shadowing.
     void renderShadow(const Terrain&) const;
     // Renders a terrain with the specified model-view and projection
     // transformations.
-    void render(const Terrain&, const glm::mat4& mv, const glm::mat4& p) const;
+    void render(const Terrain&, const glm::mat4& mv, const glm::mat4& p,
+                const glm::mat4& shadow_mvp) const;
 
   private:
     // Generates positions from a terrain and return the position count.
@@ -32,6 +33,7 @@ class TerrainRenderer {
     ShaderProgram program_;
 
     const Game& game_;
+    const int shadow_map_texture_index_;
     const Texture grass_texture_;
     const Texture rock_texture_;
 

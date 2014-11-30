@@ -12,9 +12,10 @@ using glm::vec3;
 
 // Public methods.
 
-TerrainRenderer::TerrainRenderer(const Game& game)
+TerrainRenderer::TerrainRenderer(const Game& game, int shadow_map_texture_index)
     : program_("src/terrain.vert", "src/terrain.frag"),
       game_(game),
+      shadow_map_texture_index_(shadow_map_texture_index),
       grass_texture_("data/images/grass_texture.png"),
       rock_texture_("data/images/mountain_texture.png"),
       initialized(false),
@@ -32,7 +33,7 @@ void TerrainRenderer::renderShadow(const Terrain& terrain) const {
 }
 
 void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
-                             const mat4& p) const {
+                             const mat4& p, const mat4& shadow_mvp) const {
     if (!initialized) {
         genVertices(terrain);
         initialized = true;
@@ -48,6 +49,7 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
                              light->position(game_.camera()));
         program_.uniformVec3(prefix + "color", light->color());
         program_.uniformVec3(prefix + "attenuation", light->attenuation());
+        program_.uniform1i(prefix + "cast_shadow", light->cast_shadow());
     }
 
     const Material& material = terrain.material();
@@ -61,10 +63,11 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
     rock_texture_.activateAndBind(GL_TEXTURE1);
     program_.uniform1i("grass_sampler", 0);
     program_.uniform1i("rock_sampler", 1);
-    program_.uniform1i("shadowmap_sampler", 8);
+    program_.uniform1i("shadowmap_sampler", shadow_map_texture_index_);
 
     program_.uniformMat4("mv", mv);
     program_.uniformMat4("mvp", p * mv);
+    program_.uniformMat4("shadow_mvp", shadow_mvp);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_array_.count());
     checkGlError();
@@ -124,7 +127,6 @@ void TerrainRenderer::genVertices(const Terrain& terrain) const {
     vertex_array_.set_count(positions.size() / 3);
 }
 
-#include <cstdio>
 void TerrainRenderer::addPosition(const Terrain& terrain,
                                   vector<GLfloat>& positions,
                                   int x, int z) const {

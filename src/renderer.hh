@@ -21,10 +21,6 @@ class Renderer {
     virtual void prepareRendering() const = 0;
     // Renders everything.
     virtual void render();
-    // Renders a terrain node with the specified model transformations for
-    // shadowing.
-    virtual void renderShadow(const Terrain&,
-                              glm::mat4 transformations) const = 0;
     // Renders a spirit node with the specified model transformations for
     // shadowing.
     virtual void renderShadow(const Spirit&, glm::mat4 transformations) = 0;

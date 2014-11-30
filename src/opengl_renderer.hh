@@ -24,9 +24,6 @@ class OpenGLRenderer : public Renderer {
     // Prepares for rendering.
     virtual void prepareRendering() const;
     using Renderer::render;
-    // Renders a terrain node with the specified model transformation for
-    // shadowing.
-    virtual void renderShadow(const Terrain&, glm::mat4 model_trans) const;
     // Renders a spirit node with the specified model transformation for
     // shadowing.
     virtual void renderShadow(const Spirit&, glm::mat4 model_trans);
@@ -47,8 +44,8 @@ class OpenGLRenderer : public Renderer {
     // Initialize GLEW.
     void initGlew() const;
 
+    const int shadow_map_texture_index_;
     const glm::mat4 shadow_proj_trans_;
-    const ShaderProgram shadow_mapper_;
     const TerrainRenderer terrain_renderer_;
     const SkyRenderer sky_renderer_;
     SpiritRenderer spirit_renderer_;

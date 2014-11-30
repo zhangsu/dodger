@@ -27,13 +27,13 @@ OpenGLRenderer::OpenGLRenderer(int width, int height, const Game& game)
         checkGlError(),
 
         game)),
-      shadow_proj_trans_(glm::ortho<float>(-10, 10, -10, 10, -10, 20)),
-      shadow_mapper_("src/shadow_map.vert", "src/shadow_map.frag"),
-      terrain_renderer_(game_),
+      shadow_map_texture_index_(8),
+      shadow_proj_trans_(glm::ortho<float>(-150, 150, -130, 130, -1000, 10000)),
+      terrain_renderer_(game_, shadow_map_texture_index_),
       sky_renderer_(game_),
       spirit_renderer_(game_),
       shadow_frame_buffer_(0),
-      shadow_map_(1024, 1024, true, true) {
+      shadow_map_(8192, 8192, false, true) {
 
     resize(width, height);
 
@@ -49,6 +49,9 @@ OpenGLRenderer::OpenGLRenderer(int width, int height, const Game& game)
     checkGlError();
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         throw runtime_error("Framebuffer object not complete");
+
+    shadow_map_.activateAndBind(GL_TEXTURE0 + shadow_map_texture_index_);
+    checkGlError();
 }
 
 void OpenGLRenderer::clear() const {
@@ -61,8 +64,9 @@ void OpenGLRenderer::clear() const {
 void OpenGLRenderer::prepareShadowRendering() const {
     glBindFramebuffer(GL_FRAMEBUFFER, shadow_frame_buffer_);
     checkGlError();
-    shadow_mapper_.use();
     glViewport(0, 0, shadow_map_.width(), shadow_map_.height());
+    checkGlError();
+    glCullFace(GL_FRONT);
     checkGlError();
 }
 
@@ -70,27 +74,25 @@ void OpenGLRenderer::prepareRendering() const {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     checkGlError();
     glViewport(0, 0, width_, height_);
-    shadow_map_.activateAndBind(GL_TEXTURE8);
+    checkGlError();
+    glCullFace(GL_BACK);
     checkGlError();
 }
 
-void OpenGLRenderer::renderShadow(const Terrain& terrain,
-                                  mat4 model_trans) const {
-    shadow_mapper_.uniformMat4(
-        "mvp", shadow_proj_trans_ * game_.sunViewTrans() * model_trans);
-    terrain_renderer_.renderShadow(terrain);
-}
-
 void OpenGLRenderer::renderShadow(const Spirit& spirit, mat4 model_trans) {
-    shadow_mapper_.uniformMat4(
-        "mvp", shadow_proj_trans_ * game_.sunViewTrans() * model_trans);
     spirit_renderer_.renderShadow(
         spirit, game_.sunViewTrans() * model_trans, shadow_proj_trans_);
 }
 
 void OpenGLRenderer::render(const Terrain& terrain, mat4 model_trans) const {
+    mat4 shadow_mvp = mat4(
+        0.5, 0.0, 0.0, 0.0,
+        0.0, 0.5, 0.0, 0.0,
+        0.0, 0.0, 0.5, 0.0,
+        0.5, 0.5, 0.5, 1.0
+    ) * shadow_proj_trans_ * game_.sunViewTrans() * model_trans;
     terrain_renderer_.render(
-        terrain, game_.viewTrans() * model_trans, proj_trans_);
+        terrain, game_.viewTrans() * model_trans, proj_trans_, shadow_mvp);
 }
 
 void OpenGLRenderer::render(const Sky& sky, mat4 model_trans) const {

@@ -21,6 +21,7 @@ void copy_vec(GLfloat dest[3], GLfloat src[3]) {
 SpiritRenderer::SpiritRenderer(const Game& game)
     : game_(game),
       program_("src/spirit.vert", "src/spirit.frag"),
+      shadow_mapper_("src/spirit_shadow_map.vert", "src/shadow_map.frag"),
       lod_(5),
       vertex_array_(program_),
       metrics_(),
@@ -74,24 +75,27 @@ SpiritRenderer::SpiritRenderer(const Game& game)
 
 void SpiritRenderer::renderShadow(const Spirit& spirit, const mat4& mv,
                                   const mat4& p) {
-
-}
-
-void SpiritRenderer::render(const Spirit& spirit, const mat4& mv,
-                            const mat4& p) {
+    // Reduce the frame rate of particles by a half.
     static int frame = 0;
     frame++;
     if (frame % 2 == 0)
         updateParticles(spirit);
 
     vertex_array_.bind();
+    shadow_mapper_.use();
+    // Render particles in spirit's parent frame to create a particle track.
+    shadow_mapper_.uniformMat4("mvp", p * mv * glm::inverse(spirit.trans()));
+    glDrawArraysInstanced(GL_TRIANGLES, 0, vertex_array_.count(),
+                          MAX_PARTICLE_COUNT);
+    checkGlError();
+}
 
+void SpiritRenderer::render(const Spirit& spirit, const mat4& mv,
+                            const mat4& p) {
+    vertex_array_.bind();
     program_.use();
     // Render particles in spirit's parent frame to create a particle track.
     program_.uniformMat4("mvp", p * mv * glm::inverse(spirit.trans()));
-    size_t len = 4 * MAX_PARTICLE_COUNT * sizeof (GLfloat);
-    vertex_array_.stream("metric", metrics(), len);
-    vertex_array_.stream("color", colors(), len);
     glDrawArraysInstanced(GL_TRIANGLES, 0, vertex_array_.count(),
                           MAX_PARTICLE_COUNT);
     checkGlError();
@@ -130,6 +134,9 @@ void SpiritRenderer::updateParticles(const Spirit& spirit) {
                              1.0f));
         }
     }
+    size_t stream_buffer_len = 4 * MAX_PARTICLE_COUNT * sizeof (GLfloat);
+    vertex_array_.stream("metric", metrics(), stream_buffer_len);
+    vertex_array_.stream("color", colors(), stream_buffer_len);
 }
 
 void SpiritRenderer::genParticle(int index, vec4 metric, vec4 color) {

@@ -46,6 +46,11 @@ Texture::Texture(int width, int height, bool clamp, bool nearest) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, width, height, 0,
                  GL_DEPTH_COMPONENT, GL_FLOAT, 0);
     checkGlError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+    checkGlError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE,
+                    GL_COMPARE_R_TO_TEXTURE);
+    checkGlError();
 }
 
 void Texture::bind() const {

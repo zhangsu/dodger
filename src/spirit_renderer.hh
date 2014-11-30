@@ -38,6 +38,7 @@ class SpiritRenderer {
 
     const Game& game_;
     const ShaderProgram program_;
+    const ShaderProgram shadow_mapper_;
     const int lod_;
 
     VertexArray vertex_array_;
