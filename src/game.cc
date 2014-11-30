@@ -11,6 +11,7 @@ using glm::vec3;
 
 Game::Game()
     : ambient_(0.3f),
+      sun_position_(2500.0f, 3000.0f, 0.0f),
       terrain_(new Terrain("data/images/heightmap.png")),
       camera_(new SceneNode()),
       player_(new Spirit(terrain_)),
@@ -40,7 +41,7 @@ Game::Game()
 
     // Add a global sunlight.
     Light* sun = new Light(vec3(0.1, 0.1, 0.1), vec3(0.1, 0, 0));
-    sun->translate(0, 100, 0);
+    sun->translate(sun_position_);
     addLight(&scene_, sun);
 }
 
@@ -117,6 +118,11 @@ void Game::toggleGodMode() {
 
 mat4 Game::viewTrans() const {
     return glm::inverse(camera_->worldTrans());
+}
+
+mat4 Game::sunViewTrans() const {
+    return glm::lookAt(sun_position_, vec3(0.0f, 0.0f, 0.0f),
+                       vec3(0.0f, 1.0f, 0.0f));
 }
 
 const SceneNode& Game::scene() const {

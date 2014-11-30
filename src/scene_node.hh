@@ -14,6 +14,8 @@ class SceneNode {
     SceneNode();
     virtual ~SceneNode();
 
+    // Render this scene node and its descendents for shadowing.
+    virtual void renderShadow(Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Render this scene node and its descendents.
     virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Add a child node to this node.
@@ -53,6 +55,9 @@ class SceneNode {
     void translate(float x, float y, float z);
 
   protected:
+    // Renders the children with the specified cumulative matrix stack for
+    // shadowing.
+    void renderChildrenShadow(Renderer& renderer, glm::mat4 stack) const;
     // Renders the children with the specified cumulative matrix stack.
     void renderChildren(Renderer& renderer, glm::mat4 stack) const;
 

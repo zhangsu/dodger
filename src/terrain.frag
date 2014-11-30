@@ -8,6 +8,7 @@ struct Light {
 
 uniform sampler2D grass_sampler;
 uniform sampler2D rock_sampler;
+uniform sampler2D shadowmap_sampler;
 
 uniform Light lights[16];
 uniform int light_count;

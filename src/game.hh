@@ -30,6 +30,8 @@ class Game {
 
     // Returns the viewing transformation matrix.
     glm::mat4 viewTrans() const;
+    // Returns the viewing transformation matrix from the Sun's perspective.
+    glm::mat4 sunViewTrans() const;
     // Gets the root node of the scene.
     const SceneNode& scene() const;
     // Gets the camera node.
@@ -45,6 +47,7 @@ class Game {
     void updateCameraTrans();
 
     const float ambient_;
+    const glm::vec3 sun_position_;
 
     Terrain* const terrain_;
     SceneNode* const camera_;

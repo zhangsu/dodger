@@ -8,6 +8,10 @@ Renderer::Renderer(const Game& game)
       culling_backface_(true) {}
 
 void Renderer::render() {
+    prepareShadowRendering();
+    clear();
+    game_.scene().renderShadow(*this);
+    prepareRendering();
     clear();
     game_.scene().render(*this);
 }
