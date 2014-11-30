@@ -77,7 +77,7 @@ void Game::rotateCamera(float dx, float dy) {
         camera_->rotate(-dx * angle, 0, 1, 0);
         camera_->rotate(-dy * angle, 1, 0, 0);
     } else {
-        camera_angles_.x += dx * angle;
+        camera_angles_.x += -dx * angle;
         camera_angles_.y += -dy * angle;
         updateCameraTrans();
     }
@@ -143,7 +143,7 @@ void Game::addLight(SceneNode* parent, Light* light) {
 }
 
 void Game::updateCameraTrans() {
-    camera_angles_.y = std::min(std::max(camera_angles_.y, -0.5f), 0.1f);
+    camera_angles_.y = std::min(std::max(camera_angles_.y, -1.0f), 0.0f);
     camera_->resetTrans();
     // Rotate around camera's, also the player's origin.
     camera_->rotate(camera_angles_.x, 0, 1, 0);
