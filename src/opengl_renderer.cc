@@ -27,9 +27,8 @@ OpenGLRenderer::OpenGLRenderer(int width, int height, const Game& game)
         checkGlError(),
 
         game)),
-      program_("src/texture.vert", "src/texture.frag"),
       terrain_renderer_(game_),
-      sky_renderer_(game_, program_),
+      sky_renderer_(game_),
       spirit_renderer_(game_) {
 
     resize(width, height);

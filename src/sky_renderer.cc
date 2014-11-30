@@ -4,11 +4,11 @@
 
 using std::vector;
 
-SkyRenderer::SkyRenderer(const Game& game, const ShaderProgram& program)
+SkyRenderer::SkyRenderer(const Game& game)
     : game_(game),
-      program_(program),
+      program_("src/texture.vert", "src/texture.frag"),
       texture_("data/images/sky.png", true),
-      vertex_array_(program) {
+      vertex_array_(program_) {
 
     vector<GLfloat> positions = {
         // Front face.

@@ -5,7 +5,6 @@
 #include <glm/glm.hpp>
 #include "game.hh"
 #include "renderer.hh"
-#include "shader_program.hh"
 #include "sky_renderer.hh"
 #include "spirit_renderer.hh"
 #include "terrain_renderer.hh"
@@ -36,7 +35,6 @@ class OpenGLRenderer : public Renderer {
     // Initialize GLEW.
     void initGlew() const;
 
-    const ShaderProgram program_;
     const TerrainRenderer terrain_renderer_;
     const SkyRenderer sky_renderer_;
     SpiritRenderer spirit_renderer_;
