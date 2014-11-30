@@ -15,7 +15,7 @@ class SceneNode {
     virtual ~SceneNode();
 
     // Render this scene node and its descendents.
-    virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;
+    virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Add a child node to this node.
     virtual void attach(SceneNode* child);
     // Removes a child node from this node.
@@ -54,7 +54,7 @@ class SceneNode {
 
   protected:
     // Renders the children with the specified cumulative matrix stack.
-    void renderChildren(const Renderer& renderer, glm::mat4 stack) const;
+    void renderChildren(Renderer& renderer, glm::mat4 stack) const;
 
     glm::mat4 trans_;
     glm::vec3 scaling_;

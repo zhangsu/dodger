@@ -34,7 +34,7 @@ Terrain::Terrain(string heightmap_filename)
     }
 }
 
-void Terrain::render(const Renderer& renderer, mat4 trans) const {
+void Terrain::render(Renderer& renderer, mat4 trans) const {
     mat4 stack = trans * this->trans();
     renderer.render(*this, stack);
     renderChildren(renderer, stack);

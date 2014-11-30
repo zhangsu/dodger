@@ -15,7 +15,7 @@ class Terrain : public Primitive {
     explicit Terrain(std::string heightmap_filename);
 
     // Renders this terrain and its descendents.
-    virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;
+    virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Gets the number of heights in the x direction.
     int width() const;
     // Gets the number of heights in the z direction.

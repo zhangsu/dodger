@@ -9,7 +9,7 @@ using glm::vec4;
 
 Sky::Sky() {}
 
-void Sky::render(const Renderer& renderer, mat4 trans) const {
+void Sky::render(Renderer& renderer, mat4 trans) const {
     mat4 stack = trans * this->trans();
     renderer.render(*this, stack);
     renderChildren(renderer, stack);

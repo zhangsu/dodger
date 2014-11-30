@@ -24,7 +24,7 @@ class OpenGLRenderer : public Renderer {
     // Renders a sky node with the specified model transformation.
     virtual void render(const Sky&, glm::mat4 model_trans) const;
     // Renders a spirit node with the specified model transformation.
-    virtual void render(const Spirit&, glm::mat4 model_trans) const;
+    virtual void render(const Spirit&, glm::mat4 model_trans);
     // Resizes the viewport as the window resizes.
     void resize(int width, int height);
     // Toggles wireframe mode. The default is off.
@@ -39,7 +39,7 @@ class OpenGLRenderer : public Renderer {
     const ShaderProgram program_;
     const TerrainRenderer terrain_renderer_;
     const SkyRenderer sky_renderer_;
-    const SpiritRenderer spirit_renderer_;
+    SpiritRenderer spirit_renderer_;
 
     glm::mat4 proj_trans_;
 };

@@ -10,7 +10,7 @@ class Sky : public Primitive {
     Sky();
 
     // Renders this sky.
-    virtual void render(const Renderer&, glm::mat4 trans = glm::mat4()) const;
+    virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
 };
 
 #endif // DODGER_SKY_HH_

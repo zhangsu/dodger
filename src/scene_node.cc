@@ -65,7 +65,7 @@ void SceneNode::set_trans(glm::mat4 trans) {
     trans_ = trans;
 }
 
-void SceneNode::render(const Renderer& renderer, mat4 trans) const {
+void SceneNode::render(Renderer& renderer, mat4 trans) const {
     renderChildren(renderer, trans * this->trans());
 }
 
@@ -96,7 +96,7 @@ void SceneNode::translate(float x, float y, float z) {
 
 // Protected methods.
 
-void SceneNode::renderChildren(const Renderer& renderer, mat4 stack) const {
+void SceneNode::renderChildren(Renderer& renderer, mat4 stack) const {
     for (auto child : children_)
         child->render(renderer, stack);
 }

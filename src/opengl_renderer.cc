@@ -30,7 +30,7 @@ OpenGLRenderer::OpenGLRenderer(int width, int height, const Game& game)
       program_("src/texture.vert", "src/texture.frag"),
       terrain_renderer_(game_),
       sky_renderer_(game_, program_),
-      spirit_renderer_(game_, program_) {
+      spirit_renderer_(game_) {
 
     resize(width, height);
 }
@@ -50,7 +50,7 @@ void OpenGLRenderer::render(const Sky& sky, mat4 model_trans) const {
         sky, game_.viewTrans() * model_trans, proj_trans_);
 }
 
-void OpenGLRenderer::render(const Spirit& spirit, mat4 model_trans) const {
+void OpenGLRenderer::render(const Spirit& spirit, mat4 model_trans) {
     spirit_renderer_.render(
         spirit, game_.viewTrans() * model_trans, proj_trans_);
 }

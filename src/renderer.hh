@@ -16,13 +16,13 @@ class Renderer {
     // Clears everything.
     virtual void clear() const = 0;
     // Renders everything.
-    virtual void render() const;
+    virtual void render();
     // Renders a terrain node with the specified model transformations.
     virtual void render(const Terrain&, glm::mat4 transformations) const = 0;
     // Renders a sky node with the specified model transformations.
     virtual void render(const Sky&, glm::mat4 transformations) const = 0;
     // Renders a spirit node with the specified model transformations.
-    virtual void render(const Spirit&, glm::mat4 transformations) const = 0;
+    virtual void render(const Spirit&, glm::mat4 transformations) = 0;
     // Callback that resizes the viewport as the window resizes.
     virtual void resize(int width, int height) = 0;
     // Toggles wireframe mode. The default is off.

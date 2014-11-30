@@ -7,7 +7,7 @@ Renderer::Renderer(const Game& game)
       drawing_wireframe_(false),
       culling_backface_(true) {}
 
-void Renderer::render() const {
+void Renderer::render() {
     clear();
     game_.scene().render(*this);
 }
