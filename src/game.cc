@@ -11,6 +11,7 @@ using glm::vec3;
 
 Game::Game()
     : ambient_(0.3f),
+      sun_position_(2500.0f, 3000.0f, 0.0f),
       terrain_(new Terrain("data/images/heightmap.png")),
       camera_(new SceneNode()),
       player_(new Spirit(terrain_)),
@@ -40,7 +41,7 @@ Game::Game()
 
     // Add a global sunlight.
     Light* sun = new Light(vec3(0.1, 0.1, 0.1), vec3(0.1, 0, 0));
-    sun->translate(0, 100, 0);
+    sun->translate(sun_position_);
     addLight(&scene_, sun);
 }
 
@@ -133,6 +134,10 @@ const vector<const Light*> Game::lights() const {
 
 float Game::ambient() const {
     return ambient_;
+}
+
+vec3 Game::sun_position() const {
+    return sun_position_;
 }
 
 // Private methods.

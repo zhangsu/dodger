@@ -38,6 +38,7 @@ class Game {
     const std::vector<const Light*> lights() const;
     // Gets the ambient light coefficient.
     float ambient() const;
+    glm::vec3 sun_position() const;
 
   private:
     void addLight(SceneNode* parent, Light*);
@@ -45,6 +46,7 @@ class Game {
     void updateCameraTrans();
 
     const float ambient_;
+    const glm::vec3 sun_position_;
 
     Terrain* const terrain_;
     SceneNode* const camera_;
