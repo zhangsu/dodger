@@ -20,6 +20,17 @@ TerrainRenderer::TerrainRenderer(const Game& game)
       initialized(false),
       vertex_array_(program_) {}
 
+void TerrainRenderer::renderShadow(const Terrain& terrain) const {
+    if (!initialized) {
+        genVertices(terrain);
+        initialized = true;
+    }
+
+    vertex_array_.bind();
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_array_.count());
+    checkGlError();
+}
+
 void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
                              const mat4& p) const {
     if (!initialized) {
@@ -50,6 +61,7 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
     rock_texture_.activateAndBind(GL_TEXTURE1);
     program_.uniform1i("grass_sampler", 0);
     program_.uniform1i("rock_sampler", 1);
+    program_.uniform1i("shadowmap_sampler", 8);
 
     program_.uniformMat4("mv", mv);
     program_.uniformMat4("mvp", p * mv);

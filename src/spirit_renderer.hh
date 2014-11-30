@@ -14,6 +14,9 @@ class SpiritRenderer {
     SpiritRenderer(const Game&);
 
     // Renders a spirit with the specified model-view and projection
+    // transformations for shadowing.
+    void renderShadow(const Spirit&, const glm::mat4& mv, const glm::mat4& p);
+    // Renders a spirit with the specified model-view and projection
     // transformations.
     void render(const Spirit&, const glm::mat4& mv, const glm::mat4& p);
 

@@ -72,6 +72,11 @@ SpiritRenderer::SpiritRenderer(const Game& game)
     vertex_array_.set_count(vertex_count);
 }
 
+void SpiritRenderer::renderShadow(const Spirit& spirit, const mat4& mv,
+                                  const mat4& p) {
+
+}
+
 void SpiritRenderer::render(const Spirit& spirit, const mat4& mv,
                             const mat4& p) {
     static int frame = 0;
@@ -91,7 +96,7 @@ void SpiritRenderer::render(const Spirit& spirit, const mat4& mv,
                           MAX_PARTICLE_COUNT);
     checkGlError();
 }
-#include <cstdio>
+
 void SpiritRenderer::updateParticles(const Spirit& spirit) {
     // Update existing particles and clean up dead particles.
     for (size_t i = 0; i < MAX_PARTICLE_COUNT; ++i) {

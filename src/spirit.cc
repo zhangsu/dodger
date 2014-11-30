@@ -16,6 +16,12 @@ void Spirit::translate(float x, float z) {
     trans_[3][1] = terrain_->height(position.x, position.z) + scaling().y * 1.3;
 }
 
+void Spirit::renderShadow(Renderer& renderer, mat4 trans) const {
+    mat4 stack = trans * this->trans();
+    renderer.renderShadow(*this, stack);
+    renderChildrenShadow(renderer, stack);
+}
+
 void Spirit::render(Renderer& renderer, mat4 trans) const {
     mat4 stack = trans * this->trans();
     renderer.render(*this, stack);

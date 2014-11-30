@@ -27,16 +27,65 @@ OpenGLRenderer::OpenGLRenderer(int width, int height, const Game& game)
         checkGlError(),
 
         game)),
+      shadow_proj_trans_(glm::ortho<float>(-10, 10, -10, 10, -10, 20)),
+      shadow_mapper_("src/shadow_map.vert", "src/shadow_map.frag"),
       terrain_renderer_(game_),
       sky_renderer_(game_),
-      spirit_renderer_(game_) {
+      spirit_renderer_(game_),
+      shadow_frame_buffer_(0),
+      shadow_map_(1024, 1024, true, true) {
 
     resize(width, height);
+
+    // Initialize objects used by shadow mapping.
+    glGenFramebuffers(1, &shadow_frame_buffer_);
+    checkGlError();
+    glBindFramebuffer(GL_FRAMEBUFFER, shadow_frame_buffer_);
+    checkGlError();
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                         shadow_map_.id(), 0);
+    checkGlError();
+    glDrawBuffer(GL_NONE);
+    checkGlError();
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        throw runtime_error("Framebuffer object not complete");
 }
 
 void OpenGLRenderer::clear() const {
     glClearColor(0, 0, 0, 1);
+    checkGlError();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    checkGlError();
+}
+
+void OpenGLRenderer::prepareShadowRendering() const {
+    glBindFramebuffer(GL_FRAMEBUFFER, shadow_frame_buffer_);
+    checkGlError();
+    shadow_mapper_.use();
+    glViewport(0, 0, shadow_map_.width(), shadow_map_.height());
+    checkGlError();
+}
+
+void OpenGLRenderer::prepareRendering() const {
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    checkGlError();
+    glViewport(0, 0, width_, height_);
+    shadow_map_.activateAndBind(GL_TEXTURE8);
+    checkGlError();
+}
+
+void OpenGLRenderer::renderShadow(const Terrain& terrain,
+                                  mat4 model_trans) const {
+    shadow_mapper_.uniformMat4(
+        "mvp", shadow_proj_trans_ * game_.sunViewTrans() * model_trans);
+    terrain_renderer_.renderShadow(terrain);
+}
+
+void OpenGLRenderer::renderShadow(const Spirit& spirit, mat4 model_trans) {
+    shadow_mapper_.uniformMat4(
+        "mvp", shadow_proj_trans_ * game_.sunViewTrans() * model_trans);
+    spirit_renderer_.renderShadow(
+        spirit, game_.sunViewTrans() * model_trans, shadow_proj_trans_);
 }
 
 void OpenGLRenderer::render(const Terrain& terrain, mat4 model_trans) const {
@@ -58,12 +107,12 @@ void OpenGLRenderer::resize(int width, int height) {
     if (height == 0)
         height = 1;
 
+    width_ = width;
+    height_ = height;
+
     float fov = glm::radians(60.0f);
     float aspect_ratio = (float) width / height;
     proj_trans_ = glm::perspective(fov, aspect_ratio, 0.001f, 10000.0f);
-
-    glViewport(0, 0, width, height);
-    checkGlError();
 }
 
 void OpenGLRenderer::toggleWireframe() {

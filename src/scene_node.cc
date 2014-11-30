@@ -65,6 +65,10 @@ void SceneNode::set_trans(glm::mat4 trans) {
     trans_ = trans;
 }
 
+void SceneNode::renderShadow(Renderer& renderer, mat4 trans) const {
+    renderChildrenShadow(renderer, trans * this->trans());
+}
+
 void SceneNode::render(Renderer& renderer, mat4 trans) const {
     renderChildren(renderer, trans * this->trans());
 }
@@ -95,6 +99,11 @@ void SceneNode::translate(float x, float y, float z) {
 }
 
 // Protected methods.
+
+void SceneNode::renderChildrenShadow(Renderer& renderer, mat4 stack) const {
+    for (auto child : children_)
+        child->renderShadow(renderer, stack);
+}
 
 void SceneNode::renderChildren(Renderer& renderer, mat4 stack) const {
     for (auto child : children_)

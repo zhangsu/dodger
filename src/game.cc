@@ -120,6 +120,11 @@ mat4 Game::viewTrans() const {
     return glm::inverse(camera_->worldTrans());
 }
 
+mat4 Game::sunViewTrans() const {
+    return glm::lookAt(sun_position_, vec3(0.0f, 0.0f, 0.0f),
+                       vec3(0.0f, 1.0f, 0.0f));
+}
+
 const SceneNode& Game::scene() const {
     return scene_;
 }
@@ -134,10 +139,6 @@ const vector<const Light*> Game::lights() const {
 
 float Game::ambient() const {
     return ambient_;
-}
-
-vec3 Game::sun_position() const {
-    return sun_position_;
 }
 
 // Private methods.

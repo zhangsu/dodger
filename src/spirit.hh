@@ -15,6 +15,8 @@ class Spirit : public SceneNode {
 
     // Translate this spirit by x, z on the terrain.
     void translate(float x, float z);
+    // Renders this spirit and its descendents for shadowing.
+    virtual void renderShadow(Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Renders this spirit and its descendents.
     virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
 
