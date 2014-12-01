@@ -9,9 +9,13 @@
 // An abstraction of OpenGL Vertex Array Object and related operations.
 class VertexArray {
   public:
+    // Constructs a vertex array object.
+    VertexArray();
     // Constructs a vertex array object with an associated shader program.
     explicit VertexArray(const ShaderProgram&);
 
+    // Sets the program for this vertex array.
+    void set_program(const ShaderProgram&);
     // Binds to this vertex array.
     void bind() const;
     // Adds a buffer to this vertex array with content from `data` that have a
@@ -49,7 +53,7 @@ class VertexArray {
     size_t count_;
     std::unordered_map<std::string, Buffer> buffers_;
 
-    const ShaderProgram& program_;
+    const ShaderProgram* program_;
 };
 
 #endif // OPENGL_VERTEX_ARRAY_HH_

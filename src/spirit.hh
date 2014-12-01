@@ -11,7 +11,7 @@ class Spirit : public SceneNode {
   public:
     // Constructs a spherical sprit with the specified terrain on which the
     // spirit walks.
-    explicit Spirit(const Terrain*);
+    explicit Spirit(const Terrain*, bool player = false);
 
     // Translate this spirit by x, z on the terrain.
     void translate(float x, float z);
@@ -20,7 +20,14 @@ class Spirit : public SceneNode {
     // Renders this spirit and its descendents.
     virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
 
+    // Return an integer identifier of this node.
+    unsigned id() const;
+    // Determines if this spirit is a player.
+    unsigned is_player() const;
+
   private:
+    const unsigned id_;
+    const bool is_player_;
     const Terrain* const terrain_;
 };
 

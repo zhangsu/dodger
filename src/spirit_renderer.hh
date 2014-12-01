@@ -21,30 +21,36 @@ class SpiritRenderer {
     void render(const Spirit&, const glm::mat4& mv, const glm::mat4& p);
 
   private:
-    static const size_t MAX_PARTICLE_COUNT = 10000;
+    static const size_t MAX_SPIRIT_COUNT = 10;
+    static const size_t MAX_PARTICLE_COUNT = 1000;
 
     // Update particle metrics and colors.
     void updateParticles(const Spirit&);
     // generate a new particle at the specified index.
-    void genParticle(int index, glm::vec4 metric, glm::vec4 color);
+    void genParticle(unsigned spirit_id, int index, const glm::vec4& metric,
+                     const glm::vec4& color);
     // Tests if a particle is dead at the specified index.
-    bool isParticleDead(int index) const;
+    inline bool isParticleDead(unsigned spirit_id, int index);
+    // Return the specific metric for a particle of a specific spirit.
+    inline GLfloat* metric(unsigned spirit_id, int metric_index);
+    // Return the specific color for a particle of a specific spirit.
+    inline GLfloat* color(unsigned spirit_id, int color_index);
     // Returns a list of particle metrics, which are 4-tuples (x, y, z, scale).
-    GLfloat* metrics() const;
+    inline GLfloat* metrics(int spirit_id) const;
     // Returns a list of particle colors.
-    GLfloat* colors() const;
-
-    float random() const;
+    inline GLfloat* colors(int spirit_id) const;
+    // Generates a random number berween 0 and 1.
+    inline float random() const;
 
     const Game& game_;
     const ShaderProgram program_;
     const ShaderProgram shadow_mapper_;
     const int lod_;
 
-    VertexArray vertex_array_;
+    VertexArray vertex_arrays_[MAX_SPIRIT_COUNT];
 
-    GLfloat metrics_[MAX_PARTICLE_COUNT][4];
-    GLfloat colors_[MAX_PARTICLE_COUNT][4];
+    GLfloat metrics_[MAX_SPIRIT_COUNT][MAX_PARTICLE_COUNT][4];
+    GLfloat colors_[MAX_SPIRIT_COUNT][MAX_PARTICLE_COUNT][4];
 };
 
 #endif // DODGER_SPIRIT_RENDERER_HH_

@@ -5,9 +5,20 @@ using std::string;
 using glm::mat4;
 using glm::vec3;
 
+namespace {
+
+int id_count = 0;
+
+}
+
 // Public methods.
 
-Spirit::Spirit(const Terrain* terrain) : terrain_(terrain) {}
+Spirit::Spirit(const Terrain* terrain, bool is_player)
+    : id_(id_count++),
+      is_player_(is_player),
+      terrain_(terrain) {
+    translate(0, 0);
+}
 
 void Spirit::translate(float x, float z) {
     SceneNode::translate(x, 0, z);
@@ -26,4 +37,12 @@ void Spirit::render(Renderer& renderer, mat4 trans) const {
     mat4 stack = trans * this->trans();
     renderer.render(*this, stack);
     renderChildren(renderer, stack);
+}
+
+unsigned Spirit::id() const {
+    return id_;
+}
+
+unsigned Spirit::is_player() const {
+    return is_player_;
 }

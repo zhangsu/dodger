@@ -6,11 +6,18 @@ using std::vector;
 
 // Public methods.
 
-VertexArray::VertexArray(const ShaderProgram& program)
-    : count_(0),
-      program_(program) {
+VertexArray::VertexArray() : count_(0) {
     glGenVertexArrays(1, &id_);
     checkGlError();
+}
+
+VertexArray::VertexArray(const ShaderProgram& program)
+    : VertexArray() {
+    program_ = &program;
+}
+
+void VertexArray::set_program(const ShaderProgram& program) {
+    program_ = &program;
 }
 
 void VertexArray::bind() const {
@@ -40,7 +47,7 @@ void VertexArray::addStreamAttribute(size_t len, string attr,
 }
 
 void VertexArray::setAttributeDivisor(std::string attr, size_t divisor) {
-    GLuint index = program_.attribLocation(attr);
+    GLuint index = program_->attribLocation(attr);
     glVertexAttribDivisor(index, divisor);
     checkGlError();
 }
@@ -76,7 +83,7 @@ void VertexArray::initBufferAndAttribute(string attr, size_t tuple_len) {
     glBindBuffer(GL_ARRAY_BUFFER, buf);
     checkGlError();
 
-    GLuint index = program_.attribLocation(attr);
+    GLuint index = program_->attribLocation(attr);
     glEnableVertexAttribArray(index);
     checkGlError();
     glVertexAttribPointer(index, tuple_len, GL_FLOAT, GL_FALSE, 0, 0);
