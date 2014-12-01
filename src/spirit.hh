@@ -22,7 +22,8 @@ class Spirit : public SceneNode {
     // Renders this spirit and its descendents.
     virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
 
-    // Return an integer identifier of this node.
+    // Return an integer identifier of this node. The id is guaranteed to be
+    // incremental each time a new Spirit is generated.
     unsigned id() const;
     // Determines if this spirit is a player.
     unsigned is_player() const;
