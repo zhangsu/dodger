@@ -24,6 +24,9 @@ class OpenGLRenderer : public Renderer {
     // Prepares for rendering.
     virtual void prepareRendering() const;
     using Renderer::render;
+    // Renders a terrain node with the specified model transformation for
+    // shadowing.
+    virtual void renderShadow(const Terrain&, glm::mat4 model_trans);
     // Renders a spirit node with the specified model transformation for
     // shadowing.
     virtual void renderShadow(const Spirit&, glm::mat4 model_trans);

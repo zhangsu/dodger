@@ -42,6 +42,12 @@ Terrain::Terrain(string heightmap_filename)
     }
 }
 
+void Terrain::renderShadow(Renderer& renderer, mat4 trans) const {
+    mat4 stack = trans * this->trans();
+    renderer.renderShadow(*this, stack);
+    renderChildrenShadow(renderer, stack);
+}
+
 void Terrain::render(Renderer& renderer, mat4 trans) const {
     mat4 stack = trans * this->trans();
     renderer.render(*this, stack);

@@ -16,7 +16,8 @@ class TerrainRenderer {
     TerrainRenderer(const Game&, int shadow_map_texture_index);
 
     // Renders a terrain for shadowing.
-    void renderShadow(const Terrain&) const;
+    void renderShadow(const Terrain&, const glm::mat4& mv,
+                      const glm::mat4& p) const;
     // Renders a terrain with the specified model-view and projection
     // transformations.
     void render(const Terrain&, const glm::mat4& mv, const glm::mat4& p,
@@ -30,9 +31,10 @@ class TerrainRenderer {
     void addNormal(const Terrain&, std::vector<GLfloat>& normals,
                    int x, int z) const;
 
-    ShaderProgram program_;
-
     const Game& game_;
+    const ShaderProgram program_;
+    const ShaderProgram shadow_mapper_;
+
     const int shadow_map_texture_index_;
     const Texture grass_texture_;
     const Texture rock_texture_;

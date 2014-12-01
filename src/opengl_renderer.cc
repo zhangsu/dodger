@@ -66,8 +66,6 @@ void OpenGLRenderer::prepareShadowRendering() const {
     checkGlError();
     glViewport(0, 0, shadow_map_.width(), shadow_map_.height());
     checkGlError();
-    glCullFace(GL_FRONT);
-    checkGlError();
 }
 
 void OpenGLRenderer::prepareRendering() const {
@@ -75,8 +73,11 @@ void OpenGLRenderer::prepareRendering() const {
     checkGlError();
     glViewport(0, 0, width_, height_);
     checkGlError();
-    glCullFace(GL_BACK);
-    checkGlError();
+}
+
+void OpenGLRenderer::renderShadow(const Terrain& spirit, mat4 model_trans) {
+    terrain_renderer_.renderShadow(
+        spirit, game_.sunViewTrans() * model_trans, shadow_proj_trans_);
 }
 
 void OpenGLRenderer::renderShadow(const Spirit& spirit, mat4 model_trans) {

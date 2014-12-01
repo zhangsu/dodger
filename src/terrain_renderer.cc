@@ -13,21 +13,25 @@ using glm::vec3;
 // Public methods.
 
 TerrainRenderer::TerrainRenderer(const Game& game, int shadow_map_texture_index)
-    : program_("src/terrain.vert", "src/terrain.frag"),
-      game_(game),
+    : game_(game),
+      program_("src/terrain.vert", "src/terrain.frag"),
+      shadow_mapper_("src/shadow_map.vert", "src/shadow_map.frag"),
       shadow_map_texture_index_(shadow_map_texture_index),
       grass_texture_("data/images/grass_texture.png"),
       rock_texture_("data/images/mountain_texture.png"),
       initialized(false),
       vertex_array_(program_) {}
 
-void TerrainRenderer::renderShadow(const Terrain& terrain) const {
+void TerrainRenderer::renderShadow(const Terrain& terrain, const mat4& mv,
+                                   const mat4& p) const {
     if (!initialized) {
         genVertices(terrain);
         initialized = true;
     }
 
+    shadow_mapper_.use();
     vertex_array_.bind();
+    shadow_mapper_.uniformMat4("mvp", p * mv);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, vertex_array_.count());
     checkGlError();
 }

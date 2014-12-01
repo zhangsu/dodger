@@ -14,6 +14,8 @@ class Terrain : public Primitive {
     // and 1 in the y direction.
     explicit Terrain(std::string heightmap_filename);
 
+    // Renders this terrain and its descendents for shadowing.
+    virtual void renderShadow(Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Renders this terrain and its descendents.
     virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Gets the number of heights in the x direction.

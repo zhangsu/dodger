@@ -53,7 +53,7 @@ float computeShades() {
             (1.0 - texture(
                 shadowmap_sampler,
                 vec3(
-                    shadow_coord.xy + poisson_consts[i] / 1000.0,
+                    shadow_coord.xy + poisson_consts[i] / 700.0,
                     (shadow_coord.z - bias) / shadow_coord.w
                 )
             )) * 0.2;
