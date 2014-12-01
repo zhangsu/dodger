@@ -45,3 +45,12 @@ void OpenALRenderer::render(const Spirit& spirit, glm::mat4 model_trans) {
     vec4 pos = game_.viewTrans() * model_trans * vec4(0.0f, 0.0f, 0.0f, 1.0f);
     seal_set_src_pos(&particle_noises[id], pos.x, pos.y, pos.z);
 }
+
+void OpenALRenderer::toggle() {
+    AudioRenderer::toggle();
+    if (!on_) {
+        for (unsigned i = 0; i < Spirit::MAX_COUNT; ++i) {
+            checkSealError(seal_pause_src(&particle_noises[i]));
+        }
+    }
+}

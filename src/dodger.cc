@@ -20,6 +20,7 @@ namespace {
 // that do not capture anything can be used as function pointers.
 Game game;
 Renderer* prenderer;
+AudioRenderer* paudio_renderer;
 bool left_mouse_button_down = false;
 bool right_mouse_button_down = false;
 
@@ -78,6 +79,9 @@ void handleKeyEvent(GLFWwindow*, int key, int, int action, int) {
         break;
     case GLFW_KEY_5:
         prenderer->toggleTerrainShadow();
+        break;
+    case GLFW_KEY_6:
+        paudio_renderer->toggle();
         break;
     case GLFW_KEY_G:
         game.toggleGodMode();
@@ -161,6 +165,7 @@ int main() {
         OpenGLRenderer renderer(width, height, game);
         prenderer = &renderer;
         OpenALRenderer audio_renderer(game);
+        paudio_renderer = &audio_renderer;
 
         glfwSetWindowSizeCallback(
             window,

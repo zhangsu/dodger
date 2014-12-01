@@ -19,9 +19,13 @@ class AudioRenderer {
     virtual void render(const SceneNode&, glm::mat4 model_trans);
     // Renders audio for a spirit node with the specified model transformations.
     virtual void render(const Spirit&, glm::mat4 model_trans) = 0;
+    // Toggles audio on and off.
+    virtual void toggle();
 
   protected:
     const Game& game_;
+
+    bool on_;
 };
 
 #endif // DODGER_AUDIO_RENDERER_HH_

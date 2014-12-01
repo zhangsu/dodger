@@ -15,6 +15,8 @@ class OpenALRenderer : public AudioRenderer {
     using AudioRenderer::render;
     // Renders audio for a spirit node with the specified model transformations.
     virtual void render(const Spirit&, glm::mat4 model_trans);
+    // Toggles audio on and off.
+    virtual void toggle();
 
   private:
     seal_src_t particle_noises[Spirit::MAX_COUNT];
