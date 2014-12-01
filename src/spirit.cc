@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include "renderer.hh"
 #include "spirit.hh"
 
@@ -22,9 +23,25 @@ Spirit::Spirit(const Terrain* terrain, bool is_player)
 
 void Spirit::translate(float x, float z) {
     SceneNode::translate(x, 0, z);
-    vec3 position = this->position(terrain_);
-    // Move spirit on terrain.
-    trans_[3][1] = terrain_->height(position.x, position.z) + scaling().y * 1.3;
+    updateAltitude();
+}
+
+void Spirit::walk() {
+    bool turning = (rand() % 3 == 0);
+    if (turning) {
+        bool turningLeft = (rand() % 2 == 0);
+        float angle = ((float) rand()) / RAND_MAX;
+        if (turningLeft)
+            rotate(angle, 0, 1, 0);
+        else
+            rotate(-angle, 0, 1, 0);
+    }
+    bool moving = (rand() % 3 != 0);
+    if (moving) {
+        SceneNode::translate(0, 0, -0.4f);
+        updateAltitude();
+    }
+
 }
 
 void Spirit::renderShadow(Renderer& renderer, mat4 trans) const {
@@ -45,4 +62,12 @@ unsigned Spirit::id() const {
 
 unsigned Spirit::is_player() const {
     return is_player_;
+}
+
+// Private methods.
+
+void Spirit::updateAltitude() {
+    vec3 position = this->position(terrain_);
+    // Move spirit on terrain.
+    trans_[3][1] = terrain_->height(position.x, position.z) + scaling().y * 1.3;
 }

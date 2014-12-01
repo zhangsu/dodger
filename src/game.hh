@@ -25,6 +25,8 @@ class Game {
     void rotatePlayer(float dx, float dy);
     // Reset the camera's x angle, making it look at the player.
     void lookAtPlayer();
+    // Ticks the game.
+    void tick();
     // Toggles god mode.
     void toggleGodMode();
 
@@ -55,6 +57,7 @@ class Game {
 
     SceneNode scene_;
     std::vector<const Light*> lights_;
+    std::vector<Spirit*> enemies_;
 
     // Camera's distance to the player.
     float camera_distance_;

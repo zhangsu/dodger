@@ -15,6 +15,8 @@ class Spirit : public SceneNode {
 
     // Translate this spirit by x, z on the terrain.
     void translate(float x, float z);
+    // Walks the spirit in a turtle graphics fashion.
+    void walk();
     // Renders this spirit and its descendents for shadowing.
     virtual void renderShadow(Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Renders this spirit and its descendents.
@@ -26,6 +28,9 @@ class Spirit : public SceneNode {
     unsigned is_player() const;
 
   private:
+    // Updates this spirit's altitude based on the terrain height.
+    void updateAltitude();
+
     const unsigned id_;
     const bool is_player_;
     const Terrain* const terrain_;

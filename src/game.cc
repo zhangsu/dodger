@@ -37,30 +37,12 @@ Game::Game()
     addLight(player_, new Light(vec3(0.05, 0.1, 1.0), vec3(0.1, 0.01, 0.01)));
 
     // Set up enemies.
-    Spirit* enemy = new Spirit(terrain_);
-    Spirit* enemy2 = new Spirit(terrain_);
-    Spirit* enemy3 = new Spirit(terrain_);
-    Spirit* enemy4 = new Spirit(terrain_);
-    Spirit* enemy5 = new Spirit(terrain_);
-    Spirit* enemy6 = new Spirit(terrain_);
-    Spirit* enemy7 = new Spirit(terrain_);
-    Spirit* enemy8 = new Spirit(terrain_);
-    scene_.attach(enemy);
-    scene_.attach(enemy2);
-    scene_.attach(enemy3);
-    scene_.attach(enemy4);
-    scene_.attach(enemy5);
-    scene_.attach(enemy6);
-    scene_.attach(enemy7);
-    scene_.attach(enemy8);
-    enemy->translate(-2, -2);
-    enemy2->translate(-3, -3);
-    enemy3->translate(-4, -4);
-    enemy4->translate(-5, -5);
-    enemy5->translate(-6, -3);
-    enemy6->translate(-7, -4);
-    enemy7->translate(-8, -5);
-    enemy8->translate(-9, -3);
+    for (int i = 0; i < 8; ++i) {
+        Spirit* enemy = new Spirit(terrain_);
+        enemies_.push_back(enemy);
+        scene_.attach(enemy);
+        addLight(enemy, new Light(vec3(1.0, 0.1, 0.05), vec3(0.1, 0.01, 0.01)));
+    }
 
     // Set up camera.
     player_->attach(camera_);
@@ -129,6 +111,12 @@ void Game::lookAtPlayer() {
         return;
     camera_angles_.x = 0;
     updateCameraTrans();
+}
+
+void Game::tick() {
+    for (auto enemy : enemies_) {
+        enemy->walk();
+    }
 }
 
 void Game::toggleGodMode() {

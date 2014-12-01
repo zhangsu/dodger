@@ -167,6 +167,7 @@ int main() {
             glfwSwapBuffers(window);
             glfwPollEvents();
             handleKeyState(window, game);
+            game.tick();
 
 #ifndef NDEBUG
             // Output FPS count to standard output.
