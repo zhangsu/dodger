@@ -9,6 +9,7 @@ struct Light {
 
 uniform bool do_lighting;
 uniform bool drawing_shadow;
+uniform bool drawing_fog;
 
 uniform sampler2D grass_sampler;
 uniform sampler2D rock_sampler;
@@ -109,9 +110,11 @@ void main() {
         frag_color = vec4(shades * tex_color, 1.0);
     }
 
-    // Add some gray fog.
-    float fog_density = 0.02 * -mv_position.z;
-    frag_color = mix(frag_color,
-                     vec4(0.7, 0.7, 0.7, 1.0),
-                     clamp(1.0 - exp(-fog_density * fog_density), 0.0, 1.0));
+    if (drawing_fog) {
+      // Add some gray fog.
+      float fog_density = 0.02 * -mv_position.z;
+      frag_color = mix(frag_color,
+                       vec4(0.7, 0.7, 0.7, 1.0),
+                       clamp(1.0 - exp(-fog_density * fog_density), 0.0, 1.0));
+    }
 }

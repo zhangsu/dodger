@@ -30,7 +30,7 @@ OpenGLRenderer::OpenGLRenderer(int width, int height, const Game& game)
       shadow_map_texture_index_(8),
       shadow_proj_trans_(glm::ortho<float>(-150, 150, -130, 130, -1000, 10000)),
       terrain_renderer_(game_, shadow_map_texture_index_, do_lighting_,
-                        drawing_shadow_),
+                        drawing_shadow_, drawing_fog_),
       sky_renderer_(game_),
       spirit_renderer_(game_),
       shadow_frame_buffer_(0),

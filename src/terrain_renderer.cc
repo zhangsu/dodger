@@ -15,7 +15,8 @@ using glm::vec3;
 TerrainRenderer::TerrainRenderer(const Game& game,
                                  int shadow_map_texture_index,
                                  const bool& do_lighting,
-                                 const bool& drawing_shadow)
+                                 const bool& drawing_shadow,
+                                 const bool& drawing_fog)
     : game_(game),
       program_("src/terrain.vert", "src/terrain.frag"),
       shadow_mapper_("src/shadow_map.vert", "src/shadow_map.frag"),
@@ -24,6 +25,7 @@ TerrainRenderer::TerrainRenderer(const Game& game,
       rock_texture_("data/images/mountain_texture.png"),
       do_lighting_(do_lighting),
       drawing_shadow_(drawing_shadow),
+      drawing_fog_(drawing_fog),
       initialized(false),
       vertex_array_(program_) {}
 
@@ -72,6 +74,7 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
 
     program_.uniform1i("do_lighting", do_lighting_);
     program_.uniform1i("drawing_shadow", drawing_shadow_);
+    program_.uniform1i("drawing_fog", drawing_fog_);
 
     grass_texture_.activateAndBind(GL_TEXTURE0);
     rock_texture_.activateAndBind(GL_TEXTURE1);

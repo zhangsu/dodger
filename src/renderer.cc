@@ -8,7 +8,8 @@ Renderer::Renderer(const Game& game)
       culling_backface_(true),
       do_lighting_(true),
       drawing_shadow_(true),
-      drawing_terrain_shadow_(false) {}
+      drawing_terrain_shadow_(false),
+      drawing_fog_(true) {}
 
 Renderer::~Renderer() {}
 
@@ -43,3 +44,6 @@ void Renderer::toggleTerrainShadow() {
     drawing_terrain_shadow_ ^= true;
 }
 
+void Renderer::toggleFog() {
+    drawing_fog_ ^= true;
+}

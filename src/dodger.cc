@@ -81,6 +81,9 @@ void handleKeyEvent(GLFWwindow*, int key, int, int action, int) {
         prenderer->toggleTerrainShadow();
         break;
     case GLFW_KEY_6:
+        prenderer->toggleFog();
+        break;
+    case GLFW_KEY_7:
         paudio_renderer->toggle();
         break;
     case GLFW_KEY_G:

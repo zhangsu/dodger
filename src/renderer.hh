@@ -46,6 +46,8 @@ class Renderer {
     virtual void toggleShadow();
     // Toggles terrain shadow rendering. The defalt is off.
     virtual void toggleTerrainShadow();
+    // Toggles fog rendering. The defalt is on.
+    virtual void toggleFog();
 
 
   protected:
@@ -56,6 +58,7 @@ class Renderer {
     bool do_lighting_;
     bool drawing_shadow_;
     bool drawing_terrain_shadow_;
+    bool drawing_fog_;
 };
 
 #endif // DODGER_RENDERER_HH_
