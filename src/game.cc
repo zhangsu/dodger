@@ -16,7 +16,8 @@ Game::Game()
       camera_(new SceneNode()),
       player_(new Spirit(terrain_, true)),
       camera_distance_(10),
-      god_mode_(false) {
+      god_mode_(false),
+      moving_speed_(0.1f) {
     // Set up sky.
     Sky* sky = new Sky();
     scene_.attach(sky);
@@ -31,9 +32,6 @@ Game::Game()
 
     // Set up player.
     scene_.attach(player_);
-    // Update the y position of the player immediately, as the terrain was just
-    // transformed.
-    player_->translate(0, 0);
     addLight(player_, new Light(vec3(0.05, 0.1, 1.0), vec3(0.1, 0.01, 0.01)));
 
     // Set up enemies.
@@ -52,26 +50,51 @@ Game::Game()
     Light* sun = new Light(vec3(0.1, 0.1, 0.1), vec3(0.1, 0, 0), true);
     sun->translate(sun_position_);
     addLight(&scene_, sun);
+
+    reset();
 }
 
-void Game::move(float x, float y, float z) {
-    move(vec3(x, y, z));
+void Game::moveForward() {
+    move(0, 0, -moving_speed_);
 }
 
-void Game::move(vec3 translation) {
-    if (god_mode_) {
-        camera_->translate(5.0f * translation);
-    } else {
-        player_->translate(translation.x, translation.z);
-    }
+void Game::moveBackward() {
+    move(0, 0, moving_speed_);
 }
 
-void Game::turn(float angle) {
-    if (god_mode_) {
-        camera_->rotate(angle, 0, 1, 0);
-    } else {
-        player_->rotate(angle, 0, 1, 0);
-    }
+void Game::moveLeft() {
+    move(-moving_speed_, 0, 0);
+}
+
+void Game::moveRight() {
+    move(moving_speed_, 0, 0);
+}
+
+void Game::moveUp() {
+    move(0, moving_speed_, 0);
+}
+
+void Game::moveDown() {
+    move(0, -moving_speed_, 0);
+}
+void Game::turnLeft() {
+    turn(-0.025);
+}
+
+void Game::turnRight() {
+    turn(0.025);
+}
+
+void Game::accelerate() {
+    moving_speed_ += 0.01f;
+    if (moving_speed_ > 1.0f)
+        moving_speed_ = 1.0f;
+}
+
+void Game::decelerate() {
+    moving_speed_ -= 0.01f;
+    if (moving_speed_ < 0.1f)
+        moving_speed_ = 0.1f;
 }
 
 void Game::zoom(float distance) {
@@ -119,6 +142,15 @@ void Game::tick() {
     }
 }
 
+void Game::reset() {
+    player_->resetTrans();
+    player_->translate(0, 10);
+    for (unsigned i = 0; i < enemies_.size(); ++i) {
+        enemies_[i]->resetTrans();
+        enemies_[i]->translate(i / 3 * 5, - (float)(i % 3) * 5);
+    }
+}
+
 void Game::toggleGodMode() {
     god_mode_ ^= true;
     if (god_mode_) {
@@ -162,6 +194,26 @@ size_t Game::spirit_count() const {
 }
 
 // Private methods.
+
+void Game::Game::move(float x, float y, float z) {
+    move(vec3(x, y, z));
+}
+
+void Game::move(vec3 translation) {
+    if (god_mode_) {
+        camera_->translate(5.0f * translation);
+    } else {
+        player_->translate(translation.x, translation.z);
+    }
+}
+
+void Game::turn(float angle) {
+    if (god_mode_) {
+        camera_->rotate(angle, 0, 1, 0);
+    } else {
+        player_->rotate(angle, 0, 1, 0);
+    }
+}
 
 void Game::addLight(SceneNode* parent, Light* light) {
     lights_.push_back(light);

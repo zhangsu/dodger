@@ -29,6 +29,13 @@ SceneNode* SceneNode::parent() const {
     return parent_;
 }
 
+const SceneNode* SceneNode::root() const {
+    const SceneNode* node = this;
+    while (node->parent() != nullptr)
+        node = node->parent();
+    return node;
+}
+
 const vec3& SceneNode::scaling() const {
     return scaling_;
 }
@@ -102,6 +109,15 @@ void SceneNode::translate(float x, float y, float z) {
     translate(vec3(x, y, z));
 }
 
+bool SceneNode::collideWith(const SceneNode*) const {
+    // A pure node is not a physical object thus collides with nothing.
+    return false;
+}
+
+bool SceneNode::colliding() const {
+    return colliding(root());
+}
+
 // Protected methods.
 
 void SceneNode::renderChildrenShadow(Renderer& renderer, mat4 stack) const {
@@ -118,3 +134,16 @@ void SceneNode::renderChildrenAudio(AudioRenderer& renderer, mat4 stack) const {
     for (auto child : children_)
         child->renderAudio(renderer, stack);
 }
+
+// Private methods.
+
+bool SceneNode::colliding(const SceneNode* start_node) const {
+    if (collideWith(start_node))
+        return true;
+    for (auto child : start_node->children_)
+        if (colliding(child))
+            return true;
+    return false;
+}
+
+

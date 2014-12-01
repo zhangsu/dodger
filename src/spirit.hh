@@ -15,8 +15,6 @@ class Spirit : public SceneNode {
     // spirit walks.
     explicit Spirit(const Terrain*, bool player = false);
 
-    // Translate this scene node by `amount` but fails when colliding.
-    virtual void translate(float x, float y, float z);
     // Translate this spirit by x, z on the terrain.
     void translate(float x, float z);
     // Walks the spirit in a turtle graphics fashion.
@@ -29,6 +27,8 @@ class Spirit : public SceneNode {
     virtual void renderAudio(AudioRenderer&,
                              glm::mat4 trans = glm::mat4()) const;
 
+    // Tests collision with another node.
+    virtual bool collideWith(const SceneNode*) const;
     // Return an integer identifier of this node. The id is guaranteed to be
     // incremental each time a new Spirit is generated.
     unsigned id() const;

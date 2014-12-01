@@ -3,6 +3,7 @@
 // GLFW documentation asks to include GLEW headers before GLFW.
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "gameover.hh"
 #include "openal_renderer.hh"
 #include "opengl_renderer.hh"
 
@@ -30,22 +31,31 @@ void handleKeyState(GLFWwindow* window, Game& game) {
 
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS
         || glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        game.move(0, 0, -0.1);
+        game.moveForward();
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS
         || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        game.move(0, 0, 0.1);
+        game.moveBackward();
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        game.move(-0.1, 0, 0);
+        game.moveLeft();
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        game.move(0.1, 0, 0);
+        game.moveRight();
 
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        game.turn(0.025);
+        game.turnLeft();
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        game.turn(-0.025);
+        game.turnRight();
 
-    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-        game.move(0, lctrl ? -0.1 : 0.1, 0);
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        if (lctrl)
+            game.moveDown();
+        else
+            game.moveUp();
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_EQUAL) == GLFW_PRESS)
+        game.accelerate();
+    else if (glfwGetKey(window, GLFW_KEY_MINUS) == GLFW_PRESS)
+        game.decelerate();
 }
 
 // Handles all the keyboard input event independent of frames.
@@ -165,12 +175,16 @@ int main() {
         double last_frame_time = glfwGetTime();
 #endif
         while (!glfwWindowShouldClose(window)) {
-            renderer.render();
-            audio_renderer.render();
-            glfwSwapBuffers(window);
-            glfwPollEvents();
-            handleKeyState(window, game);
-            game.tick();
+            try {
+                renderer.render();
+                audio_renderer.render();
+                glfwSwapBuffers(window);
+                glfwPollEvents();
+                handleKeyState(window, game);
+                game.tick();
+            } catch (const Gameover&) {
+                game.reset();
+            }
 
 #ifndef NDEBUG
             // Output FPS count to standard output.

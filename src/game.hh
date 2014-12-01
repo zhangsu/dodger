@@ -12,11 +12,21 @@ class Game {
   public:
     Game();
 
-    // Moves the player.
-    void move(float x, float y, float z);
-    void move(glm::vec3 translation);
-    // Turns the player left or right on the xz terrain plane.
-    void turn(float angle);
+    // Move functions.
+    void moveForward();
+    void moveBackward();
+    void moveLeft();
+    void moveRight();
+    void moveUp();
+    void moveDown();
+    // Turns the player left on the xz terrain plane.
+    void turnLeft();
+    // Turns the player right on the xz terrain plane.
+    void turnRight();
+    // Accelerates the moving speed.
+    void accelerate();
+    // Decaccelerates the moving speed.
+    void decelerate();
     // Zooms in (negative distance) or out (positive distance) the camera.
     void zoom(float distance);
     // Rotates the camera only.
@@ -27,6 +37,8 @@ class Game {
     void lookAtPlayer();
     // Ticks the game.
     void tick();
+    // Resets the game.
+    void reset();
     // Toggles god mode.
     void toggleGodMode();
 
@@ -46,6 +58,11 @@ class Game {
     size_t spirit_count() const;
 
   private:
+    // Moves the player.
+    void move(float x, float y, float z);
+    void move(glm::vec3 translation);
+    // Turns the player left or right on the xz terrain plane.
+    void turn(float angle);
     void addLight(SceneNode* parent, Light*);
     // Updates the camera transformation in parent's frame.
     void updateCameraTrans();
@@ -64,8 +81,8 @@ class Game {
     // Camera's distance to the player.
     float camera_distance_;
     glm::vec2 camera_angles_;
-    glm::vec3 god_camera_translation_;
     bool god_mode_;
+    float moving_speed_;
 };
 
 #endif // DODGER_GAME_HH_
