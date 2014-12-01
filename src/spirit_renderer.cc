@@ -80,12 +80,6 @@ SpiritRenderer::SpiritRenderer(const Game& game)
 
 void SpiritRenderer::renderShadow(const Spirit& spirit, const mat4& mv,
                                   const mat4& p) {
-    // Reduce the frame rate of particles by a half.
-    static int frame = 0;
-    frame++;
-    if (frame % 2 == 0)
-        updateParticles(spirit);
-
     vertex_arrays_[spirit.id()].bind();
     shadow_mapper_.use();
     // Render particles in spirit's parent frame to create a particle track.
@@ -97,6 +91,12 @@ void SpiritRenderer::renderShadow(const Spirit& spirit, const mat4& mv,
 
 void SpiritRenderer::render(const Spirit& spirit, const mat4& mv,
                             const mat4& p) {
+    // Reduce the frame rate of particles by a half.
+    static int frame = 0;
+    frame++;
+    if (frame % 2 == 0)
+        updateParticles(spirit);
+
     vertex_arrays_[spirit.id()].bind();
     program_.use();
     // Render particles in spirit's parent frame to create a particle track.

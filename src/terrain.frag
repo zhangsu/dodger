@@ -7,6 +7,8 @@ struct Light {
     bool cast_shadow;
 };
 
+uniform bool drawing_shadow;
+
 uniform sampler2D grass_sampler;
 uniform sampler2D rock_sampler;
 uniform sampler2DShadow shadowmap_sampler;
@@ -45,7 +47,7 @@ vec2 poisson_consts[16] = vec2[](
 );
 
 float computeShades() {
-    float shades= 1.0;
+    float shades = 1.0;
     float bias = 0.0001;
     // Poisson disc multisampling on the shadow map.
     for (int i = 0; i < 4; i++) {
@@ -67,7 +69,9 @@ void main() {
 
     vec3 tex_color = mix(texture(grass_sampler, uv).rgb,
                          texture(rock_sampler, uv).rgb, altitude);
-    float shades = computeShades();
+    float shades = 1.0;
+    if (drawing_shadow)
+        shades = computeShades();
 
     // Phong Lighting.
     vec3 color = tex_color * ambient;
@@ -93,7 +97,7 @@ void main() {
 
         vec3 light_color = tex_color * diffuse_color + specular_color;
         if (lights[i].cast_shadow)
-          light_color *= shades;
+            light_color *= shades;
         color += light_color;
     }
     frag_color = vec4(color, 1.0);

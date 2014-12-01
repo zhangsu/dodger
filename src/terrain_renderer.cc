@@ -12,13 +12,16 @@ using glm::vec3;
 
 // Public methods.
 
-TerrainRenderer::TerrainRenderer(const Game& game, int shadow_map_texture_index)
+TerrainRenderer::TerrainRenderer(const Game& game,
+                                 int shadow_map_texture_index,
+                                 const bool& drawing_shadow)
     : game_(game),
       program_("src/terrain.vert", "src/terrain.frag"),
       shadow_mapper_("src/shadow_map.vert", "src/shadow_map.frag"),
       shadow_map_texture_index_(shadow_map_texture_index),
       grass_texture_("data/images/grass_texture.png"),
       rock_texture_("data/images/mountain_texture.png"),
+      drawing_shadow_(drawing_shadow),
       initialized(false),
       vertex_array_(program_) {}
 
@@ -62,6 +65,8 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
     program_.uniformVec3("diffuse", material.diffuse());
     program_.uniformVec3("specular", material.specular());
     program_.uniform1f("shininess", material.shininess());
+
+    program_.uniform1i("drawing_shadow", drawing_shadow_);
 
     grass_texture_.activateAndBind(GL_TEXTURE0);
     rock_texture_.activateAndBind(GL_TEXTURE1);

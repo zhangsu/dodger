@@ -40,6 +40,10 @@ class Renderer {
     virtual void toggleWireframe();
     // Toggles backface culling. The default is on.
     virtual void toggleBackfaceCulling();
+    // Toggles shadow rendering. The defalt is on.
+    virtual void toggleShadow();
+    // Toggles terrain shadow rendering. The defalt is off.
+    virtual void toggleTerrainShadow();
 
 
   protected:
@@ -47,6 +51,8 @@ class Renderer {
 
     bool drawing_wireframe_;
     bool culling_backface_;
+    bool drawing_shadow_;
+    bool drawing_terrain_shadow_;
 };
 
 #endif // DODGER_RENDERER_HH_
