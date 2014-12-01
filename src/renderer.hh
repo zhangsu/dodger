@@ -12,6 +12,7 @@ class Renderer {
   public:
     // Constructs a renderer with the specified game.
     explicit Renderer(const Game&);
+    virtual ~Renderer();
 
     // Clears everything.
     virtual void clear() const = 0;

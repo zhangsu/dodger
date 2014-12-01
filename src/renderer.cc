@@ -7,6 +7,8 @@ Renderer::Renderer(const Game& game)
       drawing_wireframe_(false),
       culling_backface_(true) {}
 
+Renderer::~Renderer() {}
+
 void Renderer::render() {
     prepareShadowRendering();
     clear();
