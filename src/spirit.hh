@@ -15,6 +15,8 @@ class Spirit : public SceneNode {
     // spirit walks.
     explicit Spirit(const Terrain*, bool player = false);
 
+    // Translate this scene node by `amount` but fails when colliding.
+    virtual void translate(float x, float y, float z);
     // Translate this spirit by x, z on the terrain.
     void translate(float x, float z);
     // Walks the spirit in a turtle graphics fashion.

@@ -22,9 +22,23 @@ Spirit::Spirit(const Terrain* terrain, bool is_player)
     translate(0, 0);
 }
 
+void Spirit::translate(float x, float y, float z) {
+    SceneNode::translate(x, y, z);
+
+    vec3 position = this->position(terrain_);
+    vec3 up(0.0f, 1.0f, 0.0f);
+    vec3 normal = terrain_->transformedNormal(position.x, position.z);
+
+    if (glm::dot(up, normal) / glm::length(up) / glm::length(normal) < 0.7f) {
+        // Current terrain is too steep, fallback.
+        SceneNode::translate(-x, -y, -z);
+    } else {
+        updateAltitude();
+    }
+}
+
 void Spirit::translate(float x, float z) {
-    SceneNode::translate(x, 0, z);
-    updateAltitude();
+    translate(x, 0, z);
 }
 
 void Spirit::walk() {
@@ -39,8 +53,7 @@ void Spirit::walk() {
     }
     bool moving = (rand() % 3 != 0);
     if (moving) {
-        SceneNode::translate(0, 0, -0.4f);
-        updateAltitude();
+        translate(0, 0, -0.4f);
     }
 
 }

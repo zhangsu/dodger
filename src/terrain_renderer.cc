@@ -139,20 +139,7 @@ void TerrainRenderer::addPosition(const Terrain& terrain,
 void TerrainRenderer::addNormal(const Terrain& terrain,
                                 vector<GLfloat>& normals,
                                 int x, int z) const {
-    vec3 center = vec3(x, terrain[z][x], z);
-    vec3 zero;
-    vec3 neighbors[] = {
-        z > 0 ? (vec3(x, terrain[z - 1][x], z - 1) - center) : zero,
-        x > 0 ? (vec3(x - 1, terrain[z][x - 1], z) - center) : zero,
-        z < terrain.height() - 1 ? (vec3(x, terrain[z + 1][x], z + 1) - center)
-                                 : zero,
-        x < terrain.width() - 1 ? (vec3(x + 1, terrain[z][x + 1], z) - center)
-                                : zero
-    };
-    // Vertex normal is the sum of neighboring surface normals.
-    vec3 normal;
-    for (int i = 0; i < 4; ++i)
-        normal += glm::cross(neighbors[i], neighbors[(i + 1) % 4]);
+    vec3 normal = terrain.normal(x, z);
     normals.push_back(normal.x);
     normals.push_back(normal.y);
     normals.push_back(normal.z);

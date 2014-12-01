@@ -25,11 +25,19 @@ Terrain::Terrain(string heightmap_filename)
     if (height_ % 2 == 1)
         height_--;
     heightmap_.resize(height_);
+    normals_.resize(height_);
 
     for (int z = 0; z < height_; ++z) {
         heightmap_[z].resize(width_);
         for (int x = 0; x < width_; ++x) {
             heightmap_[z][x] = heightmap(x, z, 0);
+        }
+    }
+    // Compute normals after heights are mapped.
+    for (int z = 0; z < height_; ++z) {
+        normals_[z].resize(width_);
+        for (int x = 0; x < width_; ++x) {
+            normals_[z][x] = computeNormal(x, z);
         }
     }
 }
@@ -76,4 +84,33 @@ float Terrain::height(float x, float z) const {
     else
         y = y3 + (y1 - y3) * (1 - dz) + (y2 - y3) * (1 - dx);
     return (trans_ * vec4(x, y, z, 1)).y;
+}
+
+vec3 Terrain::normal(int x, int z) const {
+    return normals_[z][x];
+}
+
+vec3 Terrain::transformedNormal(int x, int z) const {
+    return vec3(glm::inverse(glm::transpose(trans()))
+                * vec4(normal(x, z), 0.0f));
+}
+
+// Private methods.
+
+vec3 Terrain::computeNormal(int x, int z) const {
+    vec3 center = vec3(x, (*this)[z][x], z);
+    vec3 zero;
+    vec3 neighbors[] = {
+        z > 0 ? (vec3(x, (*this)[z - 1][x], z - 1) - center) : zero,
+        x > 0 ? (vec3(x - 1, (*this)[z][x - 1], z) - center) : zero,
+        z < height() - 1 ? (vec3(x, (*this)[z + 1][x], z + 1) - center)
+                                 : zero,
+        x < width() - 1 ? (vec3(x + 1, (*this)[z][x + 1], z) - center)
+                                : zero
+    };
+    // Vertex normal is the sum of neighboring surface normals.
+    vec3 normal;
+    for (int i = 0; i < 4; ++i)
+        normal += glm::cross(neighbors[i], neighbors[(i + 1) % 4]);
+    return normal;
 }

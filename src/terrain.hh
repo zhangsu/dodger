@@ -25,11 +25,19 @@ class Terrain : public Primitive {
     const std::vector<float>& operator [](int index) const;
     // Gets the height at a specified point on the terrain.
     float height(float x, float z) const;
+    // Gets the normal at a specified point on the terrain.
+    glm::vec3 normal(int x, int z) const;
+    // Gets the normal transformed by this node's transformation at a specified
+    // point on the terrain.
+    glm::vec3 transformedNormal(int x, int z) const;
 
   private:
+    glm::vec3 computeNormal(int x, int z) const;
+
     int width_;
     int height_;
     std::vector<std::vector<float>> heightmap_;
+    std::vector<std::vector<glm::vec3>> normals_;
 };
 
 #endif // DODGER_TERRAIN_HH_
