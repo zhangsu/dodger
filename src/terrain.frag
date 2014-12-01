@@ -70,6 +70,8 @@ void main() {
 
     vec3 tex_color = mix(texture(grass_sampler, uv).rgb,
                          texture(rock_sampler, uv).rgb, altitude);
+
+    // Shadow mapping.
     float shades = 1.0;
     if (drawing_shadow)
         shades = computeShades();
@@ -106,4 +108,10 @@ void main() {
     } else {
         frag_color = vec4(shades * tex_color, 1.0);
     }
+
+    // Add some gray fog.
+    float fog_density = 0.02 * -mv_position.z;
+    frag_color = mix(frag_color,
+                     vec4(0.7, 0.7, 0.7, 1.0),
+                     clamp(1.0 - exp(-fog_density * fog_density), 0.0, 1.0));
 }
