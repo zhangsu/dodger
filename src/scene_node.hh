@@ -14,11 +14,11 @@ class SceneNode {
     SceneNode();
     virtual ~SceneNode();
 
-    // Render this scene node and its descendents for shadowing.
+    // Renders this scene node and its descendents for shadowing.
     virtual void renderShadow(Renderer&, glm::mat4 trans = glm::mat4()) const;
-    // Render this scene node and its descendents.
+    // Renders this scene node and its descendents.
     virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
-    // Add a child node to this node.
+    // Adds a child node to this node.
     virtual void attach(SceneNode* child);
     // Removes a child node from this node.
     void detach(SceneNode* child);
