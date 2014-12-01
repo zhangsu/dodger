@@ -86,6 +86,9 @@ void handleKeyEvent(GLFWwindow*, int key, int, int action, int) {
     case GLFW_KEY_G:
         game.toggleGodMode();
         break;
+    case GLFW_KEY_TAB:
+        game.switchSpiritView();
+        break;
     }
 }
 
@@ -95,7 +98,7 @@ void handleMouseButtonEvent(GLFWwindow* window, int button, int action, int) {
     case GLFW_MOUSE_BUTTON_LEFT:
         left_mouse_button_down = (action == GLFW_PRESS);
         if (!left_mouse_button_down)
-            game.lookAtPlayer();
+            game.lookAtSpirit();
         break;
     case GLFW_MOUSE_BUTTON_RIGHT:
         right_mouse_button_down = (action == GLFW_PRESS);

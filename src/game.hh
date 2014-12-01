@@ -33,8 +33,10 @@ class Game {
     void rotateCamera(float dx, float dy);
     // Rotates the player together with camera.
     void rotatePlayer(float dx, float dy);
-    // Reset the camera's x angle, making it look at the player.
-    void lookAtPlayer();
+    // Reset the camera's x angle, making it look at the spirit.
+    void lookAtSpirit();
+    // Switches the view to a different spirit.
+    void switchSpiritView();
     // Ticks the game.
     void tick();
     // Resets the game.
@@ -83,6 +85,7 @@ class Game {
     glm::vec2 camera_angles_;
     bool god_mode_;
     float moving_speed_;
+    int spirit_view_index;
 };
 
 #endif // DODGER_GAME_HH_

@@ -17,7 +17,8 @@ Game::Game()
       player_(new Spirit(terrain_, true)),
       camera_distance_(10),
       god_mode_(false),
-      moving_speed_(0.1f) {
+      moving_speed_(0.1f),
+      spirit_view_index(0) {
     // Set up sky.
     Sky* sky = new Sky();
     scene_.attach(sky);
@@ -121,7 +122,7 @@ void Game::rotatePlayer(float dx, float dy) {
     if (god_mode_) {
         camera_->rotate(-dx * camera_angle, 0, 1, 0);
         camera_->rotate(-dy * camera_angle, 1, 0, 0);
-    } else {
+    } else if (spirit_view_index == 0) {
         player_->rotate(-dx * glm::radians(120.0f), 0, 1, 0);
         // Camera y position can be rotated at the same time, but not x.
         camera_angles_.y += -dy * camera_angle;
@@ -129,11 +130,21 @@ void Game::rotatePlayer(float dx, float dy) {
     }
 }
 
-void Game::lookAtPlayer() {
+void Game::lookAtSpirit() {
     if (god_mode_)
         return;
     camera_angles_.x = 0;
     updateCameraTrans();
+}
+
+void Game::switchSpiritView() {
+    spirit_view_index = (spirit_view_index + 1) % (enemies_.size() + 1);
+    camera_->parent()->detach(camera_);
+    if (spirit_view_index == 0) {
+        player_->attach(camera_);
+    } else {
+        enemies_[spirit_view_index - 1]->attach(camera_);
+    }
 }
 
 void Game::tick() {
@@ -155,7 +166,7 @@ void Game::toggleGodMode() {
     god_mode_ ^= true;
     if (god_mode_) {
         mat4 world_trans = camera_->worldTrans();
-        player_->detach(camera_);
+        camera_->parent()->detach(camera_);
         camera_->set_trans(world_trans);
     } else {
         player_->attach(camera_);
