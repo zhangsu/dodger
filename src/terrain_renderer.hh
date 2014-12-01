@@ -14,7 +14,7 @@ class TerrainRenderer {
   public:
     // Constructs a terrain renderer with the specified shader program.
     TerrainRenderer(const Game&, int shadow_map_texture_index,
-                    const bool& drawing_shadow);
+                    const bool& do_lighting, const bool& drawing_shadow);
 
     // Renders a terrain for shadowing.
     void renderShadow(const Terrain&, const glm::mat4& mv,
@@ -40,6 +40,7 @@ class TerrainRenderer {
     const Texture grass_texture_;
     const Texture rock_texture_;
 
+    const bool& do_lighting_;
     const bool& drawing_shadow_;
 
     // These are lazily-initialized by render.

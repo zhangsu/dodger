@@ -14,6 +14,7 @@ using glm::vec3;
 
 TerrainRenderer::TerrainRenderer(const Game& game,
                                  int shadow_map_texture_index,
+                                 const bool& do_lighting,
                                  const bool& drawing_shadow)
     : game_(game),
       program_("src/terrain.vert", "src/terrain.frag"),
@@ -21,6 +22,7 @@ TerrainRenderer::TerrainRenderer(const Game& game,
       shadow_map_texture_index_(shadow_map_texture_index),
       grass_texture_("data/images/grass_texture.png"),
       rock_texture_("data/images/mountain_texture.png"),
+      do_lighting_(do_lighting),
       drawing_shadow_(drawing_shadow),
       initialized(false),
       vertex_array_(program_) {}
@@ -49,23 +51,26 @@ void TerrainRenderer::render(const Terrain& terrain, const mat4& mv,
     vertex_array_.bind();
     program_.use();
 
-    for (unsigned i = 0; i < game_.lights().size(); ++i) {
-        const Light* light = game_.lights()[i];
-        string prefix = string("lights[") + to_string(i) + "].";
-        program_.uniformVec3(prefix + "position",
-                             light->position(game_.camera()));
-        program_.uniformVec3(prefix + "color", light->color());
-        program_.uniformVec3(prefix + "attenuation", light->attenuation());
-        program_.uniform1i(prefix + "cast_shadow", light->cast_shadow());
+    if (do_lighting_) {
+        for (unsigned i = 0; i < game_.lights().size(); ++i) {
+            const Light* light = game_.lights()[i];
+            string prefix = string("lights[") + to_string(i) + "].";
+            program_.uniformVec3(prefix + "position",
+                                 light->position(game_.camera()));
+            program_.uniformVec3(prefix + "color", light->color());
+            program_.uniformVec3(prefix + "attenuation", light->attenuation());
+            program_.uniform1i(prefix + "cast_shadow", light->cast_shadow());
+        }
+
+        const Material& material = terrain.material();
+        program_.uniform1i("light_count", game_.lights().size());
+        program_.uniformVec3("ambient", game_.ambient() * material.diffuse());
+        program_.uniformVec3("diffuse", material.diffuse());
+        program_.uniformVec3("specular", material.specular());
+        program_.uniform1f("shininess", material.shininess());
     }
 
-    const Material& material = terrain.material();
-    program_.uniform1i("light_count", game_.lights().size());
-    program_.uniformVec3("ambient", game_.ambient() * material.diffuse());
-    program_.uniformVec3("diffuse", material.diffuse());
-    program_.uniformVec3("specular", material.specular());
-    program_.uniform1f("shininess", material.shininess());
-
+    program_.uniform1i("do_lighting", do_lighting_);
     program_.uniform1i("drawing_shadow", drawing_shadow_);
 
     grass_texture_.activateAndBind(GL_TEXTURE0);

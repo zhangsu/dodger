@@ -6,6 +6,7 @@ Renderer::Renderer(const Game& game)
     : game_(game),
       drawing_wireframe_(false),
       culling_backface_(true),
+      do_lighting_(true),
       drawing_shadow_(true),
       drawing_terrain_shadow_(false) {}
 
@@ -28,6 +29,10 @@ void Renderer::toggleWireframe() {
 
 void Renderer::toggleBackfaceCulling() {
     culling_backface_ ^= true;
+}
+
+void Renderer::toggleLighting() {
+    do_lighting_ ^= true;
 }
 
 void Renderer::toggleShadow() {

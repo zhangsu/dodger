@@ -70,6 +70,9 @@ void handleKeyEvent(GLFWwindow*, int key, int, int action, int) {
     case GLFW_KEY_2:
         prenderer->toggleBackfaceCulling();
         break;
+    case GLFW_KEY_3:
+        prenderer->toggleLighting();
+        break;
     case GLFW_KEY_4:
         prenderer->toggleShadow();
         break;

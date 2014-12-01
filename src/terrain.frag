@@ -7,6 +7,7 @@ struct Light {
     bool cast_shadow;
 };
 
+uniform bool do_lighting;
 uniform bool drawing_shadow;
 
 uniform sampler2D grass_sampler;
@@ -73,32 +74,36 @@ void main() {
     if (drawing_shadow)
         shades = computeShades();
 
-    // Phong Lighting.
-    vec3 color = tex_color * ambient;
-    for (int i = 0; i < light_count; ++i) {
-        vec3 position2light = lights[i].position - mv_position;
-        float dist = length(position2light);
-        vec3 light_direction = normalize(position2light);
-        vec3 eye_pos = normalize(-mv_position);
-        vec3 r = normalize(-reflect(light_direction, unit_normal));
+    if (do_lighting) {
+        // Phong Lighting.
+        vec3 color = tex_color * ambient;
+        for (int i = 0; i < light_count; ++i) {
+            vec3 position2light = lights[i].position - mv_position;
+            float dist = length(position2light);
+            vec3 light_direction = normalize(position2light);
+            vec3 eye_pos = normalize(-mv_position);
+            vec3 r = normalize(-reflect(light_direction, unit_normal));
 
-        vec3 intensity =
-            1.0 / (lights[i].attenuation.x
-                   + lights[i].attenuation.y * dist
-                   + lights[i].attenuation.z * dist * dist)
-            * lights[i].color;
+            vec3 intensity =
+                1.0 / (lights[i].attenuation.x
+                       + lights[i].attenuation.y * dist
+                       + lights[i].attenuation.z * dist * dist)
+                * lights[i].color;
 
-        vec3 diffuse_color = intensity * diffuse
-            * max(dot(unit_normal, light_direction), 0.0);
-        vec3 specular_color = intensity * specular
-            * pow(max(dot(r, eye_pos), 0.0), shininess);
-        diffuse_color = clamp(diffuse_color, 0.0, 1.0);
-        specular_color = clamp(specular_color, 0.0, 1.0);
+            vec3 diffuse_color = intensity * diffuse
+                * max(dot(unit_normal, light_direction), 0.0);
+            vec3 specular_color = intensity * specular
+                * pow(max(dot(r, eye_pos), 0.0), shininess);
+            diffuse_color = clamp(diffuse_color, 0.0, 1.0);
+            specular_color = clamp(specular_color, 0.0, 1.0);
 
-        vec3 light_color = tex_color * diffuse_color + specular_color;
-        if (lights[i].cast_shadow)
-            light_color *= shades;
-        color += light_color;
+            vec3 light_color = tex_color * diffuse_color + specular_color;
+            if (lights[i].cast_shadow)
+                light_color *= shades;
+            color += light_color;
+        }
+        frag_color = vec4(color, 1.0);
+    } else {
+        frag_color = vec4(shades * tex_color, 1.0);
     }
-    frag_color = vec4(color, 1.0);
 }
