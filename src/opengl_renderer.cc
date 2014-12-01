@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include <string>
 #include <glm/gtc/matrix_transform.hpp>
-#include "glerror.hh"
+#include "error.hh"
 #include "opengl_renderer.hh"
 
 using std::runtime_error;

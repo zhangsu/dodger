@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <string>
 #include <GL/glew.h>
-#include "glerror.hh"
+#include "error.hh"
 
 using std::endl;
 using std::ostringstream;
@@ -52,6 +52,23 @@ void _checkGlError(const char* filename, int lineno) {
     }
 #else
     // If not debugging, turn error checking off for performance.
+    (void) filename;
+    (void) lineno;
+#endif // NDEBUG
+}
+
+void _checkSealError(seal_err_t err, const char* filename, int lineno) {
+#ifndef NDEBUG
+    ostringstream output;
+    const char* err_str = seal_get_err_msg(err);
+    if (err_str != nullptr) {
+        ostringstream message;
+        message << "SEAL (" << filename << ":" << lineno << "): " << err_str;
+        throw runtime_error(message.str());
+    }
+#else
+    // If not debugging, turn error checking off for performance.
+    (void) err;
     (void) filename;
     (void) lineno;
 #endif // NDEBUG

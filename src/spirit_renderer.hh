@@ -21,7 +21,6 @@ class SpiritRenderer {
     void render(const Spirit&, const glm::mat4& mv, const glm::mat4& p);
 
   private:
-    static const size_t MAX_SPIRIT_COUNT = 10;
     static const size_t MAX_PARTICLE_COUNT = 1000;
 
     // Update particle metrics and colors.
@@ -47,10 +46,10 @@ class SpiritRenderer {
     const ShaderProgram shadow_mapper_;
     const int lod_;
 
-    VertexArray vertex_arrays_[MAX_SPIRIT_COUNT];
+    VertexArray vertex_arrays_[Spirit::MAX_COUNT];
 
-    GLfloat metrics_[MAX_SPIRIT_COUNT][MAX_PARTICLE_COUNT][4];
-    GLfloat colors_[MAX_SPIRIT_COUNT][MAX_PARTICLE_COUNT][4];
+    GLfloat metrics_[Spirit::MAX_COUNT][MAX_PARTICLE_COUNT][4];
+    GLfloat colors_[Spirit::MAX_COUNT][MAX_PARTICLE_COUNT][4];
 };
 
 #endif // DODGER_SPIRIT_RENDERER_HH_

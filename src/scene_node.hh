@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 
 class Renderer;
+class AudioRenderer;
 
 // The base type for any node in a scene graph.
 class SceneNode {
@@ -18,6 +19,9 @@ class SceneNode {
     virtual void renderShadow(Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Renders this scene node and its descendents.
     virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
+    // Renders the audio for this scene node and its descendents.
+    virtual void renderAudio(AudioRenderer&,
+                             glm::mat4 trans = glm::mat4()) const;
     // Adds a child node to this node.
     virtual void attach(SceneNode* child);
     // Removes a child node from this node.
@@ -60,6 +64,9 @@ class SceneNode {
     void renderChildrenShadow(Renderer& renderer, glm::mat4 stack) const;
     // Renders the children with the specified cumulative matrix stack.
     void renderChildren(Renderer& renderer, glm::mat4 stack) const;
+    // Renders audio for the children with the specified cumulative matrix
+    // stack.
+    void renderChildrenAudio(AudioRenderer& renderer, glm::mat4 stack) const;
 
     glm::mat4 trans_;
     glm::vec3 scaling_;

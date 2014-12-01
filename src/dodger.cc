@@ -3,6 +3,7 @@
 // GLFW documentation asks to include GLEW headers before GLFW.
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "openal_renderer.hh"
 #include "opengl_renderer.hh"
 
 using std::cout;
@@ -140,6 +141,7 @@ int main() {
     try {
         OpenGLRenderer renderer(width, height, game);
         prenderer = &renderer;
+        OpenALRenderer audio_renderer(game);
 
         glfwSetWindowSizeCallback(
             window,
@@ -164,6 +166,7 @@ int main() {
 #endif
         while (!glfwWindowShouldClose(window)) {
             renderer.render();
+            audio_renderer.render();
             glfwSwapBuffers(window);
             glfwPollEvents();
             handleKeyState(window, game);

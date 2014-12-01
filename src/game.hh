@@ -42,6 +42,8 @@ class Game {
     const std::vector<const Light*> lights() const;
     // Gets the ambient light coefficient.
     float ambient() const;
+    // Gets the number of spirits currently in game.
+    size_t spirit_count() const;
 
   private:
     void addLight(SceneNode* parent, Light*);

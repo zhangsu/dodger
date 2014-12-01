@@ -73,6 +73,10 @@ void SceneNode::render(Renderer& renderer, mat4 trans) const {
     renderChildren(renderer, trans * this->trans());
 }
 
+void SceneNode::renderAudio(AudioRenderer& renderer, mat4 trans) const {
+    renderChildrenAudio(renderer, trans * this->trans());
+}
+
 void SceneNode::rotate(float angle, const vec3& axis) {
     trans_ = glm::rotate(trans_, angle, axis);
 }
@@ -108,4 +112,9 @@ void SceneNode::renderChildrenShadow(Renderer& renderer, mat4 stack) const {
 void SceneNode::renderChildren(Renderer& renderer, mat4 stack) const {
     for (auto child : children_)
         child->render(renderer, stack);
+}
+
+void SceneNode::renderChildrenAudio(AudioRenderer& renderer, mat4 stack) const {
+    for (auto child : children_)
+        child->renderAudio(renderer, stack);
 }

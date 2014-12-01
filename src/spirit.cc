@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include "renderer.hh"
+#include "audio_renderer.hh"
 #include "spirit.hh"
 
 using std::string;
@@ -54,6 +55,12 @@ void Spirit::render(Renderer& renderer, mat4 trans) const {
     mat4 stack = trans * this->trans();
     renderer.render(*this, stack);
     renderChildren(renderer, stack);
+}
+
+void Spirit::renderAudio(AudioRenderer& renderer, mat4 trans) const {
+    mat4 stack = trans * this->trans();
+    renderer.render(*this, stack);
+    renderChildrenAudio(renderer, trans * this->trans());
 }
 
 unsigned Spirit::id() const {

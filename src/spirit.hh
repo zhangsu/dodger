@@ -9,6 +9,8 @@
 // A class that stores the properties of a terrain.
 class Spirit : public SceneNode {
   public:
+    static const size_t MAX_COUNT = 10;
+
     // Constructs a spherical sprit with the specified terrain on which the
     // spirit walks.
     explicit Spirit(const Terrain*, bool player = false);
@@ -21,6 +23,9 @@ class Spirit : public SceneNode {
     virtual void renderShadow(Renderer&, glm::mat4 trans = glm::mat4()) const;
     // Renders this spirit and its descendents.
     virtual void render(Renderer&, glm::mat4 trans = glm::mat4()) const;
+    // Renders the audio for this scene node and its descendents.
+    virtual void renderAudio(AudioRenderer&,
+                             glm::mat4 trans = glm::mat4()) const;
 
     // Return an integer identifier of this node. The id is guaranteed to be
     // incremental each time a new Spirit is generated.

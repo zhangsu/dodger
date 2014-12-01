@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <vector>
 #include <glm/gtc/type_ptr.hpp>
-#include "glerror.hh"
+#include "error.hh"
 #include "shader_program.hh"
 
 using std::ifstream;

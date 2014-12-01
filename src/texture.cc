@@ -1,5 +1,5 @@
 #include <vector>
-#include "glerror.hh"
+#include "error.hh"
 #include "image.hh"
 #include "texture.hh"
 

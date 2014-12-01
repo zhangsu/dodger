@@ -3,7 +3,7 @@
 #include <cstring>
 #include <vector>
 #include <glm/gtc/type_ptr.hpp>
-#include "glerror.hh"
+#include "error.hh"
 #include "spirit_renderer.hh"
 
 using std::vector;
@@ -64,7 +64,7 @@ SpiritRenderer::SpiritRenderer(const Game& game)
     size_t len = sizeof (sphere_positions);
     size_t vertex_count = len / 3 / sizeof (GLfloat);
     size_t stream_buf_len = MAX_PARTICLE_COUNT * 4 * sizeof (GLfloat);
-    for (unsigned i = 0; i < MAX_SPIRIT_COUNT; ++i) {
+    for (unsigned i = 0; i < Spirit::MAX_COUNT; ++i) {
         vertex_arrays_[i].set_program(program_);
         vertex_arrays_[i].addAttribute((GLfloat*) sphere_positions, len,
                                        "position", 3);
@@ -95,7 +95,6 @@ void SpiritRenderer::renderShadow(const Spirit& spirit, const mat4& mv,
     checkGlError();
 }
 
-#include <cstdio>
 void SpiritRenderer::render(const Spirit& spirit, const mat4& mv,
                             const mat4& p) {
     vertex_arrays_[spirit.id()].bind();

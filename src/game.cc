@@ -156,6 +156,11 @@ float Game::ambient() const {
     return ambient_;
 }
 
+size_t Game::spirit_count() const {
+    // Number of enemies plus the player.
+    return enemies_.size() + 1;
+}
+
 // Private methods.
 
 void Game::addLight(SceneNode* parent, Light* light) {

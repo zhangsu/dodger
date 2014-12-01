@@ -1,5 +1,5 @@
 #include <vector>
-#include "glerror.hh"
+#include "error.hh"
 #include "sky_renderer.hh"
 
 using std::vector;

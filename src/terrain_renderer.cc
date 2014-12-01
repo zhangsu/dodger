@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 #include "image.hh"
-#include "glerror.hh"
+#include "error.hh"
 #include "terrain_renderer.hh"
 
 using std::string;

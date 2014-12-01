@@ -1,4 +1,4 @@
-#include "glerror.hh"
+#include "error.hh"
 #include "vertex_array.hh"
 
 using std::string;
