@@ -24,28 +24,27 @@ SpiritRenderer::SpiritRenderer(const Game& game)
     : game_(game),
       program_("src/spirit.vert", "src/spirit.frag"),
       shadow_mapper_("src/spirit_shadow_map.vert", "src/shadow_map.frag"),
-      lod_(5),
       metrics_(),
       colors_() {
 
     srand(time(nullptr));
 
-    GLfloat positions[lod_ + 1][lod_][3];
+    GLfloat positions[LOD + 1][LOD][3];
 
-    for (int i = 0; i < lod_ + 1; ++i) {
-        for (int j = 0; j < lod_; ++j) {
-            positions[i][j][0] = cos(j * 2 * M_PI / lod_)
-                               * sin(i * M_PI / lod_);
-            positions[i][j][1] = sin(j * 2 * M_PI / lod_)
-                               * sin(i * M_PI / lod_);
-            positions[i][j][2] = cos(i * M_PI / lod_);
+    for (int i = 0; i < LOD + 1; ++i) {
+        for (int j = 0; j < LOD; ++j) {
+            positions[i][j][0] = cos(j * 2 * M_PI / LOD)
+                               * sin(i * M_PI / LOD);
+            positions[i][j][1] = sin(j * 2 * M_PI / LOD)
+                               * sin(i * M_PI / LOD);
+            positions[i][j][2] = cos(i * M_PI / LOD);
         }
     }
 
-    GLfloat sphere_positions[lod_][lod_ * 2 * 3][3];
+    GLfloat sphere_positions[LOD][LOD * 2 * 3][3];
     memset(sphere_positions, 0, sizeof (sphere_positions));
-    for (int i = 0; i < lod_; ++i) {
-        for (int j = 0; j < lod_; ++j) {
+    for (int i = 0; i < LOD; ++i) {
+        for (int j = 0; j < LOD; ++j) {
             copy_vec(sphere_positions[i][j * 2 * 3],
                      positions[i][j]);
             copy_vec(sphere_positions[i][j * 2 * 3 + 1],

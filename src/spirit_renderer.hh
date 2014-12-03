@@ -41,10 +41,11 @@ class SpiritRenderer {
     // Generates a random number berween 0 and 1.
     inline float random() const;
 
+    static const int LOD = 5;
+
     const Game& game_;
     const ShaderProgram program_;
     const ShaderProgram shadow_mapper_;
-    const int lod_;
 
     VertexArray vertex_arrays_[Spirit::MAX_COUNT];
 
