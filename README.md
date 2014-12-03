@@ -63,11 +63,13 @@ Increase the moving speed of the player.
 
 ### -
 Decrease the moving speed of the player.
-Left mouse button
+
+### Left mouse button
 Rotate camera only around x or y axis. Mouse motions in the x direction are used for rotation along the y axis, and mouse motions in the y direction are used for rotation along the x axis. No rotation is done on the z axis. When the mouse button is pressed, the cursor is temporarily disabled so that it doesn’t go out of the window frame (unless the window is maximized). The cursor is re-enabled when the mouse button is released.
 
 The camera rotation can be done even when the player is moving (e.g., holding down W to move forward while at the same time hold down left mouse button to rotate the camera). The rotation along the x axis is bounded by an interval so that the camera keeps on top of the ground and not going over the player’s head. The rotation is originated at the player. When the left mouse button is released, the view is reset to the forward direction of the player. In God mode, there is no bound to the rotation along the x axis.
-Right mouse button
+
+### Right mouse button
 Similar to the left mouse button, but also rotate the player’s orientation along with the camera. In God mode, it behaves the same as the left mouse button.
 
 ### Scrolling
