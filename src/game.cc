@@ -207,7 +207,7 @@ size_t Game::spirit_count() const {
 
 // Private methods.
 
-void Game::Game::move(float x, float y, float z) {
+void Game::move(float x, float y, float z) {
     move(vec3(x, y, z));
 }
 
