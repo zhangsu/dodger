@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\seal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\audio_renderer.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\error.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\gameover.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\image.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\light.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\material.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\openal_renderer.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\opengl_renderer.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\primitive.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\renderer.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\scene_node.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\shader_program.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sky.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sky_renderer.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\spirit.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\spirit_renderer.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\terrain_renderer.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\texture.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\vertex_array.hh">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\audio_renderer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dodger.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\error.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\image.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\light.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\material.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\openal_renderer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\opengl_renderer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\primitive.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\renderer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\scene_node.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\shader_program.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sky.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sky_renderer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spirit.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\spirit_renderer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain_renderer.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\texture.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\vertex_array.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\shadow_map.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\src\shadow_map.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\src\spirit.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\src\spirit.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\src\spirit_shadow_map.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\src\terrain.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\src\terrain.vert">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\src\texture.frag">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\src\texture.vert">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

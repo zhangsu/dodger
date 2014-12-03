@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3609CBFA-A248-404D-9149-FB48556685CD}</ProjectGuid>
+    <RootNamespace>dodger</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../include;include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_DLL;GLM_FORCE_RADIANS;NDEBUG;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);glew32.lib;seal.lib;libpng16.lib;glfw3dll.lib;OpenGL32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\lib</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy lib\*.dll .
+xcopy/IYS ..\data data
+xcopy/IY ..\src\*.vert src
+xcopy/IY ..\src\*.frag src</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy data and shader files</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../include;include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_DLL;GLM_FORCE_RADIANS;NDEBUG;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);glew32.lib;seal.lib;libpng16.lib;glfw3dll.lib;OpenGL32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\lib</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Message>Copy data and shader files</Message>
+      <Command>copy lib\*.dll .
+xcopy/IYS ..\data data
+xcopy/IY ..\src\*.vert src
+xcopy/IY ..\src\*.frag src</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\seal.h" />
+    <ClInclude Include="..\src\audio_renderer.hh" />
+    <ClInclude Include="..\src\error.hh" />
+    <ClInclude Include="..\src\game.hh" />
+    <ClInclude Include="..\src\gameover.hh" />
+    <ClInclude Include="..\src\image.hh" />
+    <ClInclude Include="..\src\light.hh" />
+    <ClInclude Include="..\src\material.hh" />
+    <ClInclude Include="..\src\openal_renderer.hh" />
+    <ClInclude Include="..\src\opengl_renderer.hh" />
+    <ClInclude Include="..\src\primitive.hh" />
+    <ClInclude Include="..\src\renderer.hh" />
+    <ClInclude Include="..\src\scene_node.hh" />
+    <ClInclude Include="..\src\shader_program.hh" />
+    <ClInclude Include="..\src\sky.hh" />
+    <ClInclude Include="..\src\sky_renderer.hh" />
+    <ClInclude Include="..\src\spirit.hh" />
+    <ClInclude Include="..\src\spirit_renderer.hh" />
+    <ClInclude Include="..\src\terrain.hh" />
+    <ClInclude Include="..\src\terrain_renderer.hh" />
+    <ClInclude Include="..\src\texture.hh" />
+    <ClInclude Include="..\src\vertex_array.hh" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\audio_renderer.cc" />
+    <ClCompile Include="..\src\dodger.cc" />
+    <ClCompile Include="..\src\error.cc" />
+    <ClCompile Include="..\src\game.cc" />
+    <ClCompile Include="..\src\image.cc" />
+    <ClCompile Include="..\src\light.cc" />
+    <ClCompile Include="..\src\material.cc" />
+    <ClCompile Include="..\src\openal_renderer.cc" />
+    <ClCompile Include="..\src\opengl_renderer.cc" />
+    <ClCompile Include="..\src\primitive.cc" />
+    <ClCompile Include="..\src\renderer.cc" />
+    <ClCompile Include="..\src\scene_node.cc" />
+    <ClCompile Include="..\src\shader_program.cc" />
+    <ClCompile Include="..\src\sky.cc" />
+    <ClCompile Include="..\src\sky_renderer.cc" />
+    <ClCompile Include="..\src\spirit.cc" />
+    <ClCompile Include="..\src\spirit_renderer.cc" />
+    <ClCompile Include="..\src\terrain.cc" />
+    <ClCompile Include="..\src\terrain_renderer.cc" />
+    <ClCompile Include="..\src\texture.cc" />
+    <ClCompile Include="..\src\vertex_array.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\shadow_map.frag" />
+    <None Include="..\src\shadow_map.vert" />
+    <None Include="..\src\spirit.frag" />
+    <None Include="..\src\spirit.vert" />
+    <None Include="..\src\spirit_shadow_map.vert" />
+    <None Include="..\src\terrain.frag" />
+    <None Include="..\src\terrain.vert" />
+    <None Include="..\src\texture.frag" />
+    <None Include="..\src\texture.vert" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
