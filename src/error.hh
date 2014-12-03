@@ -1,7 +1,7 @@
 #ifndef DODGER_GLERROR_HH_
 #define DODGER_GLERROR_HH_
 
-#include "seal.h"
+#include <seal.h>
 
 // Checks OpenGL errors since last OpenGL call.
 #define checkGlError() _checkGlError(__FILE__, __LINE__)
