@@ -2,7 +2,7 @@ CC            = g++
 LINKER        = g++
 FLAGS         = -Wall -Wextra
 CFLAGS        = $(FLAGS) -std=c++0x -c -Iinclude -DGLM_FORCE_RADIANS
-LFLAGS        = $(FLAGS) -Llib -lpng -lGLEW -lglfw -lGL -lseal -Wl,-rpath,lib
+LFLAGS        = $(FLAGS) -Llib -lpng -lGLEW -lglfw -lseal -Wl,-rpath,lib
 SRCDIR        = src/
 BINDIR        = bin/
 OUTPUTS       = $(DODGEROUTPUT)
@@ -19,6 +19,12 @@ ifeq ($(DEBUG),1)
 else
   FLAGS += -O3
   CFLAGS += -DNDEBUG
+endif
+
+ifeq ($(shell uname),Darwin)
+	LFLAGS += -framework OpenGL
+else
+	LFLAGS += -lGL
 endif
 
 .PHONY: clean
